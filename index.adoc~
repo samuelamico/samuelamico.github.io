@@ -1,5 +1,6 @@
 = Digital Image Processing
 Samuel Amico <sam.fst@gmail.com>
+
 :numbered:
 :sourcedir-root: ../../..
 ifdef::jfokus[:sourcedir-root: {rootdir}]

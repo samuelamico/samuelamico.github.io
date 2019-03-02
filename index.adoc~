@@ -1,6 +1,5 @@
 = Digital Image Processing
 Samuel Amico <sam.fst@gmail.com>
-:source-highlighter: pygments
 :numbered:
 
 An indroduction to http://asciidoc.org[AsciiDoc] and http://opencv.org[OpenCV].

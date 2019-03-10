@@ -448,34 +448,77 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_unit_1">Unit 1</h2>
+<h2 id="_pixel_manipulation">Pixel Manipulation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The objective of this lesson is to show how we can manipulate the pixels of an image, for that we can access a pixel value by it&#8217;s row and column coordinates. For BGR image, it returns an array of Blue,Green,Red values.For grayscale image, just corresponding intensity is returned.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Negative of a Region of Interest (ROI)
+In this example we&#8217;ll be selecting a ROI with a specific coordinates that we give inside the program. The next step is invert the ROI, for this we use the simple formula: pixel_color_new = 255 - pixel_color_old. The image are in the grayscale.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock right text-center">
+<div class="content">
+<img src="PDI/biel.png" alt="Biel" width="200" height="200">
+</div>
+<div class="title">Figure 1. Biel image</div>
+</div>
+<div class="imageblock left text-center">
+<div class="content">
+<img src="PDI/negativebiel.png" alt="Negative" width="200" height="200">
+</div>
+<div class="title">Figure 2. Negative image</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">include::PDI/trabalho1.py</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Swapping regions
+In this example we&#8217;ll divided the image in four quadrants (they have the same dimension) - ROI A,B,C,D. Where each ROI are built from a copy of the original image, cv2.copy(). A new image will be construct by using those ROI, swapping them in differents ways.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock right text-center">
+<div class="content">
+<img src="PDI/biel.png" alt="Biel" width="200" height="200">
+</div>
+<div class="title">Figure 3. Biel image</div>
+</div>
+<div class="imageblock left text-center">
+<div class="content">
+<img src="PDI/bielmix.png" alt="Swapping" width="200" height="200">
+</div>
+<div class="title">Figure 4. Swapping image</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">include::PDI/trabalho1-1.py</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_filling_regions">Filling regions</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>item 1</p>
-</li>
-<li>
-<p>item 2</p>
+<p>Labeling objects</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_unit_2">Unit 2</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>item 1</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_unit_3">Unit 3</h2>
+<h2 id="_histogram">Histogram</h2>
 <div class="sectionbody">
 
 </div>
@@ -489,7 +532,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-02 17:01:14 -0300
+Last updated 2019-03-10 07:26:07 -0300
 </div>
 </div>
 </body>

@@ -5,16 +5,44 @@ Samuel Amico <sam.fst@gmail.com>
 
 An indroduction to http://asciidoc.org[AsciiDoc] and http://opencv.org[OpenCV].
 
-== Unit 1
+== Pixel Manipulation
+The objective of this lesson is to show how we can manipulate the pixels of an image, for that we can access a pixel value by it's row and column coordinates. For BGR image, it returns an array of Blue,Green,Red values.For grayscale image, just corresponding intensity is returned.
 
-* item 1
-* item 2
+* Negative of a Region of Interest (ROI)
+In this example we'll be selecting a ROI with a specific coordinates that we give inside the program. The next step is invert the ROI, for this we use the simple formula: pixel_color_new = 255 - pixel_color_old. The image are in the grayscale.
 
-== Unit 2
+.Biel image
+image::PDI/biel.png[Biel,200,200,float="right",align="center"]
 
-* item 1
+.Negative image
+image::PDI/negativebiel.png[Negative,200,200,float="left",align="center"] 
 
-== Unit 3
+[source,python]
+----
+include::PDI/trabalho1.py
+----
+ 
+* Swapping regions
+In this example we'll divided the image in four quadrants (they have the same dimension) - ROI A,B,C,D. Where each ROI are built from a copy of the original image, cv2.copy(). A new image will be construct by using those ROI, swapping them in differents ways.
+
+.Biel image
+image::PDI/biel.png[Biel,200,200,float="right",align="center"]
+
+.Swapping image
+image::PDI/bielmix.png[Swapping,200,200,float="left",align="center"] 
+
+[source,python]
+----
+include::PDI/trabalho1-1.py
+----
+
+== Filling regions
+
+* Labeling objects
+
+
+
+== Histogram
 
 
 == Unit 4

@@ -68,7 +68,7 @@ image::BolhaWhite.png[BolhasWhite,300,300]
 .BolhasColor image
 image::BolhaCor.png[BolhaCor,300,300]
 
-[.right]
+
 .BolhaBlack image
 image::BolhaBlack.png[BolhaBlack,300,300]
 --

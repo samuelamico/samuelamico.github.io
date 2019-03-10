@@ -54,19 +54,27 @@ include::trabalho1-1.py[]
 * Change color of a Region of Interest (ROI)
 In this example we'll change a color from a ROI that we selected from the program. The ROI are change for White, Black and another color of interest.
 
+[.float-group]
+--
+[.left]
 .Bolhas image
 image::bolhas.png[Bolhas,300,300]
 
+[.left]
 .BolhasWhite image
 image::BolhaWhite.png[BolhasWhite,300,300]
 
+[.right]
 .BolhasColor image
 image::BolhaCor.png[BolhaCor,300,300]
 
+
 .BolhaBlack image
 image::BolhaBlack.png[BolhaBlack,300,300]
+--
 
-[source,python]
+
+[source,python,linenums,highlight=2..5]]
 ----
 include::trabalho2.py[]
 ----

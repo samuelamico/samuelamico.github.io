@@ -24,7 +24,7 @@ image::negativebiel.png[Negative,300,300]
 --
 
 
-[source,python,linenums]
+[source,python,linenums,highlight=2..5]
 ----
 include::trabalho1.py[]
 ----
@@ -32,13 +32,20 @@ include::trabalho1.py[]
 * Swapping regions
 In this example we'll divided the image in four quadrants (they have the same dimension) - ROI A,B,C,D. Where each ROI are built from a copy of the original image, cv2.copy(). A new image will be construct by using those ROI, swapping them in differents ways.
 
+
+[.float-group]
+--
+[.left]
 .Biel image
 image::biel.png[Biel,300,300]
 
+[.right]
 .Swapping image
 image::bielmix.png[Swapping,300,300] 
+--
 
-[source,python]
+
+[source,python,linenums,highlight=2..5]
 ----
 include::trabalho1-1.py[]
 ----
@@ -47,19 +54,27 @@ include::trabalho1-1.py[]
 * Change color of a Region of Interest (ROI)
 In this example we'll change a color from a ROI that we selected from the program. The ROI are change for White, Black and another color of interest.
 
+[.float-group]
+--
+[.left]
 .Bolhas image
 image::bolhas.png[Bolhas,300,300]
 
+[.left]
 .BolhasWhite image
 image::BolhaWhite.png[BolhasWhite,300,300]
 
+[.right]
 .BolhasColor image
 image::BolhaCor.png[BolhaCor,300,300]
 
+[.right]
 .BolhaBlack image
 image::BolhaBlack.png[BolhaBlack,300,300]
+--
 
-[source,python]
+
+[source,python,linenums,highlight=2..5]]
 ----
 include::trabalho2.py[]
 ----

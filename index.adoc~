@@ -12,29 +12,46 @@ The objective of this lesson is to show how we can manipulate the pixels of an i
 In this example we'll be selecting a ROI with a specific coordinates that we give inside the program. The next step is invert the ROI, for this we use the simple formula: pixel_color_new = 255 - pixel_color_old. The image are in the grayscale.
 
 .Biel image
-image::biel.png[Biel,200,200]
+image::biel.png[Biel,300,300,role="left"]
 
 .Negative image
-image::negativebiel.png[Negative,200,200] 
+image::negativebiel.png[Negative,300,300,role="right"] 
 
 [source,python]
 ----
-include::trabalho1.py
+include::trabalho1.py[]
 ----
  
 * Swapping regions
 In this example we'll divided the image in four quadrants (they have the same dimension) - ROI A,B,C,D. Where each ROI are built from a copy of the original image, cv2.copy(). A new image will be construct by using those ROI, swapping them in differents ways.
 
 .Biel image
-image::biel.png[Biel,200,200,float="right",align="center"]
+image::biel.png[Biel,200,200,float="right"]
 
 .Swapping image
-image::bielmix.png[Swapping,200,200,float="left",align="center"] 
+image::bielmix.png[Swapping,200,200,float="left"] 
 
 [source,python]
 ----
-include::trabalho1-1.py
+include::trabalho1-1.py[]
 ----
+
+
+* Change color of a Region of Interest (ROI)
+In this example we'll change a color from a ROI that we selected from the program. The ROI are change for White, Black and another color of interest.
+
+.Bolhas image
+image::bolhas.png[Bolhas,200,200]
+
+.BolhasWhite image
+image::BolhaWhite.png[BolhasWhite,200,200]
+
+.BolhasColor image
+image::BolhaCor.png[BolhaCor,200,200]
+
+.BolhaBlack image
+image::BolhaBlack.png[BolhaBlack,200,200]
+
 
 == Filling regions
 

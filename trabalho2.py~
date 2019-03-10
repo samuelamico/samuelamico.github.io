@@ -48,10 +48,6 @@ cv2.destroyAllWindows()
 for i in range(P1x,P2x):
 	for j in range(P1y,P2y):
 		image[i,j] = 255
-# ROI --> Color
-for i in range(P1x,P2x):
-	for j in range(P1y,P2y):
-		image[i,j] = [cor_B,cor_G,cor_R]
 
 cv2.imshow("White ROI", image)
 k = cv2.waitKey(0)

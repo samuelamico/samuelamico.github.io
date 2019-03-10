@@ -2,6 +2,7 @@
 Samuel Amico <sam.fst@gmail.com>
 
 :toc: left
+:source-highlighter: coderay
 
 An indroduction to http://asciidoc.org[AsciiDoc] and http://opencv.org[OpenCV].
 
@@ -12,10 +13,10 @@ The objective of this lesson is to show how we can manipulate the pixels of an i
 In this example we'll be selecting a ROI with a specific coordinates that we give inside the program. The next step is invert the ROI, for this we use the simple formula: pixel_color_new = 255 - pixel_color_old. The image are in the grayscale.
 
 .Biel image
-image::biel.png[Biel,300,300,role="left"]
+image::biel.png[Biel,300,300,role="left",align="center"]
 
 .Negative image
-image::negativebiel.png[Negative,300,300,role="right"] 
+image::negativebiel.png[Negative,300,300,role="right",align="center"] 
 
 [source,python]
 ----
@@ -57,10 +58,6 @@ image::BolhaBlack.png[BolhaBlack,200,200]
 include::trabalho2.py[]
 ----
 
-[source,python]
-----
-include::trabalho2-1.py[]
-----
 
 == Filling regions
 

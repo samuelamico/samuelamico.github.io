@@ -12,10 +12,10 @@ The objective of this lesson is to show how we can manipulate the pixels of an i
 In this example we'll be selecting a ROI with a specific coordinates that we give inside the program. The next step is invert the ROI, for this we use the simple formula: pixel_color_new = 255 - pixel_color_old. The image are in the grayscale.
 
 .Biel image
-image::biel.png[Biel,200,200,float="right",align="center"]
+image::biel.png[Biel,200,200]
 
 .Negative image
-image::negativebiel.png[Negative,200,200,float="left",align="center"] 
+image::negativebiel.png[Negative,200,200] 
 
 [source,python]
 ----

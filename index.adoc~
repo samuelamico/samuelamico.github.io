@@ -122,7 +122,7 @@ Histograms in digital images in grayscale,for example,usually associate a histog
 --
 [.left]
 .HistEqualizado image
-image::HisEqualizado.png[HistEqualizado,500,500]
+image::HistEqualizado.png[HistEqualizado,400,300]
 --
 
 [source,python,linenums,highlight=2..5]]

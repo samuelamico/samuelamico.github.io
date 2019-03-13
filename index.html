@@ -1046,9 +1046,47 @@ cv2.destroyAllWindows()</pre></td>
 <div class="ulist">
 <ul>
 <li>
-<p>Labeling objects</p>
+<p>Labeling objects
+The example illustrates the use of two functions: a) Count regions with and without hoeles, b) Fill holes. To do this, a special function called FloodFill() consists of finding a pixel(pixel of interest) and,from this, filling the adjacent regions in a color chosen by the user. The FloodFill function works like this: the function find the start pixel and works by running neighboring pixels and checking the BGR or gray intensity (and changes to the desired color).</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>But this algorithm does not work when the number of objects exceeds 255, for this a different number representation as such as floting point.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="bolhas.png" alt="Bolhas" width="300" height="300">
+</div>
+<div class="title">Figure 9. Bolhas image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="BolhaAtualizada.png" alt="BolhasAtualizadas" width="300" height="300">
+</div>
+<div class="title">Figure 10. BolhaAtualizada image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="BolhaCheia.png" alt="BolhaPreenchida" width="300" height="300">
+</div>
+<div class="title">Figure 11. BolhaCheia image</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="BolhaFuro.png" alt="BolhaFuro" width="300" height="300">
+</div>
+<div class="title">Figure 12. BolhaFuro image</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="BolhaTotal.png" alt="BolhaTotal" width="300" height="300">
+</div>
+<div class="title">Figure 13. BolhaTotal image</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1067,7 +1105,7 @@ cv2.destroyAllWindows()</pre></td>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-10 09:42:49 -0300
+Last updated 2019-03-12 21:04:03 -0300
 </div>
 </div>
 </body>

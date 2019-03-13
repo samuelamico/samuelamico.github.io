@@ -83,7 +83,9 @@ include::trabalho2.py[]
 == Filling regions
 
 * Labeling objects
+The example illustrates the use of two functions: a) Count regions with and without hoeles, b) Fill holes. To do this, a special function called FloodFill() consists of finding a pixel(pixel of interest) and,from this, filling the adjacent regions in a color chosen by the user. The FloodFill function works like this: the function find the start pixel and works by running neighboring pixels and checking the BGR or gray intensity (and changes to the desired color).
 
+But this algorithm does not work when the number of objects exceeds 255, for this a different number representation as such as floting point.   
 
 
 == Histogram

@@ -125,5 +125,10 @@ Histograms in digital images in grayscale,for example,usually associate a histog
 image::HisEqualizado.png[HistEqualizado,500,500]
 --
 
+[source,python,linenums,highlight=2..5]]
+----
+include::trabalho4.py[]
+----
+
 == Unit 4
 

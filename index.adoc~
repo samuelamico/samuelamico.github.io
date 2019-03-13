@@ -87,9 +87,43 @@ The example illustrates the use of two functions: a) Count regions with and with
 
 But this algorithm does not work when the number of objects exceeds 255, for this a different number representation as such as floting point.   
 
+[.float-group]
+--
+[.left]
+.Bolhas image
+image::bolhas.png[Bolhas,300,300]
+
+[.left]
+.BolhaAtualizada image
+image::BolhaAtualizada.png[BolhasAtualizadas,300,300]
+
+[.right]
+.BolhaCheia image
+image::BolhaCheia.png[BolhaPreenchida,300,300]
+
+[.right]
+.BolhaFuro image
+image::BolhaFuro.png[BolhaFuro,300,300]
+
+[.right]
+.BolhaTotal image
+image::BolhaTotal.png[BolhaTotal,300,300]
+--
+
+[source,python,linenums,highlight=2..5]]
+----
+include::trabalho3.py[]
+----
 
 == Histogram
+Histograms in digital images in grayscale,for example,usually associate a histogram with the occurrence count of each of the possible tones in an image. Roughly, the histogram gives an estimate of the probability of occurrence of gray tones in the image. In this example I'm using Histogram equalization, this method improves the contrast in an image, in order to stretch out the intesity range.
 
+[.float-group]
+--
+[.left]
+.HistEqualizado image
+image::HisEqualizado.png[HistEqualizado,500,500]
+--
 
 == Unit 4
 

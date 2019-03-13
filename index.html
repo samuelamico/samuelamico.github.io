@@ -1074,13 +1074,13 @@ The example illustrates the use of two functions: a) Count regions with and with
 </div>
 <div class="title">Figure 11. BolhaCheia image</div>
 </div>
-<div class="imageblock">
+<div class="imageblock right">
 <div class="content">
 <img src="BolhaFuro.png" alt="BolhaFuro" width="300" height="300">
 </div>
 <div class="title">Figure 12. BolhaFuro image</div>
 </div>
-<div class="imageblock">
+<div class="imageblock right">
 <div class="content">
 <img src="BolhaTotal.png" alt="BolhaTotal" width="300" height="300">
 </div>
@@ -1088,12 +1088,279 @@ The example illustrates the use of two functions: a) Count regions with and with
 </div>
 </div>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="python"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+<strong class="highlighted">2</strong>
+<strong class="highlighted">3</strong>
+<strong class="highlighted">4</strong>
+<strong class="highlighted">5</strong>
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+</pre></td>
+  <td class="code"><pre><span class="comment"># Processamento Digital de Imagem</span>
+<span class="comment"># Aluno: Samuel Amico</span>
+<span class="comment"># Matricula: 20180010181</span>
+<span class="comment"># Trabalho 3 - referente a imagem bolhas.png</span>
+
+<span class="keyword">import</span> <span class="include">numpy</span> <span class="keyword">as</span> np
+<span class="keyword">import</span> <span class="include">cv2</span>
+<span class="keyword">import</span> <span class="include">time</span>
+<span class="keyword">import</span> <span class="include">scipy.ndimage</span> <span class="keyword">as</span> ndimage
+
+<span class="comment"># Ler imagem grayscale:</span>
+image = cv2.imread(<span class="string"><span class="delimiter">'</span><span class="content">bolhas.png</span><span class="delimiter">'</span></span>,<span class="integer">0</span>)
+cv2.imshow(<span class="string"><span class="delimiter">'</span><span class="content"> Original Image</span><span class="delimiter">'</span></span>,image)
+k = cv2.waitKey(<span class="integer">0</span>)
+
+<span class="comment"># dimensoes da imagem</span>
+height, width = image.shape[:<span class="integer">2</span>]
+
+
+
+<span class="comment">### apagando as bolhas que tocam as paredes:</span>
+bolhas_parede = <span class="integer">0</span>
+img = image
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(height):
+        <span class="keyword">if</span>(img[i,<span class="integer">0</span>]==<span class="integer">255</span>):
+                cv2.floodFill(img,<span class="predefined-constant">None</span>,(<span class="integer">0</span>,i),(<span class="integer">0</span>,),(<span class="integer">0</span>,),(<span class="integer">0</span>,))
+        <span class="keyword">if</span>(img[i,width-<span class="integer">1</span>]==<span class="integer">255</span>):
+                cv2.floodFill(img,<span class="predefined-constant">None</span>,(width-<span class="integer">1</span>,i),(<span class="integer">0</span>,),(<span class="integer">0</span>,),(<span class="integer">0</span>,))
+
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(width):
+        <span class="keyword">if</span>(img[<span class="integer">0</span>,i]==<span class="integer">255</span>):
+                cv2.floodFill(img,<span class="predefined-constant">None</span>,(i,<span class="integer">0</span>),(<span class="integer">0</span>,),(<span class="integer">0</span>,),(<span class="integer">0</span>,))
+        <span class="keyword">if</span>(img[height-<span class="integer">1</span>,i]==<span class="integer">255</span>):
+                cv2.floodFill(img,<span class="predefined-constant">None</span>,(i,height-<span class="integer">1</span>),(<span class="integer">0</span>,),(<span class="integer">0</span>,),(<span class="integer">0</span>,))
+
+cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Image refresh</span><span class="delimiter">&quot;</span></span>,image)
+k = cv2.waitKey(<span class="integer">0</span>)
+<span class="comment">#cv2.imwrite('BolhaAtualizada.png',image)</span>
+cv2.destroyAllWindows()
+
+<span class="comment">## Find Holes and count holes too</span>
+image_fill = image.copy()
+
+obj=<span class="integer">0</span>
+mask = np.zeros((height+<span class="integer">2</span>,width+<span class="integer">2</span>),np.uint8)
+
+
+labels, n_regions = ndimage.label(image)
+print(<span class="string"><span class="delimiter">&quot;</span><span class="content">Numbers of bublles = </span><span class="delimiter">&quot;</span></span>, n_regions)
+
+<span class="comment">## Count holes:</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(height):
+        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="predefined">range</span>(width):
+                <span class="keyword">if</span>(image[i,j]==<span class="integer">0</span>):
+                        obj=obj+<span class="integer">1</span>
+                        cv2.floodFill(image_fill,mask,(j,i),obj)
+
+cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Floodfill</span><span class="delimiter">&quot;</span></span>,image_fill)
+k = cv2.waitKey(<span class="integer">0</span>)
+<span class="comment">#cv2.imwrite('BolhaCheia.png',image_fill)</span>
+
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(height):
+        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="predefined">range</span>(width):
+                <span class="keyword">if</span>(image[i,j]==<span class="integer">255</span>):
+                        obj=obj+<span class="integer">1</span>
+                        c=cv2.floodFill(image_fill,mask,(j,i),<span class="integer">0</span>)
+
+cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Holes</span><span class="delimiter">&quot;</span></span>,image_fill)
+k = cv2.waitKey(<span class="integer">0</span>)
+<span class="comment">#cv2.imwrite('BolhaFuro.png',image_fill)</span>
+cv2.destroyAllWindows()
+
+labels, n_regions = ndimage.label(image_fill)
+print(<span class="string"><span class="delimiter">&quot;</span><span class="content">Numbers of holes = </span><span class="delimiter">&quot;</span></span>, n_regions)
+
+
+
+<span class="comment">## Resultado</span>
+
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></td>
+</tr></table></code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_histogram">Histogram</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Histograms in digital images in grayscale,for example,usually associate a histogram with the occurrence count of each of the possible tones in an image. Roughly, the histogram gives an estimate of the probability of occurrence of gray tones in the image. In this example I&#8217;m using Histogram equalization, this method improves the contrast in an image, in order to stretch out the intesity range.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="HisEqualizado.png" alt="HistEqualizado" width="500" height="500">
+</div>
+<div class="title">Figure 14. HistEqualizado image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="python"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+<strong class="highlighted">2</strong>
+<strong class="highlighted">3</strong>
+<strong class="highlighted">4</strong>
+<strong class="highlighted">5</strong>
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td>
+  <td class="code"><pre><span class="comment"># Processamento Digital de Imagem</span>
+<span class="comment"># Aluno: Samuel Amico</span>
+<span class="comment"># Matricula: 20180010181</span>
+<span class="comment"># Trabalho 3 - referente a imagem bolhas.png</span>
 
+<span class="keyword">import</span> <span class="include">numpy</span> <span class="keyword">as</span> np
+<span class="keyword">import</span> <span class="include">cv2</span>
+<span class="keyword">import</span> <span class="include">time</span>
+
+capture = cv2.VideoCapture(<span class="integer">0</span>)
+
+
+<span class="keyword">while</span> capture.isOpened():
+        ret,img = capture.read()
+        old_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+
+        equ = cv2.equalizeHist(old_gray)
+        res = np.hstack((old_gray,equ))
+
+        <span class="comment">#cv2.imshow('image',old_gray)</span>
+        cv2.imshow(<span class="string"><span class="delimiter">'</span><span class="content">Histogram equ</span><span class="delimiter">'</span></span>,res)
+        pressed_key = cv2.waitKey(<span class="integer">1</span>) &amp; <span class="hex">0xFF</span>
+        <span class="keyword">if</span> pressed_key == <span class="predefined">ord</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">z</span><span class="delimiter">&quot;</span></span>):
+                <span class="comment">#cv2.imwrite('HistEqualizado.png',res)</span>
+                <span class="keyword">break</span>
+cv2.destroyAllWindows()
+capture.release()</pre></td>
+</tr></table></code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1105,7 +1372,7 @@ The example illustrates the use of two functions: a) Count regions with and with
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-12 21:04:03 -0300
+Last updated 2019-03-12 21:16:17 -0300
 </div>
 </div>
 </body>

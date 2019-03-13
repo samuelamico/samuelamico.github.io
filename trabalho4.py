@@ -21,6 +21,7 @@ while capture.isOpened():
 	cv2.imshow('Histogram equ',res)
 	pressed_key = cv2.waitKey(1) & 0xFF
 	if pressed_key == ord("z"):
+		#cv2.imwrite('HistEqualizado.png',res)
 		break
 cv2.destroyAllWindows()
 capture.release() 		

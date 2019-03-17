@@ -1,5 +1,5 @@
 :toc: left
-:source-highlighter: coderay
+
 :source-highlighter: pygments
 
 = Digital Image Processing
@@ -27,7 +27,7 @@ image::negativebiel.png[Negative,300,300]
 --
 
 
-[source,python,linenums,highlight=2..5]
+[source,python,linenums]
 ----
 include::trabalho1.py[]
 ----
@@ -48,7 +48,7 @@ image::bielmix.png[Swapping,300,300]
 --
 
 
-[source,python,linenums,highlight=2..5]
+[source,python,linenums]
 ----
 include::trabalho1-1.py[]
 ----
@@ -77,7 +77,7 @@ image::BolhaBlack.png[BolhaBlack,300,300]
 --
 
 
-[source,python,linenums,highlight=2..5]]
+[source,python,linenums]
 ----
 include::trabalho2.py[]
 ----
@@ -113,7 +113,7 @@ image::BolhaFuro.png[BolhaFuro,300,300]
 image::BolhaTotal.png[BolhaTotal,300,300]
 --
 
-[source,python,linenums,highlight=2..5]]
+[source,python,linenums]
 ----
 include::trabalho3.py[]
 ----
@@ -128,29 +128,29 @@ Histograms in digital images in grayscale,for example,usually associate a histog
 image::HistEqualizado.png[HistEqualizado,900,800]
 --
 
-[source,python,linenums,highlight=2..5]]
+[source,python,linenums]
 ----
 include::trabalho4.py[]
 ----
 
 == Motion Detector
-Continuing to use the idea of image histogram, in this example we'll detect if a moviment occurs in a ROI. The main idea of the code is based on the use of correlation between two frames of an video. However, we'll use only the Blue Channel on openCV (you can use the Red or Green) to use the  HistComparation and calcHist on the code.
+Continuing to use the idea of image histogram, in this example we'll detect if a moviment occurs in a ROI. The main idea of the code is based on the use of correlation between two frames of an video. However, we'll use only the Blue Channel on openCV (you can use the Red or Green) to use the  HistComparation and calcHist on the code.If the number comparation < 0, then movement is detected.
 
 [.float-group]
 --
 
 [.left]
 .Motion image
-image::Motion.png[Motion,900,800]
+image::Motion.png[Motion,800,700]
 
 [.right]
 .DectMotion image
-image::DectMotion.png[DectMotion,900,800]
+image::DectMotion.png[DectMotion,800,700]
 
 --
 
 
-[source,python,linenums,highlight=2..5]]
+[source,python,linenums]
 ----
 include::Hist_comp.py[]
 ----
@@ -163,15 +163,15 @@ In this simple example, we'll just use the different filters in the video captur
 
 [.left]
 .ImgOrig image
-image::ImgOrig.png[ImgOrig,900,800]
+image::ImgOrig.png[ImgOrig,800,700]
 
 [.right]
-.FiltroLaplaceGauss image
-image::FiltroLaplaceGauss.png[FiltroLaplaceGauss,900,800]
+.LaplaceGauss image
+image::LaplaceGauss.png[LaplaceGauss,800,700]
 
 --
 
-[source,python,linenums,highlight=2..5]]
+[source,python,linenums]
 ----
 include::trabalho6.py[]
 ----

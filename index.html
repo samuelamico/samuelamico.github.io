@@ -988,19 +988,19 @@ capture.release()</code></pre>
 <h2 id="_motion_detector">Motion Detector</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Continuing to use the idea of image histogram, in this example we&#8217;ll detect if a moviment occurs in a ROI. The main idea of the code is based on the use of correlation between two frames of an video. However, we&#8217;ll use only the Blue Channel on openCV (you can use the Red or Green) to use the  HistComparation and calcHist on the code.</p>
+<p>Continuing to use the idea of image histogram, in this example we&#8217;ll detect if a moviment occurs in a ROI. The main idea of the code is based on the use of correlation between two frames of an video. However, we&#8217;ll use only the Blue Channel on openCV (you can use the Red or Green) to use the  HistComparation and calcHist on the code.If the number comparation &lt; 0, then movement is detected.</p>
 </div>
 <div class="openblock float-group">
 <div class="content">
 <div class="imageblock left">
 <div class="content">
-<img src="Motion.png" alt="Motion" width="900" height="800">
+<img src="Motion.png" alt="Motion" width="800" height="700">
 </div>
 <div class="title">Figure 15. Motion image</div>
 </div>
 <div class="imageblock right">
 <div class="content">
-<img src="DectMotion.png" alt="DectMotion" width="900" height="800">
+<img src="DectMotion.png" alt="DectMotion" width="800" height="700">
 </div>
 <div class="title">Figure 16. DectMotion image</div>
 </div>
@@ -1125,15 +1125,15 @@ capture.release()</code></pre>
 <div class="content">
 <div class="imageblock left">
 <div class="content">
-<img src="ImgOrig.png" alt="ImgOrig" width="900" height="800">
+<img src="ImgOrig.png" alt="ImgOrig" width="800" height="700">
 </div>
 <div class="title">Figure 17. ImgOrig image</div>
 </div>
 <div class="imageblock right">
 <div class="content">
-<img src="FiltroLaplaceGauss.png" alt="FiltroLaplaceGauss" width="900" height="800">
+<img src="LaplaceGauss.png" alt="LaplaceGauss" width="800" height="700">
 </div>
-<div class="title">Figure 18. FiltroLaplaceGauss image</div>
+<div class="title">Figure 18. LaplaceGauss image</div>
 </div>
 </div>
 </div>
@@ -1198,7 +1198,7 @@ while capture.isOpened():
 		#cv2.imwrite('FiltroLaplace.png',dst)
 
 	elif pressed_key == ord("f"):
-		dst1 = cv2.GaussianBlur(img,(7,7),0)
+		dst1 = cv2.GaussianBlur(img,(5,5),0)
 		dst = cv2.Laplacian(dst1,cv2.CV_64F,ksize=1)
 		cv2.imshow(" LaplaGauss ",dst)
 		cv2.imwrite('FiltroLaplaceGauss.png',dst)
@@ -1217,7 +1217,7 @@ capture.release()</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-17 10:48:20 -0300
+Last updated 2019-03-17 11:01:38 -0300
 </div>
 </div>
 </body>

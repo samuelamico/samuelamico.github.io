@@ -57,7 +57,7 @@ while capture.isOpened():
 		#cv2.imwrite('FiltroLaplace.png',dst)
 				
 	elif pressed_key == ord("f"):
-		dst1 = cv2.GaussianBlur(img,(7,7),0)
+		dst1 = cv2.GaussianBlur(img,(5,5),0)
 		dst = cv2.Laplacian(dst1,cv2.CV_64F,ksize=1)
 		cv2.imshow(" LaplaGauss ",dst)
 		cv2.imwrite('FiltroLaplaceGauss.png',dst)

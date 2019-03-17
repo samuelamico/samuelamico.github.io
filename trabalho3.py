@@ -1,7 +1,7 @@
 # Processamento Digital de Imagem
 # Aluno: Samuel Amico
 # Matricula: 20180010181
-# Trabalho 3 - referente a imagem bolhas.png
+# Trabalho 4 - referente Histogramas
 
 import numpy as np
 import cv2

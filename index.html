@@ -431,12 +431,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Digital Image Processing</h1>
 <div class="details">
 <span id="author" class="author">Samuel Amico</span><br>
 <span id="email" class="email"><a href="mailto:sam.fst@gmail.com">sam.fst@gmail.com</a></span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_pixel_manipulation">Pixel Manipulation</a></li>
+<li><a href="#_filling_regions">Filling regions</a></li>
+<li><a href="#_histogram">Histogram</a></li>
+<li><a href="#_motion_detector">Motion Detector</a></li>
+<li><a href="#_lapaciangauss_filter">LapacianGauss Filter</a></li>
+</ul>
 </div>
 </div>
 <div id="content">
@@ -479,131 +489,67 @@ In this example we&#8217;ll be selecting a ROI with a specific coordinates that 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="python"><table class="CodeRay"><tr>
-  <td class="line-numbers"><pre>1
-<strong class="highlighted">2</strong>
-<strong class="highlighted">3</strong>
-<strong class="highlighted">4</strong>
-<strong class="highlighted">5</strong>
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-</pre></td>
-  <td class="code"><pre><span class="comment"># Digital Image Processing</span>
-<span class="comment"># Student: Samuel Amico</span>
-<span class="comment"># Number: 20180010181</span>
-<span class="comment"># Exercise 1.1 - biel.png</span>
+<pre class="highlight"><code class="language-python" data-lang="python"># Digital Image Processing
+# Student: Samuel Amico
+# Number: 20180010181
+# Exercise 1.1 - biel.png
 
-<span class="keyword">import</span> <span class="include">numpy</span> <span class="keyword">as</span> np
-<span class="keyword">import</span> <span class="include">cv2</span>
-<span class="keyword">import</span> <span class="include">time</span>
+import numpy as np
+import cv2
+import time
 
-<span class="comment"># Negative.py :</span>
+# Negative.py :
 
-image = cv2.imread(<span class="string"><span class="delimiter">'</span><span class="content">biel.png</span><span class="delimiter">'</span></span>)
-<span class="comment">#cv2.imwrite('bielgray.png',image)</span>
+image = cv2.imread('biel.png')
+#cv2.imwrite('bielgray.png',image)
 
 height, width, ch = image.shape
-print(<span class="string"><span class="delimiter">&quot;</span><span class="content">height - y: </span><span class="delimiter">&quot;</span></span>,height,<span class="string"><span class="delimiter">&quot;</span><span class="content">width - x: </span><span class="delimiter">&quot;</span></span>,width)
+print("height - y: ",height,"width - x: ",width)
 
 
-<span class="comment">#  P1 = top-left &amp; P2 = bottom-right</span>
-<span class="comment"># 10,10 - 150,150</span>
-P1x = <span class="predefined">input</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ponto 1 x - top:</span><span class="delimiter">&quot;</span></span>)
-P1y = <span class="predefined">input</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ponto 1 y - top:</span><span class="delimiter">&quot;</span></span>)
-P2x = <span class="predefined">input</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ponto 2 x - bot:</span><span class="delimiter">&quot;</span></span>)
-P2y = <span class="predefined">input</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ponto 2 y - bot:</span><span class="delimiter">&quot;</span></span>)
-print(<span class="string"><span class="delimiter">&quot;</span><span class="content">P1 = (</span><span class="delimiter">&quot;</span></span>,P1x,<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>,P1y,<span class="string"><span class="delimiter">&quot;</span><span class="content">)  </span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">P2 = (</span><span class="delimiter">&quot;</span></span>,P2x,<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>,P2y,<span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+#  P1 = top-left &amp; P2 = bottom-right
+# 10,10 - 150,150
+P1x = input("Ponto 1 x - top:")
+P1y = input("Ponto 1 y - top:")
+P2x = input("Ponto 2 x - bot:")
+P2y = input("Ponto 2 y - bot:")
+print("P1 = (",P1x,",",P1y,")  ","P2 = (",P2x,",",P2y,")")
 
 
-<span class="keyword">if</span> (image <span class="keyword">is</span> <span class="keyword">not</span> <span class="predefined-constant">None</span>):
-        cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Original</span><span class="delimiter">&quot;</span></span>, image)
+if (image is not None):
+	cv2.imshow("Original", image)
 
-k = cv2.waitKey(<span class="integer">0</span>)
+k = cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 
-cv2.rectangle(image,(<span class="predefined">int</span>(P1x-<span class="integer">3</span>),<span class="predefined">int</span>(P1y-<span class="integer">3</span>)),(<span class="predefined">int</span>(P2x+<span class="integer">3</span>),<span class="predefined">int</span>(P2y+<span class="integer">3</span>)),(<span class="integer">0</span>,<span class="integer">255</span>,<span class="integer">0</span>),<span class="integer">2</span>)
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rec inside the image</span><span class="delimiter">&quot;</span></span>, image)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('RecImage.png',image)</span>
+cv2.rectangle(image,(int(P1x-3),int(P1y-3)),(int(P2x+3),int(P2y+3)),(0,255,0),2)
+cv2.imshow("Rec inside the image", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('RecImage.png',image)
 
-<span class="comment"># Apply Negative efect</span>
-<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(P1x,P2x):
-        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="predefined">range</span>(P1y,P2y):
-                image[i,j] = <span class="integer">255</span> - image[i,j]
+# Apply Negative efect
+for i in range(P1x,P2x):
+	for j in range(P1y,P2y):
+		image[i,j] = 255 - image[i,j]
 
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Negative</span><span class="delimiter">&quot;</span></span>, image)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('negativebiel.png',image)</span>
+cv2.imshow("Negative", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('negativebiel.png',image)
 cv2.destroyAllWindows()
 
 
-<span class="comment"># ------------------------------&gt; y</span>
-<span class="comment">#|(0,0)                        |</span>
-<span class="comment">#|                                               |</span>
-<span class="comment">#|                                               |</span>
-<span class="comment">#|                                               |</span>
-<span class="comment">#|                                               |</span>
-<span class="comment">#|                                               |</span>
-<span class="comment">#|                                               |</span>
-<span class="comment">#|                                               |</span>
-<span class="comment">#|               (width,height)|</span>
-<span class="comment">#X------------------------------</span></pre></td>
-</tr></table></code></pre>
+# ------------------------------&gt; y
+#|(0,0)                        |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|               (width,height)|
+#X------------------------------</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -632,249 +578,126 @@ In this example we&#8217;ll divided the image in four quadrants (they have the s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="python"><table class="CodeRay"><tr>
-  <td class="line-numbers"><pre>1
-<strong class="highlighted">2</strong>
-<strong class="highlighted">3</strong>
-<strong class="highlighted">4</strong>
-<strong class="highlighted">5</strong>
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-</pre></td>
-  <td class="code"><pre><span class="comment"># Digital Image Processing</span>
-<span class="comment"># Student: Samuel Amico</span>
-<span class="comment"># Number: 20180010181</span>
-<span class="comment"># Exercise 1.2 - biel.png</span>
+<pre class="highlight"><code class="language-python" data-lang="python"># Digital Image Processing
+# Student: Samuel Amico
+# Number: 20180010181
+# Exercise 1.2 - biel.png
 
 
-<span class="keyword">import</span> <span class="include">numpy</span> <span class="keyword">as</span> np
-<span class="keyword">import</span> <span class="include">cv2</span>
+import numpy as np
+import cv2
 
-image = cv2.imread(<span class="string"><span class="delimiter">'</span><span class="content">biel.png</span><span class="delimiter">'</span></span>)
+image = cv2.imread('biel.png')
 
 height, width, ch = image.shape
-print(<span class="string"><span class="delimiter">&quot;</span><span class="content">height - y: </span><span class="delimiter">&quot;</span></span>,height,<span class="string"><span class="delimiter">&quot;</span><span class="content">width - x: </span><span class="delimiter">&quot;</span></span>,width)
+print("height - y: ",height,"width - x: ",width)
 
 img = image.copy()
 
-<span class="comment"># [coord x-(x0:xf), coord y(y0,yf)]</span>
+# [coord x-(x0:xf), coord y(y0,yf)]
 
-image_A = img[<span class="integer">0</span>:height/<span class="integer">2</span>,<span class="integer">0</span>:width/<span class="integer">2</span>]
-image_B = img[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height]
-image_C = img[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>]
-image_D = img[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width]
+image_A = img[0:height/2,0:width/2]
+image_B = img[0:width/2,height/2:height]
+image_C = img[height/2:height,0:width/2]
+image_D = img[height/2:height,width/2:width]
 
-<span class="comment"># ROI`s</span>
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">roi A</span><span class="delimiter">&quot;</span></span>, image_A)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('roiA.png',image_A)</span>
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">roi B</span><span class="delimiter">&quot;</span></span>, image_B)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('roiB.png',image_B)</span>
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">roi C</span><span class="delimiter">&quot;</span></span>, image_C)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('roiC.png',image_C)</span>
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">roi D</span><span class="delimiter">&quot;</span></span>, image_D)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('roiD.png',image_D)</span>
+# ROI`s
+cv2.imshow("roi A", image_A)
+k = cv2.waitKey(0)
+#cv2.imwrite('roiA.png',image_A)
+cv2.imshow("roi B", image_B)
+k = cv2.waitKey(0)
+#cv2.imwrite('roiB.png',image_B)
+cv2.imshow("roi C", image_C)
+k = cv2.waitKey(0)
+#cv2.imwrite('roiC.png',image_C)
+cv2.imshow("roi D", image_D)
+k = cv2.waitKey(0)
+#cv2.imwrite('roiD.png',image_D)
 
 
-<span class="comment"># 1: B/A &amp; D/C:</span>
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,<span class="integer">0</span>:height/<span class="integer">2</span>] = image_B
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height] = image_A
-image[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>] = image_D
-image[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width] = image_C
+# 1: B/A &amp; D/C:
+image[0:width/2,0:height/2] = image_B
+image[0:width/2,height/2:height] = image_A
+image[height/2:height,0:width/2] = image_D
+image[height/2:height,width/2:width] = image_C
 
-<span class="comment">#cv2.imshow(&quot;1: B/A &amp; D/C&quot;, image)</span>
-<span class="comment">#k = cv2.waitKey(0)</span>
+#cv2.imshow("1: B/A &amp; D/C", image)
+#k = cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-<span class="comment"># 2: B/A &amp; C/D:</span>
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,<span class="integer">0</span>:height/<span class="integer">2</span>] = image_B
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height] = image_A
-image[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>] = image_C
-image[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width] = image_D
+# 2: B/A &amp; C/D:
+image[0:width/2,0:height/2] = image_B
+image[0:width/2,height/2:height] = image_A
+image[height/2:height,0:width/2] = image_C
+image[height/2:height,width/2:width] = image_D
 
-<span class="comment">#cv2.imshow(&quot;2: B/A &amp; C/D&quot;, image)</span>
-<span class="comment">#k = cv2.waitKey(0)</span>
-<span class="comment">#cv2.destroyAllWindows()</span>
+#cv2.imshow("2: B/A &amp; C/D", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
 
-<span class="comment"># 3: A/B &amp; D/C:</span>
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,<span class="integer">0</span>:height/<span class="integer">2</span>] = image_A
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height] = image_B
-image[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>] = image_D
-image[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width] = image_C
+# 3: A/B &amp; D/C:
+image[0:width/2,0:height/2] = image_A
+image[0:width/2,height/2:height] = image_B
+image[height/2:height,0:width/2] = image_D
+image[height/2:height,width/2:width] = image_C
 
-<span class="comment">#cv2.imshow(&quot;3: A/B &amp; D/C&quot;, image)</span>
-<span class="comment">#k = cv2.waitKey(0)</span>
-<span class="comment">#cv2.destroyAllWindows()</span>
+#cv2.imshow("3: A/B &amp; D/C", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
 
-<span class="comment">#4: A/B &amp; C/D:</span>
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,<span class="integer">0</span>:height/<span class="integer">2</span>] = image_A
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height] = image_B
-image[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>] = image_C
-image[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width] = image_D
+#4: A/B &amp; C/D:
+image[0:width/2,0:height/2] = image_A
+image[0:width/2,height/2:height] = image_B
+image[height/2:height,0:width/2] = image_C
+image[height/2:height,width/2:width] = image_D
 
-<span class="comment">#cv2.imshow(&quot;4: A/B &amp; C/D&quot;, image)</span>
-<span class="comment">#k = cv2.waitKey(0)</span>
-<span class="comment">#cv2.destroyAllWindows()</span>
+#cv2.imshow("4: A/B &amp; C/D", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
 
-<span class="comment">#5: C/D &amp; A/B:</span>
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,<span class="integer">0</span>:height/<span class="integer">2</span>] = image_C
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height] = image_D
-image[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>] = image_A
-image[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width] = image_B
+#5: C/D &amp; A/B:
+image[0:width/2,0:height/2] = image_C
+image[0:width/2,height/2:height] = image_D
+image[height/2:height,0:width/2] = image_A
+image[height/2:height,width/2:width] = image_B
 
-<span class="comment">#cv2.imshow(&quot;5: A/B &amp; C/D&quot;, image)</span>
-<span class="comment">#k = cv2.waitKey(0)</span>
+#cv2.imshow("5: A/B &amp; C/D", image)
+#k = cv2.waitKey(0)
 
-<span class="comment">#cv2.destroyAllWindows()</span>
+#cv2.destroyAllWindows()
 
-<span class="comment">#6: C/D &amp; B/A:</span>
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,<span class="integer">0</span>:height/<span class="integer">2</span>] = image_C
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height] = image_D
-image[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>] = image_B
-image[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width] = image_A
+#6: C/D &amp; B/A:
+image[0:width/2,0:height/2] = image_C
+image[0:width/2,height/2:height] = image_D
+image[height/2:height,0:width/2] = image_B
+image[height/2:height,width/2:width] = image_A
 
-<span class="comment">#cv2.imshow(&quot;6: C/D &amp; A/B&quot;, image)</span>
-<span class="comment">#k = cv2.waitKey(0)</span>
-<span class="comment">#cv2.destroyAllWindows()</span>
+#cv2.imshow("6: C/D &amp; A/B", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
 
-<span class="comment">#7: D/C &amp; A/B:</span>
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,<span class="integer">0</span>:height/<span class="integer">2</span>] = image_D
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height] = image_C
-image[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>] = image_A
-image[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width] = image_B
+#7: D/C &amp; A/B:
+image[0:width/2,0:height/2] = image_D
+image[0:width/2,height/2:height] = image_C
+image[height/2:height,0:width/2] = image_A
+image[height/2:height,width/2:width] = image_B
 
-<span class="comment">#cv2.imshow(&quot;7: D/C &amp; A/B&quot;, image)</span>
-<span class="comment">#k = cv2.waitKey(0)</span>
-<span class="comment">#cv2.destroyAllWindows()</span>
+#cv2.imshow("7: D/C &amp; A/B", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
 
-<span class="comment"># 8: D/C &amp; B/A:</span>
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,<span class="integer">0</span>:height/<span class="integer">2</span>] = image_D
-image[<span class="integer">0</span>:width/<span class="integer">2</span>,height/<span class="integer">2</span>:height] = image_C
-image[height/<span class="integer">2</span>:height,<span class="integer">0</span>:width/<span class="integer">2</span>] = image_B
-image[height/<span class="integer">2</span>:height,width/<span class="integer">2</span>:width] = image_A
+# 8: D/C &amp; B/A:
+image[0:width/2,0:height/2] = image_D
+image[0:width/2,height/2:height] = image_C
+image[height/2:height,0:width/2] = image_B
+image[height/2:height,width/2:width] = image_A
 
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">8: D/C &amp; B/A</span><span class="delimiter">&quot;</span></span>, image)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('bielmix.png',image)</span>
+cv2.imshow("8: D/C &amp; B/A", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('bielmix.png',image)
 
-cv2.destroyAllWindows()</pre></td>
-</tr></table></code></pre>
+cv2.destroyAllWindows()</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -915,127 +738,65 @@ In this example we&#8217;ll change a color from a ROI that we selected from the 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="python"><table class="CodeRay"><tr>
-  <td class="line-numbers"><pre>1
-<strong class="highlighted">2</strong>
-<strong class="highlighted">3</strong>
-<strong class="highlighted">4</strong>
-<strong class="highlighted">5</strong>
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-</pre></td>
-  <td class="code"><pre><span class="comment"># Digital Image Processing</span>
-<span class="comment"># Student: Samuel Amico</span>
-<span class="comment"># Number: 20180010181</span>
-<span class="comment"># Exercise 2.1 - bolhas.png</span>
+<pre class="highlight"><code class="language-python" data-lang="python"># Digital Image Processing
+# Student: Samuel Amico
+# Number: 20180010181
+# Exercise 2.1 - bolhas.png
 
 
-<span class="keyword">import</span> <span class="include">numpy</span> <span class="keyword">as</span> np
-<span class="keyword">import</span> <span class="include">cv2</span>
-<span class="keyword">import</span> <span class="include">time</span>
+import numpy as np
+import cv2
+import time
 
-image = cv2.imread(<span class="string"><span class="delimiter">'</span><span class="content">bolhas.png</span><span class="delimiter">'</span></span>,<span class="integer">0</span>)
+image = cv2.imread('bolhas.png',0)
 
 height, width = image.shape
-print(<span class="string"><span class="delimiter">&quot;</span><span class="content">height - y: </span><span class="delimiter">&quot;</span></span>,height,<span class="string"><span class="delimiter">&quot;</span><span class="content">width - x: </span><span class="delimiter">&quot;</span></span>,width)
+print("height - y: ",height,"width - x: ",width)
 
-<span class="comment"># P1 = top-left &amp; P2 = bottom-right</span>
+# P1 = top-left &amp; P2 = bottom-right
 
-P1x = <span class="predefined">input</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ponto 1 x - top:</span><span class="delimiter">&quot;</span></span>)
-P1y = <span class="predefined">input</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ponto 1 y - top:</span><span class="delimiter">&quot;</span></span>)
-P2x = <span class="predefined">input</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ponto 2 x - bot:</span><span class="delimiter">&quot;</span></span>)
-P2y = <span class="predefined">input</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ponto 2 y - bot:</span><span class="delimiter">&quot;</span></span>)
-print(<span class="string"><span class="delimiter">&quot;</span><span class="content">P1 = (</span><span class="delimiter">&quot;</span></span>,P1x,<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>,P1y,<span class="string"><span class="delimiter">&quot;</span><span class="content">)  </span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">P2 = (</span><span class="delimiter">&quot;</span></span>,P2x,<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>,P2y,<span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+P1x = input("Ponto 1 x - top:")
+P1y = input("Ponto 1 y - top:")
+P2x = input("Ponto 2 x - bot:")
+P2y = input("Ponto 2 y - bot:")
+print("P1 = (",P1x,",",P1y,")  ","P2 = (",P2x,",",P2y,")")
 
 
-<span class="keyword">if</span> (image <span class="keyword">is</span> <span class="keyword">not</span> <span class="predefined-constant">None</span>):
-        cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Original</span><span class="delimiter">&quot;</span></span>, image)
+if (image is not None):
+	cv2.imshow("Original", image)
 
-k = cv2.waitKey(<span class="integer">0</span>)
+k = cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 
-cv2.rectangle(image,(<span class="predefined">int</span>(P1x-<span class="integer">3</span>),<span class="predefined">int</span>(P1y-<span class="integer">3</span>)),(<span class="predefined">int</span>(P2x+<span class="integer">3</span>),<span class="predefined">int</span>(P2y+<span class="integer">3</span>)),(<span class="integer">0</span>,<span class="integer">0</span>,<span class="integer">0</span>),<span class="integer">2</span>)
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rec in Image</span><span class="delimiter">&quot;</span></span>, image)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('RecBolha.png',image)</span>
+cv2.rectangle(image,(int(P1x-3),int(P1y-3)),(int(P2x+3),int(P2y+3)),(0,0,0),2)
+cv2.imshow("Rec in Image", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('RecBolha.png',image)
 
-<span class="comment"># ROI --&gt; black</span>
-<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(P1x,P2x):
-        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="predefined">range</span>(P1y,P2y):
-                image[i,j] = <span class="integer">0</span>
+# ROI --&gt; black
+for i in range(P1x,P2x):
+	for j in range(P1y,P2y):
+		image[i,j] = 0
 
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Black ROI</span><span class="delimiter">&quot;</span></span>, image)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('BolhaBlack.png',image)</span>
+cv2.imshow("Black ROI", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaBlack.png',image)
 cv2.destroyAllWindows()
 
-<span class="comment"># ROI --&gt; White</span>
-<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(P1x,P2x):
-        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="predefined">range</span>(P1y,P2y):
-                image[i,j] = <span class="integer">255</span>
-<span class="comment"># ROI --&gt; Color</span>
-<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(P1x,P2x):
-        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="predefined">range</span>(P1y,P2y):
-                image[i,j] = [cor_B,cor_G,cor_R]
+# ROI --&gt; White
+for i in range(P1x,P2x):
+	for j in range(P1y,P2y):
+		image[i,j] = 255
+# ROI --&gt; Color
+for i in range(P1x,P2x):
+	for j in range(P1y,P2y):
+		image[i,j] = [cor_B,cor_G,cor_R]
 
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">White ROI</span><span class="delimiter">&quot;</span></span>, image)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('BolhaWhite.png',image)</span>
-cv2.destroyAllWindows()</pre></td>
-</tr></table></code></pre>
+cv2.imshow("White ROI", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaWhite.png',image)
+cv2.destroyAllWindows()</code></pre>
 </div>
 </div>
 </div>
@@ -1090,196 +851,86 @@ The example illustrates the use of two functions: a) Count regions with and with
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="python"><table class="CodeRay"><tr>
-  <td class="line-numbers"><pre>1
-<strong class="highlighted">2</strong>
-<strong class="highlighted">3</strong>
-<strong class="highlighted">4</strong>
-<strong class="highlighted">5</strong>
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-</pre></td>
-  <td class="code"><pre><span class="comment"># Processamento Digital de Imagem</span>
-<span class="comment"># Aluno: Samuel Amico</span>
-<span class="comment"># Matricula: 20180010181</span>
-<span class="comment"># Trabalho 3 - referente a imagem bolhas.png</span>
+<pre class="highlight"><code class="language-python" data-lang="python"># Processamento Digital de Imagem
+# Aluno: Samuel Amico
+# Matricula: 20180010181
+# Trabalho 4 - referente Histogramas
 
-<span class="keyword">import</span> <span class="include">numpy</span> <span class="keyword">as</span> np
-<span class="keyword">import</span> <span class="include">cv2</span>
-<span class="keyword">import</span> <span class="include">time</span>
-<span class="keyword">import</span> <span class="include">scipy.ndimage</span> <span class="keyword">as</span> ndimage
+import numpy as np
+import cv2
+import time
+import scipy.ndimage as ndimage
 
-<span class="comment"># Ler imagem grayscale:</span>
-image = cv2.imread(<span class="string"><span class="delimiter">'</span><span class="content">bolhas.png</span><span class="delimiter">'</span></span>,<span class="integer">0</span>)
-cv2.imshow(<span class="string"><span class="delimiter">'</span><span class="content"> Original Image</span><span class="delimiter">'</span></span>,image)
-k = cv2.waitKey(<span class="integer">0</span>)
+# Ler imagem grayscale:
+image = cv2.imread('bolhas.png',0)
+cv2.imshow(' Original Image',image)
+k = cv2.waitKey(0)
 
-<span class="comment"># dimensoes da imagem</span>
-height, width = image.shape[:<span class="integer">2</span>]
+# dimensoes da imagem
+height, width = image.shape[:2]
 
 
 
-<span class="comment">### apagando as bolhas que tocam as paredes:</span>
-bolhas_parede = <span class="integer">0</span>
+### apagando as bolhas que tocam as paredes:
+bolhas_parede = 0
 img = image
-<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(height):
-        <span class="keyword">if</span>(img[i,<span class="integer">0</span>]==<span class="integer">255</span>):
-                cv2.floodFill(img,<span class="predefined-constant">None</span>,(<span class="integer">0</span>,i),(<span class="integer">0</span>,),(<span class="integer">0</span>,),(<span class="integer">0</span>,))
-        <span class="keyword">if</span>(img[i,width-<span class="integer">1</span>]==<span class="integer">255</span>):
-                cv2.floodFill(img,<span class="predefined-constant">None</span>,(width-<span class="integer">1</span>,i),(<span class="integer">0</span>,),(<span class="integer">0</span>,),(<span class="integer">0</span>,))
+for i in range(height):
+	if(img[i,0]==255):
+		cv2.floodFill(img,None,(0,i),(0,),(0,),(0,))
+	if(img[i,width-1]==255):
+		cv2.floodFill(img,None,(width-1,i),(0,),(0,),(0,))
 
-<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(width):
-        <span class="keyword">if</span>(img[<span class="integer">0</span>,i]==<span class="integer">255</span>):
-                cv2.floodFill(img,<span class="predefined-constant">None</span>,(i,<span class="integer">0</span>),(<span class="integer">0</span>,),(<span class="integer">0</span>,),(<span class="integer">0</span>,))
-        <span class="keyword">if</span>(img[height-<span class="integer">1</span>,i]==<span class="integer">255</span>):
-                cv2.floodFill(img,<span class="predefined-constant">None</span>,(i,height-<span class="integer">1</span>),(<span class="integer">0</span>,),(<span class="integer">0</span>,),(<span class="integer">0</span>,))
+for i in range(width):
+	if(img[0,i]==255):
+		cv2.floodFill(img,None,(i,0),(0,),(0,),(0,))
+	if(img[height-1,i]==255):
+		cv2.floodFill(img,None,(i,height-1),(0,),(0,),(0,))
 
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Image refresh</span><span class="delimiter">&quot;</span></span>,image)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('BolhaAtualizada.png',image)</span>
+cv2.imshow("Image refresh",image)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaAtualizada.png',image)
 cv2.destroyAllWindows()
 
-<span class="comment">## Find Holes and count holes too</span>
+## Find Holes and count holes too
 image_fill = image.copy()
 
-obj=<span class="integer">0</span>
-mask = np.zeros((height+<span class="integer">2</span>,width+<span class="integer">2</span>),np.uint8)
+obj=0
+mask = np.zeros((height+2,width+2),np.uint8)
 
 
 labels, n_regions = ndimage.label(image)
-print(<span class="string"><span class="delimiter">&quot;</span><span class="content">Numbers of bublles = </span><span class="delimiter">&quot;</span></span>, n_regions)
+print("Numbers of bublles = ", n_regions)
 
-<span class="comment">## Count holes:</span>
-<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(height):
-        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="predefined">range</span>(width):
-                <span class="keyword">if</span>(image[i,j]==<span class="integer">0</span>):
-                        obj=obj+<span class="integer">1</span>
-                        cv2.floodFill(image_fill,mask,(j,i),obj)
+## Count holes:
+for i in range(height):
+	for j in range(width):
+		if(image[i,j]==0):
+			obj=obj+1
+			cv2.floodFill(image_fill,mask,(j,i),obj)
 
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Floodfill</span><span class="delimiter">&quot;</span></span>,image_fill)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('BolhaCheia.png',image_fill)</span>
+cv2.imshow("Floodfill",image_fill)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaCheia.png',image_fill)
 
-<span class="keyword">for</span> i <span class="keyword">in</span> <span class="predefined">range</span>(height):
-        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="predefined">range</span>(width):
-                <span class="keyword">if</span>(image[i,j]==<span class="integer">255</span>):
-                        obj=obj+<span class="integer">1</span>
-                        c=cv2.floodFill(image_fill,mask,(j,i),<span class="integer">0</span>)
+for i in range(height):
+	for j in range(width):
+		if(image[i,j]==255):
+			obj=obj+1
+			c=cv2.floodFill(image_fill,mask,(j,i),0)
 
-cv2.imshow(<span class="string"><span class="delimiter">&quot;</span><span class="content">Holes</span><span class="delimiter">&quot;</span></span>,image_fill)
-k = cv2.waitKey(<span class="integer">0</span>)
-<span class="comment">#cv2.imwrite('BolhaFuro.png',image_fill)</span>
+cv2.imshow("Holes",image_fill)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaFuro.png',image_fill)
 cv2.destroyAllWindows()
 
 labels, n_regions = ndimage.label(image_fill)
-print(<span class="string"><span class="delimiter">&quot;</span><span class="content">Numbers of holes = </span><span class="delimiter">&quot;</span></span>, n_regions)
+print("Numbers of holes = ", n_regions)
 
 
 
-<span class="comment">## Resultado</span>
+## Resultado
 
-cv2.destroyAllWindows()
-
-
-
-
-
-
-
-
-
-
-
-
-
-</pre></td>
-</tr></table></code></pre>
+cv2.destroyAllWindows()</code></pre>
 </div>
 </div>
 </div>
@@ -1302,77 +953,271 @@ cv2.destroyAllWindows()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="python"><table class="CodeRay"><tr>
-  <td class="line-numbers"><pre>1
-<strong class="highlighted">2</strong>
-<strong class="highlighted">3</strong>
-<strong class="highlighted">4</strong>
-<strong class="highlighted">5</strong>
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-</pre></td>
-  <td class="code"><pre><span class="comment"># Processamento Digital de Imagem</span>
-<span class="comment"># Aluno: Samuel Amico</span>
-<span class="comment"># Matricula: 20180010181</span>
-<span class="comment"># Trabalho 3 - referente a imagem bolhas.png</span>
+<pre class="highlight"><code class="language-python" data-lang="python"># Processamento Digital de Imagem
+# Aluno: Samuel Amico
+# Matricula: 20180010181
+# Trabalho 4 - Histograma
 
-<span class="keyword">import</span> <span class="include">numpy</span> <span class="keyword">as</span> np
-<span class="keyword">import</span> <span class="include">cv2</span>
-<span class="keyword">import</span> <span class="include">time</span>
+import numpy as np
+import cv2
+import time
 
-capture = cv2.VideoCapture(<span class="integer">0</span>)
+capture = cv2.VideoCapture(0)
 
 
-<span class="keyword">while</span> capture.isOpened():
-        ret,img = capture.read()
-        old_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+while capture.isOpened():
+	ret,img = capture.read()
+	old_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
-        equ = cv2.equalizeHist(old_gray)
-        res = np.hstack((old_gray,equ))
+	equ = cv2.equalizeHist(old_gray)
+	res = np.hstack((old_gray,equ))
 
-        <span class="comment">#cv2.imshow('image',old_gray)</span>
-        cv2.imshow(<span class="string"><span class="delimiter">'</span><span class="content">Histogram equ</span><span class="delimiter">'</span></span>,res)
-        pressed_key = cv2.waitKey(<span class="integer">1</span>) &amp; <span class="hex">0xFF</span>
-        <span class="keyword">if</span> pressed_key == <span class="predefined">ord</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">z</span><span class="delimiter">&quot;</span></span>):
-                <span class="comment">#cv2.imwrite('HistEqualizado.png',res)</span>
-                <span class="keyword">break</span>
+	#cv2.imshow('image',old_gray)
+	cv2.imshow('Histogram equ',res)
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	if pressed_key == ord("z"):
+		#cv2.imwrite('HistEqualizado.png',res)
+		break
 cv2.destroyAllWindows()
-capture.release()</pre></td>
-</tr></table></code></pre>
+capture.release()</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_unit_4">Unit 4</h2>
+<h2 id="_motion_detector">Motion Detector</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Continuing to use the idea of image histogram, in this example we&#8217;ll detect if a moviment occurs in a ROI. The main idea of the code is based on the use of correlation between two frames of an video. However, we&#8217;ll use only the Blue Channel on openCV (you can use the Red or Green) to use the  HistComparation and calcHist on the code.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="Motion.png" alt="Motion" width="900" height="800">
+</div>
+<div class="title">Figure 15. Motion image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="DectMotion.png" alt="DectMotion" width="900" height="800">
+</div>
+<div class="title">Figure 16. DectMotion image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Processamento Digital de Imagem
+# Aluno: Samuel Amico
+# Matricula: 20180010181
+# Trabalho 5 - Histogramas
 
+
+
+#### Histogram Comparationz
+import numpy as np
+import cv2
+import time
+
+
+global flag
+flag = True
+drawing = False
+img = None
+c = 1
+boxes = []
+capture = cv2.VideoCapture(0)
+_,img = capture.read()
+
+# a funcao aki chama a interupcao do mouse
+# o intuito e voce fazer uma area retangular para ser seu roi
+def on_mouse(event,x,y,flags,params):
+	global boxes,drawing
+	if event == cv2.EVENT_LBUTTONDOWN:
+		print('Start Mouse Position:' ,str(x),str(y))
+		s = (x,y)
+		boxes.append(s)
+		drawing = True
+		cv2.circle(img,(x,y),4,(0,255,0),2)
+		cv2.imshow('img',img)
+	elif event == cv2.EVENT_LBUTTONUP:
+		print('END Mouse Position:',str(x),str(y))
+		e = (x,y)
+		boxes.append(e)
+		drawing = False
+		mode = True
+
+def ROI_segment(retangulo,capturing):
+	hsv_roi = cv2.cvtColor(retangulo, cv2.COLOR_BGR2HSV)
+	mask = cv2.inRange(hsv_roi,np.array((0.,60.,32.)),np.array((180.,255.,255.)))
+	roi_hist = cv2.calcHist([hsv_roi], [0],None,[16],[0,180])
+	return cv2.normalize(roi_hist,roi_hist, 0, 255, cv2.NORM_MINMAX)
+
+while capture.isOpened():
+	cv2.namedWindow('img')
+	#CHAMA A FUNC MOUSE ALI EM CIMA
+	cv2.setMouseCallback('img',on_mouse,0)
+	ret,img = capture.read(0)
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	if not ret:
+		break
+	# enquanto esta voce nao escolheu os 4 pontos
+	# ele vai ficar nesse if
+	if len(boxes)&lt;4:
+		orig = img.copy()
+		#copia o primeiro frame da imagem
+		print("entrou no roi")
+		# fica no while ate acabar os 4 pontos, a imagem nao se atualiza
+		while len(boxes) &lt; 4:
+			cv2.imshow('img',img)
+			cv2.waitKey(0)
+		boxes = np.array(boxes)
+		s = boxes.sum(axis = 1)
+		# ele vai pegar os menores pontos
+		t1 = boxes[np.argmin(s)]
+		# pegar os maiores pontos
+		br = boxes[np.argmax(s)]
+		# separa a regiao desses pontos
+		roi = orig[t1[1]:br[1],t1[0]:br[0]]
+		roi_area = (t1[0],t1[1],br[0],br[1])
+		# chama aquela funcao que pega o histograma desse retangulo que voce selecionou
+		roi_hist = ROI_segment(roi,img)
+		flag = False
+	if len(boxes)&gt;4:
+		ret,img = capture.read(0)
+		# cria o hist do novo frame
+		#new_orig = img.copy()
+		new_roi = img[t1[1]:br[1],t1[0]:br[0]]
+		new_hsv = cv2.cvtColor(new_roi, cv2.COLOR_BGR2HSV)
+		cv2.rectangle(img,(t1[0],br[0]),(t1[1],br[1]),(0,255,0),3)
+		#cv2.imshow('hsv_roi_new',new_roi)
+		#cv2.imshow('roi',roi)
+
+		base_hist = cv2.calcHist([new_hsv], [0],None,[16],[0,180])
+		base_roi = cv2.normalize(base_hist,base_hist, 0, 255, cv2.NORM_MINMAX)
+		# comparamos agora os dois ROI
+
+		number = cv2.compareHist( base_roi, roi_hist, cv2.HISTCMP_CORREL);
+		print("number comparation=",number)
+
+		#pts = np.int0(cv2.boxPoints(ret1))
+		#cv2.polylines(img,[pts],True,255,2)
+		#cv2.imshow("Final",img)
+
+	cv2.imshow('img',img)
+	if pressed_key == ord("z"):
+		cv2.imwrite('Motion.png',img)
+		break
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lapaciangauss_filter">LapacianGauss Filter</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this simple example, we&#8217;ll just use the different filters in the video capture.The main filter is the LaplacianGauss, this filter is composed of the sequence of the application of a Gaussian and Laplacian filter.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="ImgOrig.png" alt="ImgOrig" width="900" height="800">
+</div>
+<div class="title">Figure 17. ImgOrig image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="FiltroLaplaceGauss.png" alt="FiltroLaplaceGauss" width="900" height="800">
+</div>
+<div class="title">Figure 18. FiltroLaplaceGauss image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Processamento Digital de Imagem
+# Aluno: Samuel Amico
+# Matricula: 20180010181
+# Trabalho 6 - Filtros
+
+import numpy as np
+import cv2
+import time
+
+capture = cv2.VideoCapture(0)
+
+
+while capture.isOpened():
+	ret,img = capture.read()
+	gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+
+	kernel_media = np.ones((5,5),np.float32)/25
+	gauss = [1,2,1,2,4,2,1,2,1]
+	sobel_x = [-1,0,1,-2,0,2,-1,0,1]
+	sobel_y = [-1,-2,-1,0,0,0,1,2,1]
+	lapace = [0,-1,0,-1,4,-1,0,-1,0]
+
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	# Convolve:
+	print('--- Menu ----\n')
+	print('a- media ----\n')
+	print('b- gauss ----\n')
+	print('c- horizontal ----\n')
+	print('d- vertical ----\n')
+	print('e- laplace ----\n')
+	print('f- laplacegauss ----\n')
+	print('z- Sair ----\n')
+	#a)
+	if pressed_key == ord("a"):
+		dst = cv2.filter2D(img,-1,kernel_media)
+		cv2.imshow(" media ",dst)
+		#cv2.imwrite('FiltroMedia.png',dst)
+
+	elif pressed_key == ord("b"):
+		dst = cv2.GaussianBlur(img,(11,11),0)
+		cv2.imshow(" gauss ",dst)
+		#cv2.imwrite('FiltroGauss.png',dst)
+
+	elif pressed_key == ord("c"):
+		dst = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
+		cv2.imshow(" Sobel-x ",dst)
+		#cv2.imwrite('FiltroSx.png',dst)
+
+	elif pressed_key == ord("d"):
+		dst = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)
+		cv2.imshow(" Sobel-y ",dst)
+		#cv2.imwrite('FiltroSy.png',dst)
+
+	elif pressed_key == ord("e"):
+		dst = cv2.Laplacian(img,cv2.CV_64F,ksize=1)
+		cv2.imshow(" Laplace ",dst)
+		#cv2.imwrite('FiltroLaplace.png',dst)
+
+	elif pressed_key == ord("f"):
+		dst1 = cv2.GaussianBlur(img,(7,7),0)
+		dst = cv2.Laplacian(dst1,cv2.CV_64F,ksize=1)
+		cv2.imshow(" LaplaGauss ",dst)
+		cv2.imwrite('FiltroLaplaceGauss.png',dst)
+
+	if pressed_key == ord("z"):
+		cv2.imwrite('ImgOrig.png',img)
+		break
+
+	cv2.imshow(" Orig ",img)
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-12 21:20:07 -0300
+Last updated 2019-03-17 10:48:20 -0300
 </div>
 </div>
 </body>

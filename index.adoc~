@@ -1,8 +1,11 @@
+:toc: left
+:source-highlighter: coderay
+:source-highlighter: pygments
+
 = Digital Image Processing
 Samuel Amico <sam.fst@gmail.com>
 
-:toc: left
-:source-highlighter: coderay
+
 
 An indroduction to http://asciidoc.org[AsciiDoc] and http://opencv.org[OpenCV].
 
@@ -122,7 +125,7 @@ Histograms in digital images in grayscale,for example,usually associate a histog
 --
 [.left]
 .HistEqualizado image
-image::HistEqualizado.png[HistEqualizado,500,600]
+image::HistEqualizado.png[HistEqualizado,900,800]
 --
 
 [source,python,linenums,highlight=2..5]]
@@ -130,5 +133,46 @@ image::HistEqualizado.png[HistEqualizado,500,600]
 include::trabalho4.py[]
 ----
 
-== Unit 4
+== Motion Detector
+Continuing to use the idea of image histogram, in this example we'll detect if a moviment occurs in a ROI. The main idea of the code is based on the use of correlation between two frames of an video. However, we'll use only the Blue Channel on openCV (you can use the Red or Green) to use the  HistComparation and calcHist on the code.
+
+[.float-group]
+--
+
+[.left]
+.Motion image
+image::Motion.png[Motion,900,800]
+
+[.right]
+.DectMotion image
+image::DectMotion.png[DectMotion,900,800]
+
+--
+
+
+[source,python,linenums,highlight=2..5]]
+----
+include::Hist_comp.py[]
+----
+
+== LapacianGauss Filter
+In this simple example, we'll just use the different filters in the video capture.The main filter is the LaplacianGauss, this filter is composed of the sequence of the application of a Gaussian and Laplacian filter.
+
+[.float-group]
+--
+
+[.left]
+.ImgOrig image
+image::ImgOrig.png[ImgOrig,900,800]
+
+[.right]
+.FiltroLaplaceGauss image
+image::FiltroLaplaceGauss.png[FiltroLaplaceGauss,900,800]
+
+--
+
+[source,python,linenums,highlight=2..5]]
+----
+include::trabalho6.py[]
+----
 

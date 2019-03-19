@@ -1,6 +1,5 @@
 :toc: left
-
-:source-highlighter: --pygments
+:source-highlighter: python-pygments
 
 = Digital Image Processing
 Samuel Amico <sam.fst@gmail.com>

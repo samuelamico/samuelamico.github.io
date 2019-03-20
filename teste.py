@@ -28,6 +28,7 @@ imageB = image.copy()
 
 image_1 = np.ones((height,width,3))*255
 image_2 = np.ones((height,width,3))*255
+image_3 = np.ones((height,width,3))
 
 ab = 33.0
 bl = 3.4
@@ -43,6 +44,9 @@ for i in range(height):
 	for j in range(width):
 		image_1[i,j] = pixel_val
 		image_2[i,j] = 255.0 - pixel_val
+		 
+
+
 
 
 cv2.imshow("image1",image_1)
@@ -50,14 +54,35 @@ image_1 = cv2.addWeighted(image_1,1.0,image_1,1.0,0,dtype=cv2.CV_8U)
 
 vis = cv2.multiply(imageB,image_1,dtype=cv2.CV_8U)
 teste = cv2.addWeighted(vis,1.0,vis,1.0,0,dtype=cv2.CV_8U)
-cv2.imshow("Imagem blurring perto",teste)
+#cv2.imshow("Imagem blurring perto",teste)
 
-
+## Nao estao UINT8
 vis1 = cv2.multiply(image_2,image_1,dtype=cv2.CV_8U)
 vis2 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(vis1),1.0,0,dtype=cv2.CV_8U)
 vis3 = cv2.addWeighted(imageA,1.0,vis1,1.0,0,dtype=cv2.CV_8U)
-cv2.imshow("Imagem Central",vis2)
-cv2.imshow("Imagem blurring ",vis3)
+#cv2.imshow("Imagem Central",vis2)
+#cv2.imshow("Imagem blurring ",vis3)
+
+## COnvertendo --- apartir daqui ja foram convertidas as imagens para 8UINT
+image_3 = vis1.astype(np.uint8)
+image_4 = image_1.astype(np.uint8)
+
+ret, thr = cv2.threshold(image_3,10,255,cv2.THRESH_BINARY)
+ret1, thr1 = cv2.threshold(image_4,10,255,cv2.THRESH_BINARY)
+	
+
+vis22 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(thr),1.0,0,dtype=cv2.CV_8U)
+vis33 = cv2.addWeighted(imageA,1.0,thr,1.0,0,dtype=cv2.CV_8U)
+
+
+cv2.imshow("Imagem Central",vis22)
+cv2.imshow("Imagem blurring ",vis33)
+#cv2.imshow("Imagem blurring de perto ",teste)
+
+
+
+final = cv2.addWeighted(vis22,1.0,imageA,0.8,0,dtype=cv2.CV_8U)
+#cv2.imshow("0--- ",final)
 
 
 

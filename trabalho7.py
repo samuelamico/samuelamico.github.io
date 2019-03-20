@@ -83,7 +83,7 @@ pressed_key = cv2.waitKey(1) & 0xFF
 teste = cv2.addWeighted(imageA,0.7,vis,0.3,0,dtype=cv2.CV_8U)
 teste1 = cv2.addWeighted(imageB,0.7,cv2.bitwise_not(vis),0.3,0,dtype=cv2.CV_8U)
 #cv2.imshow("image 1",teste)
-#cv2.imshow("image 2",teste1)
+cv2.imshow("image 2",teste1)
 
 final = cv2.addWeighted(teste1,1,imageA,0.8,0,dtype=cv2.CV_8U)
 cv2.imshow("final",final)

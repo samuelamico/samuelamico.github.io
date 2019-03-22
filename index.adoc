@@ -175,3 +175,36 @@ image::LaplaceGauss.png[LaplaceGauss,800,700]
 include::trabalho6.py[]
 ----
 
+== Tilt-Shift
+In this example we`ll simulate a photography technique called tilt-shift. The principle used to simulate the tilt-shift lens is to combine the original image with its low-pass filtered version, so as to produce in the vicinity of the edge the effect of the while maintaining the image without blurring in the center region.
+
+[.float-group]
+--
+
+[.left]
+.bara image
+image::bara.png[bara,600,500]
+
+[.left]
+.ImgCentral image
+image::ImgCentral.png[ImgCentral,600,500]
+
+[.right]
+.ImgOrig image
+image::ImgOrig.png[ImgOrig,700,600]
+
+[.right]
+.Imglur image
+image::Imglur.png[Imglur,700,600]
+
+[.right]
+.TiltShift image
+image::TiltShift.png[TiltShift,700,600]
+
+--
+
+[source,python,linenums]
+----
+include::teste.py[]
+----
+

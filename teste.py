@@ -1,11 +1,17 @@
-
 import numpy as np
 import cv2
 import math
 import time
 
-pressed_key = cv2.waitKey(1) & 0xFF 
 
+def nothing(x):
+	pass
+
+####### TRACKBAR #########
+cv2.namedWindow('bar')
+cv2.createTrackbar('abertura','bar',0,100,nothing)
+cv2.createTrackbar('Blur','bar',0,100,nothing)
+cv2.createTrackbar('Center','bar',0,100,nothing)
 
 # Utilizando a equacao para criar a imagem preto e branco:
 
@@ -20,7 +26,7 @@ print("height - y: ",height,"width - x: ",width,ch)
 imageA = image.copy()
 for i in range(4):
 	imageA = cv2.GaussianBlur(imageA,(3,3),0)
-#cv2.imshow("ImageA", imageA)
+
 
 # Imagem Normal:
 imageB = image.copy()
@@ -45,14 +51,15 @@ for i in range(height):
 		image_1[i,j] = pixel_val
 		image_2[i,j] = 255.0 - pixel_val
 		 
-
-
-
-
-cv2.imshow("image1",image_1)
+cv2.imshow("bar",image_1)
 image_1 = cv2.addWeighted(image_1,1.0,image_1,1.0,0,dtype=cv2.CV_8U)
 
+vis1 = cv2.multiply(image_2,image_1,dtype=cv2.CV_8U)
 vis = cv2.multiply(imageB,image_1,dtype=cv2.CV_8U)
+vis3 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(vis1),0.3,0,dtype=cv2.CV_8U)
+
+
+
 teste = cv2.addWeighted(vis,1.0,vis,1.0,0,dtype=cv2.CV_8U)
 #cv2.imshow("Imagem blurring perto",teste)
 
@@ -79,17 +86,10 @@ cv2.imshow("Imagem Central",vis22)
 cv2.imshow("Imagem blurring ",vis33)
 #cv2.imshow("Imagem blurring de perto ",teste)
 
-
-
-final = cv2.addWeighted(vis22,1.0,imageA,0.8,0,dtype=cv2.CV_8U)
-#cv2.imshow("0--- ",final)
-
-
+fin = cv2.bitwise_and(vis22,vis33)
+cv2.imshow("fin",fin)
 
 k = cv2.waitKey(0)
+cv2.destroyAllWindows()
 
-if pressed_key == ord("z"):
-	#cv2.imwrite('ImgOrig.png',img)
-	#cv2.imwrite("TitlShift.png",final)
-	cv2.destroyAllWindows()
 

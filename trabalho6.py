@@ -63,7 +63,7 @@ while capture.isOpened():
 		cv2.imwrite('FiltroLaplaceGauss.png',dst)
 						
 	if pressed_key == ord("z"):
-		cv2.imwrite('ImgOrig.png',img)
+		cv2.imwrite('ImagemOriginal.png',img)
 		break
 		
 	cv2.imshow(" Orig ",img)

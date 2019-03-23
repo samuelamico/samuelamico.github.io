@@ -161,12 +161,12 @@ In this simple example, we'll just use the different filters in the video captur
 --
 
 [.left]
-.ImgOrig image
-image::ImgOrig.png[ImgOrig,800,700]
+.ImagemOriginal image
+image::ImagemOriginal.png[ImagemOriginal,500,500]
 
 [.right]
 .LaplaceGauss image
-image::LaplaceGauss.png[LaplaceGauss,800,700]
+image::LaplaceGauss.png[LaplaceGauss,500,500]
 
 --
 
@@ -183,28 +183,41 @@ In this example we`ll simulate a photography technique called tilt-shift. The pr
 
 [.left]
 .bara image
-image::bara.png[bara,600,500]
+image::bara.png[bara,500,500]
+
+[.left]
+.ImgOrig image
+image::ImgOrig.png[ImgOrig,500,500]
+
 
 [.left]
 .ImgCentral image
-image::ImgCentral.png[ImgCentral,600,500]
+image::ImgCentral.png[ImgCentral,500,500]
 
-[.right]
-.ImgOrig image
-image::ImgOrig.png[ImgOrig,700,600]
 
 [.right]
 .Imglur image
-image::Imglur.png[Imglur,700,600]
+image::Imglur.png[Imglur,500,500]
 
 [.right]
 .TiltShift image
-image::TiltShift.png[TiltShift,700,600]
+image::TiltShift.png[TiltShift,500,500]
 
 --
 
 [source,python,linenums]
 ----
 include::teste.py[]
+----
+
+== Tilt-Shift Video
+The same idea of Tilt-Shift applied in the image, we'll apply in a video. A very valuable hint, what can be done before you start to analyze the video (such as calculations of arrays), always do before. In this example we must create the image_1 and image_2 arrays before we even start the While loop.
+
+
+video::output.avi[]
+
+[source,python,linenums]
+----
+include::tilt_video.py[]
 ----
 

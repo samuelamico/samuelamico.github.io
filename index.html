@@ -447,6 +447,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_motion_detector">Motion Detector</a></li>
 <li><a href="#_lapaciangauss_filter">LapacianGauss Filter</a></li>
 <li><a href="#_tilt_shift">Tilt-Shift</a></li>
+<li><a href="#_tilt_shift_video">Tilt-Shift Video</a></li>
 </ul>
 </div>
 </div>
@@ -1126,13 +1127,13 @@ capture.release()</code></pre>
 <div class="content">
 <div class="imageblock left">
 <div class="content">
-<img src="ImgOrig.png" alt="ImgOrig" width="800" height="700">
+<img src="ImagemOriginal.png" alt="ImagemOriginal" width="500" height="500">
 </div>
-<div class="title">Figure 17. ImgOrig image</div>
+<div class="title">Figure 17. ImagemOriginal image</div>
 </div>
 <div class="imageblock right">
 <div class="content">
-<img src="LaplaceGauss.png" alt="LaplaceGauss" width="800" height="700">
+<img src="LaplaceGauss.png" alt="LaplaceGauss" width="500" height="500">
 </div>
 <div class="title">Figure 18. LaplaceGauss image</div>
 </div>
@@ -1205,7 +1206,7 @@ while capture.isOpened():
 		cv2.imwrite('FiltroLaplaceGauss.png',dst)
 
 	if pressed_key == ord("z"):
-		cv2.imwrite('ImgOrig.png',img)
+		cv2.imwrite('ImagemOriginal.png',img)
 		break
 
 	cv2.imshow(" Orig ",img)
@@ -1225,31 +1226,31 @@ capture.release()</code></pre>
 <div class="content">
 <div class="imageblock left">
 <div class="content">
-<img src="bara.png" alt="bara" width="600" height="500">
+<img src="bara.png" alt="bara" width="500" height="500">
 </div>
 <div class="title">Figure 19. bara image</div>
 </div>
 <div class="imageblock left">
 <div class="content">
-<img src="ImgCentral.png" alt="ImgCentral" width="600" height="500">
+<img src="ImgOrig.png" alt="ImgOrig" width="500" height="500">
 </div>
-<div class="title">Figure 20. ImgCentral image</div>
+<div class="title">Figure 20. ImgOrig image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="ImgCentral.png" alt="ImgCentral" width="500" height="500">
+</div>
+<div class="title">Figure 21. ImgCentral image</div>
 </div>
 <div class="imageblock right">
 <div class="content">
-<img src="ImgOrig.png" alt="ImgOrig" width="700" height="600">
-</div>
-<div class="title">Figure 21. ImgOrig image</div>
-</div>
-<div class="imageblock right">
-<div class="content">
-<img src="Imglur.png" alt="Imglur" width="700" height="600">
+<img src="Imglur.png" alt="Imglur" width="500" height="500">
 </div>
 <div class="title">Figure 22. Imglur image</div>
 </div>
 <div class="imageblock right">
 <div class="content">
-<img src="TiltShift.png" alt="TiltShift" width="700" height="600">
+<img src="TiltShift.png" alt="TiltShift" width="500" height="500">
 </div>
 <div class="title">Figure 23. TiltShift image</div>
 </div>
@@ -1354,10 +1355,93 @@ cv2.destroyAllWindows()</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_tilt_shift_video">Tilt-Shift Video</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The same idea of Tilt-Shift applied in the image, we&#8217;ll apply in a video. A very valuable hint, what can be done before you start to analyze the video (such as calculations of arrays), always do before. In this example we must create the image_1 and image_2 arrays before we even start the While loop.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="output.avi" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import numpy as np
+import cv2
+import math
+import time
+
+capture = cv2.VideoCapture('walking.avi')
+
+ret1, frame1 = capture.read()
+frame1 = cv2.resize(frame1, None,fx=0.5, fy=0.5, interpolation = cv2.INTER_LINEAR)
+height, width,ch = frame1.shape
+print("height - y: ",height,"width - x: ",width,ch)
+
+image_1 = np.ones((height,width,3))*255
+image_2 = np.ones((height,width,3))*255
+image_3 = np.ones((height,width,3))
+
+ab = 33.0
+bl = 3.4
+cen = 40.0
+
+for i in range(height):
+	x = i*100.0/width
+	val = (math.tanh((x-ab)/bl) - math.tanh((x-cen)/bl) )/2.0
+	pixel_val = 255.0 * val
+	for j in range(width):
+		image_1[i,j] = pixel_val
+		image_2[i,j] = 255.0 - pixel_val
+
+image_1 = cv2.addWeighted(image_1,1.0,image_1,1.0,0,dtype=cv2.CV_8U)
+vis1 = cv2.multiply(image_2,image_1,dtype=cv2.CV_8U)
+## COnvertendo --- apartir daqui ja foram convertidas as imagens para 8UINT
+image_3 = vis1.astype(np.uint8)
+ret, thr = cv2.threshold(image_3,10,255,cv2.THRESH_BINARY)
+
+### Salvando video:
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi',fourcc,20.0,(640,480))
+
+
+while capture.isOpened():
+	time.sleep(.05)
+	ret, frame = capture.read()
+	frame = cv2.resize(frame, None,fx=0.5, fy=0.5, interpolation = cv2.INTER_LINEAR)
+	imageA = frame.copy()
+	imageB = frame.copy()
+	for i in range(4):
+		imageA = cv2.GaussianBlur(imageA,(3,3),0)
+
+	vis22 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(thr),1.0,0,dtype=cv2.CV_8U)
+	vis33 = cv2.addWeighted(imageA,1.0,thr,1.0,0,dtype=cv2.CV_8U)
+	fin = cv2.bitwise_and(vis22,vis33)
+
+	#cv2.imshow('Pedestrian Detection', frame)
+	cv2.imshow('Pedestrian Tilt', fin)
+	out.write(fin)
+	c = cv2.waitKey(1)
+	if c == ord("z"):
+		break
+
+# Close the capturing device
+capture.release()
+
+# Close all windows
+cv2.destroyAllWindows()</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-21 22:59:19 -0300
+Last updated 2019-03-23 10:35:00 -0300
 </div>
 </div>
 </body>

@@ -6,7 +6,7 @@ import time
 capture = cv2.VideoCapture('walking.avi')
 
 ret1, frame1 = capture.read()
-frame1 = cv2.resize(frame1, None,fx=0.5, fy=0.5, interpolation = cv2.INTER_LINEAR)
+frame1 = cv2.resize(frame1, None,fx=1.1, fy=1.1, interpolation = cv2.INTER_LINEAR)
 height, width,ch = frame1.shape
 print("height - y: ",height,"width - x: ",width,ch)
 
@@ -33,17 +33,17 @@ image_3 = vis1.astype(np.uint8)
 ret, thr = cv2.threshold(image_3,10,255,cv2.THRESH_BINARY)
 
 ### Salvando video:
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output.avi',fourcc,20.0,(640,480))
+#fourcc = cv2.VideoWriter_fourcc(*'XVID')
+#out = cv2.VideoWriter('output.avi',fourcc,10.0,(640,480))
 
 
 while capture.isOpened():
 	time.sleep(.05)
 	ret, frame = capture.read()
-	frame = cv2.resize(frame, None,fx=0.5, fy=0.5, interpolation = cv2.INTER_LINEAR)
+	frame = cv2.resize(frame, None,fx=1.1, fy=1.1, interpolation = cv2.INTER_LINEAR)
 	imageA = frame.copy()
 	imageB = frame.copy()
-	for i in range(4):
+	for i in range(5):
 		imageA = cv2.GaussianBlur(imageA,(3,3),0)
 
 	vis22 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(thr),1.0,0,dtype=cv2.CV_8U)
@@ -52,14 +52,14 @@ while capture.isOpened():
 	
 	#cv2.imshow('Pedestrian Detection', frame)
 	cv2.imshow('Pedestrian Tilt', fin)
-	out.write(fin)
+	#out.write(fin)
 	c = cv2.waitKey(1)
 	if c == ord("z"):
 		break
 
 # Close the capturing device
 capture.release()
-
+#out.release()
 # Close all windows
 cv2.destroyAllWindows()
 	

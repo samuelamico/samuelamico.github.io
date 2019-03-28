@@ -192,14 +192,14 @@ image::ImgOrig.png[ImgOrig,500,500]
 
 [.left]
 .ImgCentral image
-image::ImgCentral.png[ImgCentral,500,500]
+image::ImgCentral.png[ImgCentral,400,400]
 
 
 [.right]
 .Imglur image
-image::Imglur.png[Imglur,500,500]
+image::Imglur.png[Imglur,400,400]
 
-[.right]
+[.left]
 .TiltShift image
 image::TiltShift.png[TiltShift,500,500]
 
@@ -212,6 +212,9 @@ include::teste.py[]
 
 == Tilt-Shift Video
 The same idea of Tilt-Shift applied in the image, we'll apply in a video. A very valuable hint, what can be done before you start to analyze the video (such as calculations of arrays), always do before. In this example we must create the image_1 and image_2 arrays before we even start the While loop.
+
+
+video::output.avi[]
 
 [source,python,linenums]
 ----

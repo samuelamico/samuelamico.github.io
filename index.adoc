@@ -221,3 +221,29 @@ video::out-2.ogv[]
 include::tilt_video.py[]
 ----
 
+== Pointilism art
+This example we'll use the Canny Edge Detection to create a pointilism art.
+
+[.float-group]
+--
+
+[.left]
+.canny image
+image::canny.png[canny,500,500]
+
+[.left]
+.golden image
+image::golden.png[golden,500,500]
+
+[.left]
+.points image
+image::points.png[points,500,500]
+
+--
+
+
+[source,python,linenums]
+----
+include::trabalho9.py[]
+----
+

@@ -448,6 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_lapaciangauss_filter">LapacianGauss Filter</a></li>
 <li><a href="#_tilt_shift">Tilt-Shift</a></li>
 <li><a href="#_tilt_shift_video">Tilt-Shift Video</a></li>
+<li><a href="#_pointilism_art">Pointilism art</a></li>
 </ul>
 </div>
 </div>
@@ -1438,10 +1439,122 @@ cv2.destroyAllWindows()</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_pointilism_art">Pointilism art</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This example we&#8217;ll use the Canny Edge Detection to create a pointilism art.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="canny.png" alt="canny" width="500" height="500">
+</div>
+<div class="title">Figure 24. canny image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="golden.png" alt="golden" width="500" height="500">
+</div>
+<div class="title">Figure 25. golden image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="points.png" alt="points" width="500" height="500">
+</div>
+<div class="title">Figure 26. points image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import numpy as np
+import cv2
+import math
+import time
+import random
+
+def nothing(x):
+	pass
+
+STEP = 5
+####### TRACKBAR #########
+cv2.namedWindow('bar')
+cv2.createTrackbar('top','bar',0,255,nothing)
+
+ab = 10
+bl = 3*ab
+
+image = cv2.imread('golden.jpg',0)
+frame = cv2.imread('golden.jpg')
+height, width = image.shape
+print("height - y: ",height,"width - x: ",width)
+
+xranges = [0]*height
+yranges = [0]*width
+
+for i in range(height):
+	xranges[i] = xranges[i]*STEP+STEP/2
+for i in range(width):
+	yranges[i] = yranges[i]*STEP+STEP/2
+
+xranges.sort()
+
+
+points = np.ones((height,width,3))*255
+points = points.astype(np.uint8)
+
+# Algoritimo:
+
+while True:
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	ab = cv2.getTrackbarPos('top','bar')
+	canny = cv2.Canny(image, ab, bl)
+	cv2.imshow('bar', canny)
+	if pressed_key == ord("z"):
+		break
+
+
+for i in range(len(yranges)):
+	yranges.sort()
+	for j in range(len(xranges)):
+		if(canny[j,i] == 255):
+			x = int(i+(random.random() % (4)) - 2)
+			y = int(j+(random.random() % (4)) - 2)
+			color_b = int(frame[y,x,0])
+			color_g = int(frame[y,x,1])
+			color_r = int(frame[y,x,2])
+			#print("x,y=",x,y)
+			cv2.circle(points,(x,y),4,(color_b,color_g,color_r),-1)
+		else:
+			x = int(i+(random.random()%(4))- 1)
+			y = int(j+(random.random()%(4))- 1)
+			color_b = int(frame[y,x,0])
+			color_g = int(frame[y,x,1])
+			color_r = int(frame[y,x,2])
+			#print("x,y = ",x,y)
+			#print("b,g,r = ",color_b,color_g,color_r)
+			cv2.circle(points,(x,y),3,(color_b,color_g,color_r),-1)
+
+
+cv2.imshow('points', points)
+
+
+cv2.waitKey(0)
+#cv2.imwrite('canny.png',canny)
+#cv2.imwrite('golden.png',golden)
+cv2.imwrite('points.png',points)
+
+cv2.destroyAllWindows()</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-28 08:36:51 -0300
+Last updated 2019-03-28 22:03:31 -0300
 </div>
 </div>
 </body>

@@ -233,7 +233,7 @@ image::canny.png[canny,500,500]
 
 [.left]
 .golden image
-image::golden.png[golden,500,500]
+image::golden.jpg[golden,500,500]
 
 [.left]
 .points image

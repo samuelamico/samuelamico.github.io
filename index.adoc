@@ -195,7 +195,7 @@ image::ImgOrig.png[ImgOrig,500,500]
 image::ImgCentral.png[ImgCentral,400,400]
 
 
-[.right]
+[.left]
 .Imglur image
 image::Imglur.png[Imglur,400,400]
 

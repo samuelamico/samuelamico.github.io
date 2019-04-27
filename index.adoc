@@ -238,3 +238,15 @@ image::points.png[points,500,500]
 include::trabalho9.py[]
 ----
 
+== Color detect
+
+
+
+
+[source,python,linenums]
+----
+include::color_detect.py[]
+----
+
+
+

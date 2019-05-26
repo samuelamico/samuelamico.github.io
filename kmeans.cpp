@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 	}
 	imshow("cluster img",rotulada);
 	waitKey(0);
-	sprintf(name,"test%d.jpg",i);
+	sprintf(name,"tes%d.jpg",i);
 	imwrite(name,rotulada);
  }
 }

@@ -15,8 +15,8 @@ cv2.createTrackbar('top','bar',0,255,nothing)
 ab = 10
 bl = 3*ab
 
-image = cv2.imread('golden.jpg',0)
-frame = cv2.imread('golden.jpg')
+image = cv2.imread('img1.jpeg',0)
+frame = cv2.imread('img1.jpeg')
 height, width = image.shape
 print("height - y: ",height,"width - x: ",width)
 
@@ -36,13 +36,14 @@ points = points.astype(np.uint8)
 
 # Algoritimo:
 
-while True:
-	pressed_key = cv2.waitKey(1) & 0xFF 
-	ab = cv2.getTrackbarPos('top','bar')
-	canny = cv2.Canny(image, ab, bl)
-	cv2.imshow('bar', canny)
-	if pressed_key == ord("z"):
-		break
+#while True:
+	#pressed_key = cv2.waitKey(1) & 0xFF 
+ab = 100
+	#ab = cv2.getTrackbarPos('top','bar')
+canny = cv2.Canny(image, ab, bl)
+cv2.imshow('bar', canny)
+	#if pressed_key == ord("z"):
+		#break
 
 
 for i in range(len(yranges)):
@@ -64,7 +65,7 @@ for i in range(len(yranges)):
 			color_r = int(frame[y,x,2])
 			#print("x,y = ",x,y)
 			#print("b,g,r = ",color_b,color_g,color_r)
-			cv2.circle(points,(x,y),3,(color_b,color_g,color_r),-1)
+			cv2.circle(points,(x,y),5,(color_b,color_g,color_r),-1)
 			
 
 cv2.imshow('points', points)	
@@ -73,6 +74,6 @@ cv2.imshow('points', points)
 cv2.waitKey(0)
 #cv2.imwrite('canny.png',canny)
 #cv2.imwrite('golden.png',golden)
-cv2.imwrite('points.png',points)
+cv2.imwrite('points1.png',points)
 		
 cv2.destroyAllWindows()

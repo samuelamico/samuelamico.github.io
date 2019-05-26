@@ -238,3 +238,39 @@ image::points.png[points,500,500]
 include::trabalho9.py[]
 ----
 
+
+== K-means
+
+The K-means algorithm is based on the division of samples into classes (number given by the user). The algorithm follows the steps: Initializes the initial centroid mk, calculates for each sample Xi using the Euclidean distance in relation to the centroids, and recalculates the centroids again based on the mean of the samples, and repeats this until the Xi do not change class
+
+
+image::myimage.gif[myimage,500,500]
+
+[source,cpp,linenums]
+----
+include::kmeans.cpp[]
+----
+
+== Homomorphic Filter
+
+
+
+image::ponte_iluminada.jpg[ponte_iluminada,500,500]
+
+[source,cpp,linenums]
+----
+include::homomorphic.cpp[]
+----
+
+== Color detect
+
+
+
+
+[source,python,linenums]
+----
+include::color_detect.py[]
+----
+
+
+

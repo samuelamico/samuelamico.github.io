@@ -238,6 +238,31 @@ image::points.png[points,500,500]
 include::trabalho9.py[]
 ----
 
+
+== K-means
+
+The K-means algorithm is based on the division of samples into classes (number given by the user). The algorithm follows the steps: Initializes the initial centroid mk, calculates for each sample Xi using the Euclidean distance in relation to the centroids, and recalculates the centroids again based on the mean of the samples, and repeats this until the Xi do not change class
+
+
+image::myimage.gif[myimage,500,500]
+
+[source,cpp,linenums]
+----
+include::kmeans.cpp[]
+----
+
+== Homomorphic Filter
+
+The homomorphic filter is based on the luminance equation vs reflectance. f = i (x, y) r (x, y), where we must apply the logarithm in function f, and then calculate the DFT, and continue our process by multiplying the image by the filter passing through all stages of the filters in the domain of the frequency, and in the end we apply the exponential to reverse the logarithm of the beginning. Through variables that control our filter equation we are able to adjust our image to improve the product luminance reflectance.
+
+
+image::ponte_iluminada.jpg[ponte_iluminada,500,500]
+
+[source,cpp,linenums]
+----
+include::homomorphic.cpp[]
+----
+
 == Color detect
 
 

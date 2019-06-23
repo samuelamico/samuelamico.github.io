@@ -295,6 +295,8 @@ video::gb.mp4[]
 
 Segue abaixo o vídeo publicado no Youtube e os códigos:
 
+video::YouTube.mp4[]
+
 Foi criado um jogo de tenis onde o jogador controla  a raquete e tenta rebater a bola contra a parede.
 
 * Game completo
@@ -314,4 +316,48 @@ include::Head.py[]
 ----
 include::LK.py[] 
 ----
+
+== Face Detect using HOG
+The idea behind HOG  is to extract features into a vector, and feed it into a classification algorithm like a Suport Vector Machine for example that will assess wheter a face (or any object you train it to recognize actually) is present in a region or not. The features extracted are the distribution (histograms) of a directions of gradientes (oriented gradients) of the image. Gradients are typically large around edges and corners and allow us to detect those regions.
+
+[.float-group]
+--
+
+[.left]
+.face1 image
+image::face1.jpg[face1,500,500]
+
+[.right]
+.new_face image
+image::new_face.jpg[new_face,500,500]
+
+--
+
+
+* Image
+[source,python,linenums]
+----
+include::face_detect.py3[] 
+----
+
+* Video
+[source,python,linenums]
+----
+include::face_detect.py3[] 
+----
+
+== CamShift
+
+"The intuition behind the meanshift is simple. Consider you have a set of points. (It can be a pixel distribution like histogram backprojection). You are given a small window (may be a circle) and you have to move that window to the area of maximum pixel density (or maximum number of points).
+The initial window is shown in blue circle with the name "C1". Its original center is marked in blue rectangle, named "C1_o". But if you find the centroid of the points inside that window, you will get the point "C1_r" (marked in small blue circle) which is the real centroid of the window. Surely they don't match. So move your window such that the circle of the new window matches with the previous centroid. Again find the new centroid. Most probably, it won't match. So move it again, and continue the iterations such that the center of window and its centroid falls on the same location (or within a small desired error). So finally what you obtain is a window with maximum pixel distribution. It is marked with a green circle, named "C2". As you can see in the image, it has maximum number of points." OpenCV tutorial.
+
+Camshift it is similar to meanshift, but returns a rotated rectangle (that is our result) and box parameters (used to be passed as search window in next iteration). See the code below:
+
+
+[source,python,linenums]
+----
+include::Camshift_final.py[] 
+----
+
+
 

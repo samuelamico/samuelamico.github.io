@@ -453,6 +453,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_homomorphic_filter">Homomorphic Filter</a></li>
 <li><a href="#_color_detect">Color detect</a></li>
 <li><a href="#_vpython_opencv">Vpython + OpenCV</a></li>
+<li><a href="#_face_detect_using_hog">Face Detect using HOG</a></li>
+<li><a href="#_camshift">CamShift</a></li>
+<li><a href="#_line_street_detection">Line-Street Detection</a></li>
 </ul>
 </div>
 </div>
@@ -2545,10 +2548,440 @@ capture.release()</pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_face_detect_using_hog">Face Detect using HOG</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The idea behind HOG  is to extract features into a vector, and feed it into a classification algorithm like a Suport Vector Machine for example that will assess wheter a face (or any object you train it to recognize actually) is present in a region or not. The features extracted are the distribution (histograms) of a directions of gradientes (oriented gradients) of the image. Gradients are typically large around edges and corners and allow us to detect those regions.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="face1.jpg" alt="face1" width="500" height="500">
+</div>
+<div class="title">Figure 25. face1 image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="new_face.jpg" alt="new_face" width="500" height="500">
+</div>
+<div class="title">Figure 26. new_face image</div>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Image</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import cv2
+import numpy as np
+import dlib
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from imutils import face_utils
+
+img = mpimg.imread('face1.jpg')
+
+resize = cv2.resize(img, (100, 200), interpolation = cv2.INTER_LINEAR)
+
+
+im = np.float32(img) / 255.0
+
+# Vamos calcular o gradiente
+gx = cv2.Sobel(im, cv2.CV_32F, 1, 0, ksize=1)
+gy = cv2.Sobel(im, cv2.CV_32F, 0, 1, ksize=1)
+mag, angle = cv2.cartToPolar(gx, gy, angleInDegrees=True)
+
+face_detect = dlib.get_frontal_face_detector()
+
+rects = face_detect(img, 1)
+
+x_maior = 0
+y_maior = 0
+w_maior = 0
+h_maior = 0
+
+for (i, rect) in enumerate(rects):
+	(x, y, w, h) = face_utils.rect_to_bb(rect)
+	if(w &gt; w_maior):
+		x_maior = x
+		y_maior = y
+		w_maior = w
+		h_maior = h
+
+	print(x,y,w,h)
+
+	cv2.rectangle(img, (x, y), (x + w, y + h), (255, 255, 255), 3)
+
+print(x_maior,y_maior,w_maior,h_maior)
+img_final = img[y_maior:y_maior+h_maior,x_maior:x_maior+w_maior]
+
+cv2.imwrite('new_face.jpg',img_final)
+
+print(img.shape[:2])
+plt.figure()
+plt.imshow(img_final)
+plt.show()</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Video</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import cv2
+import numpy as np
+import dlib
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from imutils import face_utils
+
+img = mpimg.imread('face1.jpg')
+
+resize = cv2.resize(img, (100, 200), interpolation = cv2.INTER_LINEAR)
+
+
+im = np.float32(img) / 255.0
+
+# Vamos calcular o gradiente
+gx = cv2.Sobel(im, cv2.CV_32F, 1, 0, ksize=1)
+gy = cv2.Sobel(im, cv2.CV_32F, 0, 1, ksize=1)
+mag, angle = cv2.cartToPolar(gx, gy, angleInDegrees=True)
+
+face_detect = dlib.get_frontal_face_detector()
+
+rects = face_detect(img, 1)
+
+x_maior = 0
+y_maior = 0
+w_maior = 0
+h_maior = 0
+
+for (i, rect) in enumerate(rects):
+	(x, y, w, h) = face_utils.rect_to_bb(rect)
+	if(w &gt; w_maior):
+		x_maior = x
+		y_maior = y
+		w_maior = w
+		h_maior = h
+
+	print(x,y,w,h)
+
+	cv2.rectangle(img, (x, y), (x + w, y + h), (255, 255, 255), 3)
+
+print(x_maior,y_maior,w_maior,h_maior)
+img_final = img[y_maior:y_maior+h_maior,x_maior:x_maior+w_maior]
+
+cv2.imwrite('new_face.jpg',img_final)
+
+print(img.shape[:2])
+plt.figure()
+plt.imshow(img_final)
+plt.show()</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_camshift">CamShift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>"The intuition behind the meanshift is simple. Consider you have a set of points. (It can be a pixel distribution like histogram backprojection). You are given a small window (may be a circle) and you have to move that window to the area of maximum pixel density (or maximum number of points).
+The initial window is shown in blue circle with the name "C1". Its original center is marked in blue rectangle, named "C1_o". But if you find the centroid of the points inside that window, you will get the point "C1_r" (marked in small blue circle) which is the real centroid of the window. Surely they don&#8217;t match. So move your window such that the circle of the new window matches with the previous centroid. Again find the new centroid. Most probably, it won&#8217;t match. So move it again, and continue the iterations such that the center of window and its centroid falls on the same location (or within a small desired error). So finally what you obtain is a window with maximum pixel distribution. It is marked with a green circle, named "C2". As you can see in the image, it has maximum number of points." OpenCV tutorial.</p>
+</div>
+<div class="paragraph">
+<p>Camshift it is similar to meanshift, but returns a rotated rectangle (that is our result) and box parameters (used to be passed as search window in next iteration). See the code below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">#### Using Camshift to track a ROI
+import numpy as np
+import cv2
+import time
+
+global flag
+flag = True
+drawing = False
+img = None
+c = 1
+boxes = []
+capture = cv2.VideoCapture(0)
+_,img = capture.read()
+
+
+def on_mouse(event,x,y,flags,params):
+	global boxes,drawing
+	if event == cv2.EVENT_LBUTTONDOWN:
+		print('Start Mouse Position:' ,str(x),str(y))
+		s = (x,y)
+		boxes.append(s)
+		drawing = True
+		cv2.circle(img,(x,y),4,(0,255,0),2)
+		cv2.imshow('img',img)
+	elif event == cv2.EVENT_LBUTTONUP:
+		print('END Mouse Position:',str(x),str(y))
+		e = (x,y)
+		boxes.append(e)
+		drawing = False
+		mode = True
+
+
+
+def ROI_segment(retangulo,capturing):
+	hsv_roi = cv2.cvtColor(retangulo, cv2.COLOR_BGR2HSV)
+	mask = cv2.inRange(hsv_roi,np.array((0.,60.,32.)),np.array((180.,255.,255.)))
+	#roi_hist = cv2.calcHist([hsv_roi], [0],mask,[180],[0,180])
+	#depois tente tirar o mask e coloque:
+	roi_hist = cv2.calcHist([hsv_roi], [0],None,[16],[0,180])
+	return cv2.normalize(roi_hist,roi_hist, 0, 255, cv2.NORM_MINMAX)
+
+
+
+term_crit = ( cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
+print("Posicione seu objeto a ser detectado - ROI manual")
+roi_area = None
+#ret,img = capture.read()
+#cv2.namedWindow('img')          nao coloque aki pois vai bugars
+#cv2.setMouseCallback('img',on_mouse,0)
+while capture.isOpened():
+	cv2.namedWindow('img')
+	cv2.setMouseCallback('img',on_mouse,0)
+	ret,img = capture.read(2)
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	if not ret:
+		break
+
+	if len(boxes)&lt;4:
+		orig = img.copy()
+		print("entrou no roi")
+		while len(boxes) &lt; 4:
+			cv2.imshow('img',img)
+			cv2.waitKey(0)
+		boxes = np.array(boxes)
+		s = boxes.sum(axis = 1)
+		t1 = boxes[np.argmin(s)]
+		br = boxes[np.argmax(s)]
+		roi = orig[t1[1]:br[1],t1[0]:br[0]]
+		#roiBox_x = (t1[0],t1[1])
+		#roiBox_y = (br[0],br[1])
+		#cv2.imshow('roi',roi)
+		roi_area = (t1[0],t1[1],br[0],br[1])
+		roi_hist = ROI_segment(roi,img)
+		flag = False
+	if len(boxes)&gt;4:
+		#print("entrou")
+		ret,img = capture.read(2)
+		hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+		dst = cv2.calcBackProject([hsv],[0],roi_hist,[0,180],1)
+		#apply meanshift:
+		ret1,roi_area = cv2.CamShift(dst,roi_area,term_crit)
+		#draw it on image:
+		#a,b,w,h = track_window
+		pts = np.int0(cv2.boxPoints(ret1))
+		cv2.polylines(img,[pts],True,255,2)
+		#cv2.imshow("Final",img)
+
+	cv2.imshow('img',img)
+	if pressed_key == ord("z"):
+		break
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_line_street_detection">Line-Street Detection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This algorithm proposed by me is intended to be used for autonomous cars, where it is necessary to detect the streets and the tracks, where the car should stabilize. To do this detection is necessary to have knowledge in techniques like Canny and filters and morphology. Before you start extracting data for the intelligent controller, it is responsible for guiding the car on the road, it is necessary to filter and segment what the car will see on the street, so it is necessary to use Gaussian low pass filters and a threshold to detect only the road (this one in the simulated case was white). After that, it is necessary to use the morphology technique to destroy small noises and leave the road clearer and clearer so that we can apply Canny. Canny is responsible for detecting the contour of the road and then a suggested technique is to get three ROIs that subdivide the whole image and calculate its centroids, so we plot a line connecting all 3 centroids. The purpose of the driver is to then leave the car&#8217;s straight (centered) aligned with the straight of the road so the car should make curves or keep to achieve its goals.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="capturefilter.png" alt="capturefilter" width="500" height="500">
+</div>
+<div class="title">Figure 27. capturefilter image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="capturecanny.png" alt="capturecanny" width="500" height="500">
+</div>
+<div class="title">Figure 28. capturecanny image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="captureframe.png" alt="captureframe" width="500" height="500">
+</div>
+<div class="title">Figure 29. captureframe image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">#### Autonomos car
+import numpy as np
+import cv2
+import time
+
+capture = cv2.VideoCapture(1)
+
+def rescale_frame(capturing, wpercent=50, hpercent=50):
+    width = int(capturing.shape[1] * wpercent / 100)
+    height = int(capturing.shape[0] * hpercent / 100)
+    return cv2.resize(capturing, (width, height), interpolation=cv2.INTER_AREA)
+
+def white_seg(img,hsv,thr):
+	upper = np.array([0,0,212])
+	lower = np.array([131,255,255])
+	mask1 = cv2.inRange(hsv,lower,upper)
+	out1 = cv2.bitwise_and(img,img,mask=mask1)
+	kernel = np.ones((15,15),np.uint8)                  # destruindo os ruidos
+	mask = cv2.morphologyEx(img,cv2.MORPH_OPEN,kernel)
+	out = cv2.bitwise_and(img,img,mask=mask)
+	#cv2.imshow('filter',out)
+	# teste para melhorar:
+	final = cv2.bitwise_and(out,out1)
+	final = cv2.blur(final,(5,5))
+	kernel_new = np.ones((15,15),np.uint8)
+	mask_new = cv2.morphologyEx(final,cv2.MORPH_OPEN,kernel_new)
+	cv2.imshow('filter',out)
+	return out
+
+def filtragem(frame):
+	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+	ret,threshold = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+	for i in range(4):
+		blurred = cv2.GaussianBlur(threshold,(11,11),0)
+	white_img = white_seg(blurred,hsv,threshold)
+
+	return white_img
+
+def contorno(white_img,frame):
+	#canny = cv2.Canny(white_img, 50, 200)
+	# depois tente aplicar contorno no canny
+	ret1,thr = cv2.threshold(white_img, 127, 255, cv2.THRESH_BINARY)
+	result = cv2.findContours(thr,cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+	cont,hierarchy = result if len(result) == 2 else result[1:3]
+	if len(cont) &gt; 0:
+		areas = [cv2.contourArea(c) for c in cont]
+		max_index = np.argmax(areas)
+		cont_max = cont[-1]
+		M = cv2.moments(cont[0])
+		if (M['m00'] != 0):
+			cx = int(M['m10']/M['m00'])
+			cy = int(M['m01']/M['m00'])
+			cv2.circle(frame,(cx,cy),8,(0,255,105),3)
+			return (cx,cy)
+	return (0,0)
+
+
+#### Funcs matematicas para o controlador:
+def regressao_linear(x1,x2,x3,y1,y2,y3,height,width,frame):
+	x_medio = float((x1+x2+x3)/3)
+	y_medio = float((y1+y2+y3)/3)
+	sum1 = x1*y1+x2*y2+x3*y3
+	a1 = float(3.0*(sum1) - (x1+x2+x3)*(y1+y2+y3) )/float(3.0*(x1**2+x2**2+x3**2) - ((x1+x2+x3))**2  )
+	a0 = y_medio - a1*x_medio
+	# y = a0 + a1*x
+	# ponto 0:
+	x1 = 0   # na real isso eh o y na func do cv2.line
+	y1 = a0  # na real isso eh o x na func do cv2.line
+	# ponto F:
+	xf = height
+	yf = a0 + a1*xf
+	cv2.line(frame,(y1,x1),(yf,xf),(0,255,105),4)
+	return (y1,yf)
+
+
+
+
+while True:
+	_,img = capture.read()
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	frame = rescale_frame(img)
+	height,width = frame.shape[:2]
+	frame_new = filtragem(frame)
+	#print(width,height)
+	# tracando a reta de entrada para o controlador
+	# as imagens funcionam mais ou menos assim:
+	# ------------------------------
+	#|(0,0)                        |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|               (width,height)|
+	# ------------------------------
+	#### copy 1:
+	frame_copy = frame[0:height/3,100:width] # [coordenas y-(y0:yf), coordenas x(x0,xf)]
+	frame_seg1 = filtragem(frame_copy)
+	(x1,y1)=contorno(frame_seg1,frame_copy)
+	print(x1,y1)
+	cv2.imshow('copy',frame_copy)
+	### copy 2:
+	frame_copy2 = frame[height/3:2*height/3,100:width]
+	frame_seg2 = filtragem(frame_copy2)
+	(x2,y2)=contorno(frame_seg2,frame_copy2)
+	cv2.imshow('copy2',frame_copy2)
+	### copy 3:
+	frame_copy3 = frame[2*height/3:height,100:width]
+	frame_seg3 = filtragem(frame_copy3)
+	(x3,y3)=contorno(frame_seg3,frame_copy3)
+	cv2.imshow('copy3',frame_copy3)
+	####### CONTROLADOR ###########
+	height,width = frame.shape[:2]
+	middle_x = width/2
+	cv2.line(frame,(middle_x,0),(middle_x,height),(255,0,0),4)
+	##### atende aqui samuel pois os valores x1,x2,x3,y1,y2,y3 estao feitos na escala
+	##### do frame_copy, entao adicione 100 ao x e height/3 no y
+		#cv2.circle(frame,(x1+100,y1),3,(200,255,105),3)
+		#cv2.circle(frame,(x2+100,y2+height/3),3,(200,255,105),3)
+		#cv2.circle(frame,(x3+100,y3+2*height/3),3,(200,255,105),3)
+	# reta ligando pontos
+	x1 = int( x1 + 100 )
+	x2 = int (x2 + 100)
+	x3 = int(x3 + 100)
+	y2 = int(y2+height/3)
+	y3 = int(y2+2*height/3)
+	cv2.line(frame,(x3,y3),(x1,y1),(200,255,105),4)
+	'''
+	# reta regressao linear dos pontos obtidos:
+	(x0,xf)=regressao_linear(x1,x2,x3,y1,y2,y3,height,width,frame) # verificar func
+	# U(t) = eh exatamente a posicao media do xo e xf da reta regressao
+	u = (float(x0 + xf)/2.0)
+	## funcao erro: e = u - middle_x
+	# func planta-dos motores do robo:
+	'''
+	#cv2.imshow('frame',frame_new)
+	cv2.imshow('frame',frame)
+	if pressed_key == ord("z"):
+		break
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-06-19 19:00:57 -0300
+Last updated 2019-06-23 18:15:30 -0300
 </div>
 </div>
 </body>

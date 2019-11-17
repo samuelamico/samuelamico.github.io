@@ -60,13 +60,13 @@ ul li.active a{
 .header h1{
     color: #000;
     font-family: Oswald;
-    font-size: 80px;
+    font-size: 50px;
 }
 
 .header p{
     color: #000;
     font-family: Oswald;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .form{

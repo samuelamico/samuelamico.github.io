@@ -1,0 +1,130 @@
+body{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: #fff;
+
+    font-family: Oswald;
+
+}
+
+
+header{
+    height: 10vh;
+    background-color:white;
+    background-size: cover;
+    background-position: center;
+}
+
+ul{
+    float: left;
+    list-style: none;
+    margin-top: 35px;
+    margin-left: 30px;
+}
+
+ul li{
+    display: inline-block;
+    
+}
+
+ul li a{
+    text-decoration: none;
+    color: #000;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    font-size: 90%;
+    border: 1px solid transparent;
+    transition: 0.6s ease;
+    font-size: 150%;
+    font-family: Oswald
+}
+
+ul li a:hover{
+    border-bottom: 2px solid rgb(167, 41, 41);
+    color: #000;
+}
+
+ul li.active a{
+    border-bottom: 2px solid rgb(167, 41, 41);
+    color: #000;
+}
+
+
+
+
+
+
+
+
+/* Portfolio styles */
+
+.content-wrapper{
+    margin-top: 200px;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.portfolio-items-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.portfolio-item-wrapper{
+    position: relative;
+}
+
+.portfolio-img-background{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 350px;
+    widows: 100%;
+}
+
+.img-text-wrapper{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 200px;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.logo-wrapper img{
+    width: 120%;
+    margin-bottom: 20px; 
+}
+
+
+.img-text-wrapper .subtitle {
+    transition: 1s;
+    font-family: Oswald;
+    font-weight: 800;
+    color: transparent;
+    text-align: center;
+    justify-content: center;
+
+}
+
+.img-text-wrapper:hover .subtitle {
+
+    font-weight: 800;
+    color: lightseagreen;
+
+}
+
+.img-darken{
+    transition: 1s;
+    filter: brightness(10%)
+}

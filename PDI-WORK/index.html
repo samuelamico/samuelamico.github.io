@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.8">
+<meta name="author" content="Samuel Amico">
+<title>Digital Image Processing</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Uncomment @import statement below to use as custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite::before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock pre.nowrap,.literalblock pre.nowrap pre,.listingblock pre.nowrap,.listingblock pre.nowrap pre{white-space:pre;word-wrap:normal}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #dddddf}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin:0 0 1.25em;padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+table.tableblock{max-width:100%;border-collapse:separate}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot,table.frame-ends{border-width:1px 0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd){background:#f8f8f7}
+table.stripes-none tr,table.stripes-odd tr:nth-of-type(even){background:none}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Digital Image Processing</h1>
+<div class="details">
+<span id="author" class="author">Samuel Amico</span><br>
+<span id="email" class="email"><a href="mailto:sam.fst@gmail.com">sam.fst@gmail.com</a></span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_pixel_manipulation">Pixel Manipulation</a></li>
+<li><a href="#_filling_regions">Filling regions</a></li>
+<li><a href="#_histogram">Histogram</a></li>
+<li><a href="#_motion_detector">Motion Detector</a></li>
+<li><a href="#_lapaciangauss_filter">LapacianGauss Filter</a></li>
+<li><a href="#_tilt_shift">Tilt-Shift</a></li>
+<li><a href="#_tilt_shift_video">Tilt-Shift Video</a></li>
+<li><a href="#_pointilism_art">Pointilism art</a></li>
+<li><a href="#_k_means">K-means</a></li>
+<li><a href="#_homomorphic_filter">Homomorphic Filter</a></li>
+<li><a href="#_color_detect">Color detect</a></li>
+<li><a href="#_vpython_opencv">Vpython + OpenCV</a></li>
+<li><a href="#_face_detect_using_hog">Face Detect using HOG</a></li>
+<li><a href="#_camshift">CamShift</a></li>
+<li><a href="#_line_street_detection">Line-Street Detection</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>An indroduction to <a href="http://asciidoc.org">AsciiDoc</a> and <a href="http://opencv.org">OpenCV</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pixel_manipulation">Pixel Manipulation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The objective of this lesson is to show how we can manipulate the pixels of an image, for that we can access a pixel value by it&#8217;s row and column coordinates. For BGR image, it returns an array of Blue,Green,Red values.For grayscale image, just corresponding intensity is returned.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Negative of a Region of Interest (ROI)
+In this example we&#8217;ll be selecting a ROI with a specific coordinates that we give inside the program. The next step is invert the ROI, for this we use the simple formula: pixel_color_new = 255 - pixel_color_old. The image are in the grayscale.</p>
+</li>
+</ul>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="biel.png" alt="Biel" width="300" height="300">
+</div>
+<div class="title">Figure 1. Biel image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="negativebiel.png" alt="Negative" width="300" height="300">
+</div>
+<div class="title">Figure 2. Negative image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Digital Image Processing
+# Student: Samuel Amico
+# Number: 20180010181
+# Exercise 1.1 - biel.png
+
+import numpy as np
+import cv2
+import time
+
+# Negative.py :
+
+image = cv2.imread('biel.png')
+#cv2.imwrite('bielgray.png',image)
+
+height, width, ch = image.shape
+print("height - y: ",height,"width - x: ",width)
+
+
+#  P1 = top-left &amp; P2 = bottom-right
+# 10,10 - 150,150
+P1x = input("Ponto 1 x - top:")
+P1y = input("Ponto 1 y - top:")
+P2x = input("Ponto 2 x - bot:")
+P2y = input("Ponto 2 y - bot:")
+print("P1 = (",P1x,",",P1y,")  ","P2 = (",P2x,",",P2y,")")
+
+
+if (image is not None):
+	cv2.imshow("Original", image)
+
+k = cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+cv2.rectangle(image,(int(P1x-3),int(P1y-3)),(int(P2x+3),int(P2y+3)),(0,255,0),2)
+cv2.imshow("Rec inside the image", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('RecImage.png',image)
+
+# Apply Negative efect
+for i in range(P1x,P2x):
+	for j in range(P1y,P2y):
+		image[i,j] = 255 - image[i,j]
+
+cv2.imshow("Negative", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('negativebiel.png',image)
+cv2.destroyAllWindows()
+
+
+# ------------------------------&gt; y
+#|(0,0)                        |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|               (width,height)|
+#X------------------------------</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Swapping regions
+In this example we&#8217;ll divided the image in four quadrants (they have the same dimension) - ROI A,B,C,D. Where each ROI are built from a copy of the original image, cv2.copy(). A new image will be construct by using those ROI, swapping them in differents ways.</p>
+</li>
+</ul>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="biel.png" alt="Biel" width="300" height="300">
+</div>
+<div class="title">Figure 3. Biel image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="bielmix.png" alt="Swapping" width="300" height="300">
+</div>
+<div class="title">Figure 4. Swapping image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Digital Image Processing
+# Student: Samuel Amico
+# Number: 20180010181
+# Exercise 1.2 - biel.png
+
+
+import numpy as np
+import cv2
+
+image = cv2.imread('biel.png')
+
+height, width, ch = image.shape
+print("height - y: ",height,"width - x: ",width)
+
+img = image.copy()
+
+# [coord x-(x0:xf), coord y(y0,yf)]
+
+image_A = img[0:height/2,0:width/2]
+image_B = img[0:width/2,height/2:height]
+image_C = img[height/2:height,0:width/2]
+image_D = img[height/2:height,width/2:width]
+
+# ROI`s
+cv2.imshow("roi A", image_A)
+k = cv2.waitKey(0)
+#cv2.imwrite('roiA.png',image_A)
+cv2.imshow("roi B", image_B)
+k = cv2.waitKey(0)
+#cv2.imwrite('roiB.png',image_B)
+cv2.imshow("roi C", image_C)
+k = cv2.waitKey(0)
+#cv2.imwrite('roiC.png',image_C)
+cv2.imshow("roi D", image_D)
+k = cv2.waitKey(0)
+#cv2.imwrite('roiD.png',image_D)
+
+
+# 1: B/A &amp; D/C:
+image[0:width/2,0:height/2] = image_B
+image[0:width/2,height/2:height] = image_A
+image[height/2:height,0:width/2] = image_D
+image[height/2:height,width/2:width] = image_C
+
+#cv2.imshow("1: B/A &amp; D/C", image)
+#k = cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# 2: B/A &amp; C/D:
+image[0:width/2,0:height/2] = image_B
+image[0:width/2,height/2:height] = image_A
+image[height/2:height,0:width/2] = image_C
+image[height/2:height,width/2:width] = image_D
+
+#cv2.imshow("2: B/A &amp; C/D", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
+
+# 3: A/B &amp; D/C:
+image[0:width/2,0:height/2] = image_A
+image[0:width/2,height/2:height] = image_B
+image[height/2:height,0:width/2] = image_D
+image[height/2:height,width/2:width] = image_C
+
+#cv2.imshow("3: A/B &amp; D/C", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
+
+#4: A/B &amp; C/D:
+image[0:width/2,0:height/2] = image_A
+image[0:width/2,height/2:height] = image_B
+image[height/2:height,0:width/2] = image_C
+image[height/2:height,width/2:width] = image_D
+
+#cv2.imshow("4: A/B &amp; C/D", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
+
+#5: C/D &amp; A/B:
+image[0:width/2,0:height/2] = image_C
+image[0:width/2,height/2:height] = image_D
+image[height/2:height,0:width/2] = image_A
+image[height/2:height,width/2:width] = image_B
+
+#cv2.imshow("5: A/B &amp; C/D", image)
+#k = cv2.waitKey(0)
+
+#cv2.destroyAllWindows()
+
+#6: C/D &amp; B/A:
+image[0:width/2,0:height/2] = image_C
+image[0:width/2,height/2:height] = image_D
+image[height/2:height,0:width/2] = image_B
+image[height/2:height,width/2:width] = image_A
+
+#cv2.imshow("6: C/D &amp; A/B", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
+
+#7: D/C &amp; A/B:
+image[0:width/2,0:height/2] = image_D
+image[0:width/2,height/2:height] = image_C
+image[height/2:height,0:width/2] = image_A
+image[height/2:height,width/2:width] = image_B
+
+#cv2.imshow("7: D/C &amp; A/B", image)
+#k = cv2.waitKey(0)
+#cv2.destroyAllWindows()
+
+# 8: D/C &amp; B/A:
+image[0:width/2,0:height/2] = image_D
+image[0:width/2,height/2:height] = image_C
+image[height/2:height,0:width/2] = image_B
+image[height/2:height,width/2:width] = image_A
+
+cv2.imshow("8: D/C &amp; B/A", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('bielmix.png',image)
+
+cv2.destroyAllWindows()</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change color of a Region of Interest (ROI)
+In this example we&#8217;ll change a color from a ROI that we selected from the program. The ROI are change for White, Black and another color of interest.</p>
+</li>
+</ul>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="bolhas.png" alt="Bolhas" width="300" height="300">
+</div>
+<div class="title">Figure 5. Bolhas image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="BolhaWhite.png" alt="BolhasWhite" width="300" height="300">
+</div>
+<div class="title">Figure 6. BolhasWhite image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="BolhaCor.png" alt="BolhaCor" width="300" height="300">
+</div>
+<div class="title">Figure 7. BolhasColor image</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="BolhaBlack.png" alt="BolhaBlack" width="300" height="300">
+</div>
+<div class="title">Figure 8. BolhaBlack image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Digital Image Processing
+# Student: Samuel Amico
+# Number: 20180010181
+# Exercise 2.1 - bolhas.png
+
+
+import numpy as np
+import cv2
+import time
+
+image = cv2.imread('bolhas.png',0)
+
+height, width = image.shape
+print("height - y: ",height,"width - x: ",width)
+
+# P1 = top-left &amp; P2 = bottom-right
+
+P1x = input("Ponto 1 x - top:")
+P1y = input("Ponto 1 y - top:")
+P2x = input("Ponto 2 x - bot:")
+P2y = input("Ponto 2 y - bot:")
+print("P1 = (",P1x,",",P1y,")  ","P2 = (",P2x,",",P2y,")")
+
+
+if (image is not None):
+	cv2.imshow("Original", image)
+
+k = cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+cv2.rectangle(image,(int(P1x-3),int(P1y-3)),(int(P2x+3),int(P2y+3)),(0,0,0),2)
+cv2.imshow("Rec in Image", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('RecBolha.png',image)
+
+# ROI --&gt; black
+for i in range(P1x,P2x):
+	for j in range(P1y,P2y):
+		image[i,j] = 0
+
+cv2.imshow("Black ROI", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaBlack.png',image)
+cv2.destroyAllWindows()
+
+# ROI --&gt; White
+for i in range(P1x,P2x):
+	for j in range(P1y,P2y):
+		image[i,j] = 255
+# ROI --&gt; Color
+for i in range(P1x,P2x):
+	for j in range(P1y,P2y):
+		image[i,j] = [cor_B,cor_G,cor_R]
+
+cv2.imshow("White ROI", image)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaWhite.png',image)
+cv2.destroyAllWindows()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_filling_regions">Filling regions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Labeling objects
+The example illustrates the use of two functions: a) Count regions with and without hoeles, b) Fill holes. To do this, a special function called FloodFill() consists of finding a pixel(pixel of interest) and,from this, filling the adjacent regions in a color chosen by the user. The FloodFill function works like this: the function find the start pixel and works by running neighboring pixels and checking the BGR or gray intensity (and changes to the desired color).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>But this algorithm does not work when the number of objects exceeds 255, for this a different number representation as such as floting point.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="bolhas.png" alt="Bolhas" width="300" height="300">
+</div>
+<div class="title">Figure 9. Bolhas image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="BolhaAtualizada.png" alt="BolhasAtualizadas" width="300" height="300">
+</div>
+<div class="title">Figure 10. BolhaAtualizada image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="BolhaCheia.png" alt="BolhaPreenchida" width="300" height="300">
+</div>
+<div class="title">Figure 11. BolhaCheia image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="BolhaFuro.png" alt="BolhaFuro" width="300" height="300">
+</div>
+<div class="title">Figure 12. BolhaFuro image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="BolhaTotal.png" alt="BolhaTotal" width="300" height="300">
+</div>
+<div class="title">Figure 13. BolhaTotal image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Processamento Digital de Imagem
+# Aluno: Samuel Amico
+# Matricula: 20180010181
+# Trabalho 4 - referente Histogramas
+
+import numpy as np
+import cv2
+import time
+import scipy.ndimage as ndimage
+
+# Ler imagem grayscale:
+image = cv2.imread('bolhas.png',0)
+cv2.imshow(' Original Image',image)
+k = cv2.waitKey(0)
+
+# dimensoes da imagem
+height, width = image.shape[:2]
+
+
+
+### apagando as bolhas que tocam as paredes:
+bolhas_parede = 0
+img = image
+for i in range(height):
+	if(img[i,0]==255):
+		cv2.floodFill(img,None,(0,i),(0,),(0,),(0,))
+	if(img[i,width-1]==255):
+		cv2.floodFill(img,None,(width-1,i),(0,),(0,),(0,))
+
+for i in range(width):
+	if(img[0,i]==255):
+		cv2.floodFill(img,None,(i,0),(0,),(0,),(0,))
+	if(img[height-1,i]==255):
+		cv2.floodFill(img,None,(i,height-1),(0,),(0,),(0,))
+
+cv2.imshow("Image refresh",image)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaAtualizada.png',image)
+cv2.destroyAllWindows()
+
+## Find Holes and count holes too
+image_fill = image.copy()
+
+obj=0
+mask = np.zeros((height+2,width+2),np.uint8)
+
+
+labels, n_regions = ndimage.label(image)
+print("Numbers of bublles = ", n_regions)
+
+## Count holes:
+for i in range(height):
+	for j in range(width):
+		if(image[i,j]==0):
+			obj=obj+1
+			cv2.floodFill(image_fill,mask,(j,i),obj)
+
+cv2.imshow("Floodfill",image_fill)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaCheia.png',image_fill)
+
+for i in range(height):
+	for j in range(width):
+		if(image[i,j]==255):
+			obj=obj+1
+			c=cv2.floodFill(image_fill,mask,(j,i),0)
+
+cv2.imshow("Holes",image_fill)
+k = cv2.waitKey(0)
+#cv2.imwrite('BolhaFuro.png',image_fill)
+cv2.destroyAllWindows()
+
+labels, n_regions = ndimage.label(image_fill)
+print("Numbers of holes = ", n_regions)
+
+
+
+## Resultado
+
+cv2.destroyAllWindows()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_histogram">Histogram</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Histograms in digital images in grayscale,for example,usually associate a histogram with the occurrence count of each of the possible tones in an image. Roughly, the histogram gives an estimate of the probability of occurrence of gray tones in the image. In this example I&#8217;m using Histogram equalization, this method improves the contrast in an image, in order to stretch out the intesity range.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="HistEqualizado.png" alt="HistEqualizado" width="900" height="800">
+</div>
+<div class="title">Figure 14. HistEqualizado image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Processamento Digital de Imagem
+# Aluno: Samuel Amico
+# Matricula: 20180010181
+# Trabalho 4 - Histograma
+
+import numpy as np
+import cv2
+import time
+
+capture = cv2.VideoCapture(0)
+
+
+while capture.isOpened():
+	ret,img = capture.read()
+	old_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+
+	equ = cv2.equalizeHist(old_gray)
+	res = np.hstack((old_gray,equ))
+
+	#cv2.imshow('image',old_gray)
+	cv2.imshow('Histogram equ',res)
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	if pressed_key == ord("z"):
+		#cv2.imwrite('HistEqualizado.png',res)
+		break
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_motion_detector">Motion Detector</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Continuing to use the idea of image histogram, in this example we&#8217;ll detect if a moviment occurs in a ROI. The main idea of the code is based on the use of correlation between two frames of an video. However, we&#8217;ll use only the Blue Channel on openCV (you can use the Red or Green) to use the  HistComparation and calcHist on the code.If the number comparation &lt; 0, then movement is detected.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="Motion.png" alt="Motion" width="800" height="700">
+</div>
+<div class="title">Figure 15. Motion image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="DectMotion.png" alt="DectMotion" width="800" height="700">
+</div>
+<div class="title">Figure 16. DectMotion image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Processamento Digital de Imagem
+# Aluno: Samuel Amico
+# Matricula: 20180010181
+# Trabalho 5 - Histogramas
+
+
+
+#### Histogram Comparationz
+import numpy as np
+import cv2
+import time
+
+
+global flag
+flag = True
+drawing = False
+img = None
+c = 1
+boxes = []
+capture = cv2.VideoCapture(0)
+_,img = capture.read()
+
+# a funcao aki chama a interupcao do mouse
+# o intuito e voce fazer uma area retangular para ser seu roi
+def on_mouse(event,x,y,flags,params):
+	global boxes,drawing
+	if event == cv2.EVENT_LBUTTONDOWN:
+		print('Start Mouse Position:' ,str(x),str(y))
+		s = (x,y)
+		boxes.append(s)
+		drawing = True
+		cv2.circle(img,(x,y),4,(0,255,0),2)
+		cv2.imshow('img',img)
+	elif event == cv2.EVENT_LBUTTONUP:
+		print('END Mouse Position:',str(x),str(y))
+		e = (x,y)
+		boxes.append(e)
+		drawing = False
+		mode = True
+
+def ROI_segment(retangulo,capturing):
+	hsv_roi = cv2.cvtColor(retangulo, cv2.COLOR_BGR2HSV)
+	mask = cv2.inRange(hsv_roi,np.array((0.,60.,32.)),np.array((180.,255.,255.)))
+	roi_hist = cv2.calcHist([hsv_roi], [0],None,[16],[0,180])
+	return cv2.normalize(roi_hist,roi_hist, 0, 255, cv2.NORM_MINMAX)
+
+while capture.isOpened():
+	cv2.namedWindow('img')
+	#CHAMA A FUNC MOUSE ALI EM CIMA
+	cv2.setMouseCallback('img',on_mouse,0)
+	ret,img = capture.read(0)
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	if not ret:
+		break
+	# enquanto esta voce nao escolheu os 4 pontos
+	# ele vai ficar nesse if
+	if len(boxes)&lt;4:
+		orig = img.copy()
+		#copia o primeiro frame da imagem
+		print("entrou no roi")
+		# fica no while ate acabar os 4 pontos, a imagem nao se atualiza
+		while len(boxes) &lt; 4:
+			cv2.imshow('img',img)
+			cv2.waitKey(0)
+		boxes = np.array(boxes)
+		s = boxes.sum(axis = 1)
+		# ele vai pegar os menores pontos
+		t1 = boxes[np.argmin(s)]
+		# pegar os maiores pontos
+		br = boxes[np.argmax(s)]
+		# separa a regiao desses pontos
+		roi = orig[t1[1]:br[1],t1[0]:br[0]]
+		roi_area = (t1[0],t1[1],br[0],br[1])
+		# chama aquela funcao que pega o histograma desse retangulo que voce selecionou
+		roi_hist = ROI_segment(roi,img)
+		flag = False
+	if len(boxes)&gt;4:
+		ret,img = capture.read(0)
+		# cria o hist do novo frame
+		#new_orig = img.copy()
+		new_roi = img[t1[1]:br[1],t1[0]:br[0]]
+		new_hsv = cv2.cvtColor(new_roi, cv2.COLOR_BGR2HSV)
+		cv2.rectangle(img,(t1[0],br[0]),(t1[1],br[1]),(0,255,0),3)
+		#cv2.imshow('hsv_roi_new',new_roi)
+		#cv2.imshow('roi',roi)
+
+		base_hist = cv2.calcHist([new_hsv], [0],None,[16],[0,180])
+		base_roi = cv2.normalize(base_hist,base_hist, 0, 255, cv2.NORM_MINMAX)
+		# comparamos agora os dois ROI
+
+		number = cv2.compareHist( base_roi, roi_hist, cv2.HISTCMP_CORREL);
+		print("number comparation=",number)
+
+		#pts = np.int0(cv2.boxPoints(ret1))
+		#cv2.polylines(img,[pts],True,255,2)
+		#cv2.imshow("Final",img)
+
+	cv2.imshow('img',img)
+	if pressed_key == ord("z"):
+		cv2.imwrite('Motion.png',img)
+		break
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lapaciangauss_filter">LapacianGauss Filter</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this simple example, we&#8217;ll just use the different filters in the video capture.The main filter is the LaplacianGauss, this filter is composed of the sequence of the application of a Gaussian and Laplacian filter.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="ImagemOriginal.png" alt="ImagemOriginal" width="500" height="500">
+</div>
+<div class="title">Figure 17. ImagemOriginal image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="LaplaceGauss.png" alt="LaplaceGauss" width="500" height="500">
+</div>
+<div class="title">Figure 18. LaplaceGauss image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python"># Processamento Digital de Imagem
+# Aluno: Samuel Amico
+# Matricula: 20180010181
+# Trabalho 6 - Filtros
+
+import numpy as np
+import cv2
+import time
+
+capture = cv2.VideoCapture(0)
+
+
+while capture.isOpened():
+	ret,img = capture.read()
+	gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+
+	kernel_media = np.ones((5,5),np.float32)/25
+	gauss = [1,2,1,2,4,2,1,2,1]
+	sobel_x = [-1,0,1,-2,0,2,-1,0,1]
+	sobel_y = [-1,-2,-1,0,0,0,1,2,1]
+	lapace = [0,-1,0,-1,4,-1,0,-1,0]
+
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	# Convolve:
+	print('--- Menu ----\n')
+	print('a- media ----\n')
+	print('b- gauss ----\n')
+	print('c- horizontal ----\n')
+	print('d- vertical ----\n')
+	print('e- laplace ----\n')
+	print('f- laplacegauss ----\n')
+	print('z- Sair ----\n')
+	#a)
+	if pressed_key == ord("a"):
+		dst = cv2.filter2D(img,-1,kernel_media)
+		cv2.imshow(" media ",dst)
+		#cv2.imwrite('FiltroMedia.png',dst)
+
+	elif pressed_key == ord("b"):
+		dst = cv2.GaussianBlur(img,(11,11),0)
+		cv2.imshow(" gauss ",dst)
+		#cv2.imwrite('FiltroGauss.png',dst)
+
+	elif pressed_key == ord("c"):
+		dst = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
+		cv2.imshow(" Sobel-x ",dst)
+		#cv2.imwrite('FiltroSx.png',dst)
+
+	elif pressed_key == ord("d"):
+		dst = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)
+		cv2.imshow(" Sobel-y ",dst)
+		#cv2.imwrite('FiltroSy.png',dst)
+
+	elif pressed_key == ord("e"):
+		dst = cv2.Laplacian(img,cv2.CV_64F,ksize=1)
+		cv2.imshow(" Laplace ",dst)
+		#cv2.imwrite('FiltroLaplace.png',dst)
+
+	elif pressed_key == ord("f"):
+		dst1 = cv2.GaussianBlur(img,(5,5),0)
+		dst = cv2.Laplacian(dst1,cv2.CV_64F,ksize=1)
+		cv2.imshow(" LaplaGauss ",dst)
+		cv2.imwrite('FiltroLaplaceGauss.png',dst)
+
+	if pressed_key == ord("z"):
+		cv2.imwrite('ImagemOriginal.png',img)
+		break
+
+	cv2.imshow(" Orig ",img)
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tilt_shift">Tilt-Shift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this example we`ll simulate a photography technique called tilt-shift. The principle used to simulate the tilt-shift lens is to combine the original image with its low-pass filtered version, so as to produce in the vicinity of the edge the effect of the while maintaining the image without blurring in the center region.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="bara.png" alt="bara" width="500" height="500">
+</div>
+<div class="title">Figure 19. bara image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="ImgOrig.png" alt="ImgOrig" width="500" height="500">
+</div>
+<div class="title">Figure 20. ImgOrig image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="TitlShift.png" alt="TitlShift" width="500" height="500">
+</div>
+<div class="title">Figure 21. TitlShift image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import numpy as np
+import cv2
+import math
+import time
+
+
+def nothing(x):
+	pass
+
+####### TRACKBAR #########
+cv2.namedWindow('bar')
+cv2.createTrackbar('abertura','bar',0,100,nothing)
+cv2.createTrackbar('Blur','bar',0,100,nothing)
+cv2.createTrackbar('Center','bar',0,100,nothing)
+
+# Utilizando a equacao para criar a imagem preto e branco:
+
+
+image = cv2.imread('suica.jpg')
+image = cv2.resize(image,None,fx=0.4,fy=0.4,interpolation=cv2.INTER_CUBIC)
+
+height, width,ch = image.shape
+print("height - y: ",height,"width - x: ",width,ch)
+
+# Imagem borrada:
+imageA = image.copy()
+for i in range(4):
+	imageA = cv2.GaussianBlur(imageA,(3,3),0)
+
+
+# Imagem Normal:
+imageB = image.copy()
+
+
+image_1 = np.ones((height,width,3))*255
+image_2 = np.ones((height,width,3))*255
+image_3 = np.ones((height,width,3))
+
+ab = 33.0
+bl = 3.4
+cen = 40.0
+
+# valores para usar: ab =22.0, bl=2.0, cen=80.0
+
+
+for i in range(height):
+	x = i*100.0/width
+	val = (math.tanh((x-ab)/bl) - math.tanh((x-cen)/bl) )/2.0
+	pixel_val = 255.0 * val
+	for j in range(width):
+		image_1[i,j] = pixel_val
+		image_2[i,j] = 255.0 - pixel_val
+
+cv2.imshow("bar",image_1)
+image_1 = cv2.addWeighted(image_1,1.0,image_1,1.0,0,dtype=cv2.CV_8U)
+
+vis1 = cv2.multiply(image_2,image_1,dtype=cv2.CV_8U)
+vis = cv2.multiply(imageB,image_1,dtype=cv2.CV_8U)
+vis3 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(vis1),0.3,0,dtype=cv2.CV_8U)
+
+
+
+teste = cv2.addWeighted(vis,1.0,vis,1.0,0,dtype=cv2.CV_8U)
+#cv2.imshow("Imagem blurring perto",teste)
+
+## Nao estao UINT8
+vis1 = cv2.multiply(image_2,image_1,dtype=cv2.CV_8U)
+vis2 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(vis1),1.0,0,dtype=cv2.CV_8U)
+vis3 = cv2.addWeighted(imageA,1.0,vis1,1.0,0,dtype=cv2.CV_8U)
+#cv2.imshow("Imagem Central",vis2)
+#cv2.imshow("Imagem blurring ",vis3)
+
+## COnvertendo --- apartir daqui ja foram convertidas as imagens para 8UINT
+image_3 = vis1.astype(np.uint8)
+image_4 = image_1.astype(np.uint8)
+
+ret, thr = cv2.threshold(image_3,10,255,cv2.THRESH_BINARY)
+ret1, thr1 = cv2.threshold(image_4,10,255,cv2.THRESH_BINARY)
+
+
+vis22 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(thr),1.0,0,dtype=cv2.CV_8U)
+vis33 = cv2.addWeighted(imageA,1.0,thr,1.0,0,dtype=cv2.CV_8U)
+
+
+cv2.imshow("Imagem Central",vis22)
+cv2.imshow("Imagem blurring ",vis33)
+#cv2.imshow("Imagem blurring de perto ",teste)
+
+fin = cv2.bitwise_and(vis22,vis33)
+cv2.imshow("fin",fin)
+
+k = cv2.waitKey(0)
+cv2.destroyAllWindows()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tilt_shift_video">Tilt-Shift Video</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The same idea of Tilt-Shift applied in the image, we&#8217;ll apply in a video. A very valuable hint, what can be done before you start to analyze the video (such as calculations of arrays), always do before. In this example we must create the image_1 and image_2 arrays before we even start the While loop.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="out-2.ogv" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import numpy as np
+import cv2
+import math
+import time
+
+capture = cv2.VideoCapture('walking.avi')
+
+ret1, frame1 = capture.read()
+frame1 = cv2.resize(frame1, None,fx=1.1, fy=1.1, interpolation = cv2.INTER_LINEAR)
+height, width,ch = frame1.shape
+print("height - y: ",height,"width - x: ",width,ch)
+
+image_1 = np.ones((height,width,3))*255
+image_2 = np.ones((height,width,3))*255
+image_3 = np.ones((height,width,3))
+
+ab = 33.0
+bl = 3.4
+cen = 40.0
+
+for i in range(height):
+	x = i*100.0/width
+	val = (math.tanh((x-ab)/bl) - math.tanh((x-cen)/bl) )/2.0
+	pixel_val = 255.0 * val
+	for j in range(width):
+		image_1[i,j] = pixel_val
+		image_2[i,j] = 255.0 - pixel_val
+
+image_1 = cv2.addWeighted(image_1,1.0,image_1,1.0,0,dtype=cv2.CV_8U)
+vis1 = cv2.multiply(image_2,image_1,dtype=cv2.CV_8U)
+## COnvertendo --- apartir daqui ja foram convertidas as imagens para 8UINT
+image_3 = vis1.astype(np.uint8)
+ret, thr = cv2.threshold(image_3,10,255,cv2.THRESH_BINARY)
+
+### Salvando video:
+#fourcc = cv2.VideoWriter_fourcc(*'XVID')
+#out = cv2.VideoWriter('output.avi',fourcc,10.0,(640,480))
+
+
+while capture.isOpened():
+	time.sleep(.05)
+	ret, frame = capture.read()
+	frame = cv2.resize(frame, None,fx=1.1, fy=1.1, interpolation = cv2.INTER_LINEAR)
+	imageA = frame.copy()
+	imageB = frame.copy()
+	for i in range(5):
+		imageA = cv2.GaussianBlur(imageA,(3,3),0)
+
+	vis22 = cv2.addWeighted(imageB,1.0,cv2.bitwise_not(thr),1.0,0,dtype=cv2.CV_8U)
+	vis33 = cv2.addWeighted(imageA,1.0,thr,1.0,0,dtype=cv2.CV_8U)
+	fin = cv2.bitwise_and(vis22,vis33)
+
+	#cv2.imshow('Pedestrian Detection', frame)
+	cv2.imshow('Pedestrian Tilt', fin)
+	#out.write(fin)
+	c = cv2.waitKey(1)
+	if c == ord("z"):
+		break
+
+# Close the capturing device
+capture.release()
+#out.release()
+# Close all windows
+cv2.destroyAllWindows()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pointilism_art">Pointilism art</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This example we&#8217;ll use the Canny Edge Detection to create a pointilism art.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="canny.png" alt="canny" width="500" height="500">
+</div>
+<div class="title">Figure 22. canny image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="golden.jpg" alt="golden" width="500" height="500">
+</div>
+<div class="title">Figure 23. golden image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="points.png" alt="points" width="500" height="500">
+</div>
+<div class="title">Figure 24. points image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import numpy as np
+import cv2
+import math
+import time
+import random
+
+def nothing(x):
+	pass
+
+STEP = 5
+####### TRACKBAR #########
+cv2.namedWindow('bar')
+cv2.createTrackbar('top','bar',0,255,nothing)
+
+ab = 10
+bl = 3*ab
+
+image = cv2.imread('img1.jpeg',0)
+frame = cv2.imread('img1.jpeg')
+height, width = image.shape
+print("height - y: ",height,"width - x: ",width)
+
+xranges = [0]*height
+yranges = [0]*width
+
+for i in range(height):
+	xranges[i] = xranges[i]*STEP+STEP/2
+for i in range(width):
+	yranges[i] = yranges[i]*STEP+STEP/2
+
+xranges.sort()
+
+
+points = np.ones((height,width,3))*255
+points = points.astype(np.uint8)
+
+# Algoritimo:
+
+#while True:
+	#pressed_key = cv2.waitKey(1) &amp; 0xFF
+ab = 100
+	#ab = cv2.getTrackbarPos('top','bar')
+canny = cv2.Canny(image, ab, bl)
+cv2.imshow('bar', canny)
+	#if pressed_key == ord("z"):
+		#break
+
+
+for i in range(len(yranges)):
+	yranges.sort()
+	for j in range(len(xranges)):
+		if(canny[j,i] == 255):
+			x = int(i+(random.random() % (4)) - 2)
+			y = int(j+(random.random() % (4)) - 2)
+			color_b = int(frame[y,x,0])
+			color_g = int(frame[y,x,1])
+			color_r = int(frame[y,x,2])
+			#print("x,y=",x,y)
+			cv2.circle(points,(x,y),4,(color_b,color_g,color_r),-1)
+		else:
+			x = int(i+(random.random()%(4))- 1)
+			y = int(j+(random.random()%(4))- 1)
+			color_b = int(frame[y,x,0])
+			color_g = int(frame[y,x,1])
+			color_r = int(frame[y,x,2])
+			#print("x,y = ",x,y)
+			#print("b,g,r = ",color_b,color_g,color_r)
+			cv2.circle(points,(x,y),5,(color_b,color_g,color_r),-1)
+
+
+cv2.imshow('points', points)
+
+
+cv2.waitKey(0)
+#cv2.imwrite('canny.png',canny)
+#cv2.imwrite('golden.png',golden)
+cv2.imwrite('points1.png',points)
+
+cv2.destroyAllWindows()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_k_means">K-means</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The K-means algorithm is based on the division of samples into classes (number given by the user). The algorithm follows the steps: Initializes the initial centroid mk, calculates for each sample Xi using the Euclidean distance in relation to the centroids, and recalculates the centroids again based on the mean of the samples, and repeats this until the Xi do not change class</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="myimage.gif" alt="myimage" width="500" height="500">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;cstdlib&gt;
+
+using namespace cv;
+
+int main(int argc, char** argv)
+{
+  for(int i=0; i &lt;10; i++){
+	int nClusters = 8;
+	Mat rotulos;
+	int nRodadas = 1;
+	Mat centros;
+	char name[30];
+
+	if(argc!=3){
+	  exit(0);
+	}
+
+	Mat img = imread( argv[1], CV_LOAD_IMAGE_COLOR);
+	Mat samples(img.rows * img.cols, 3, CV_32F);
+
+	for(int y=0; y&lt; img.rows; y++){
+		for(int x=0; x&lt; img.cols;x++){
+			for(int z=0;z&lt;3;z++){
+				samples.at&lt;float&gt;(y + x*img.rows, z) = img.at&lt;Vec3b&gt;(y,x)[z];
+			}
+		}
+	}
+
+	kmeans(samples,
+			nClusters,
+			rotulos,
+			TermCriteria(CV_TERMCRIT_ITER|CV_TERMCRIT_EPS,10000,0.0001),
+			nRodadas,
+			KMEANS_RANDOM_CENTERS,
+			centros);
+
+	Mat rotulada( img.size() , img.type() );
+	for(int y =0; y&lt; img.rows; y++){
+		for(int x =0; x &lt; img.cols; x++){
+			int indice = rotulos.at&lt;int&gt;(y + x*img.rows,0);
+			rotulada.at&lt;Vec3b&gt;(y,x)[0] = (uchar) centros.at&lt;float&gt;(indice,0);
+			rotulada.at&lt;Vec3b&gt;(y,x)[1] = (uchar) centros.at&lt;float&gt;(indice,1);
+			rotulada.at&lt;Vec3b&gt;(y,x)[2] = (uchar) centros.at&lt;float&gt;(indice,2);
+		}
+	}
+	imshow("cluster img",rotulada);
+	waitKey(0);
+	sprintf(name,"tes%d.jpg",i);
+	imwrite(name,rotulada);
+ }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_homomorphic_filter">Homomorphic Filter</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The homomorphic filter is based on the luminance equation vs reflectance. f = i (x, y) r (x, y), where we must apply the logarithm in function f, and then calculate the DFT, and continue our process by multiplying the image by the filter passing through all stages of the filters in the domain of the frequency, and in the end we apply the exponential to reverse the logarithm of the beginning. Through variables that control our filter equation we are able to adjust our image to improve the product luminance reflectance.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="ponte_iluminada.jpg" alt="ponte_iluminada" width="500" height="500">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;opencv2/imgproc/imgproc.hpp&gt;
+
+#define RADIUS 100
+
+using namespace cv;
+using namespace std;
+
+// Existe um arquivo, no caso o exercicio anterior onde eu gerei uma imagem
+// mal iluminada utilizando a funca gamma.
+
+Mat imaginaryInput, complexImage, multsp;
+Mat padded, filter, mag;
+Mat image,imagegray, tmp;
+Mat_&lt;float&gt; realInput,zeros;
+vector&lt;Mat&gt; planos;
+
+float mean;
+char key;
+
+int dft_M, dft_N;
+
+char *name;
+
+// variaveis para filtro
+float yl = 0;
+int yl_slider = 0;
+int yl_slider_max = 100;
+
+float yh = 0;
+int yh_slider =50;
+int yh_slider_max=100;
+
+float d0 = 0;
+int d0_slider=50;
+int d0_slider_max=100;
+
+float c=0;
+int c_slider=5;
+int c_slider_max=100;
+
+char TrackbarName[50];
+
+// funcao de trocar os quadrantes:
+
+void deslocaDFT(Mat&amp; image)
+{
+	Mat tmp2,A,B,C,D;
+
+	// se a imagem tiver tamanho impar, recortaa regiao para evitar copias de tamano desigual
+	image = image(Rect(0,0, image.cols &amp; -2, image.rows &amp; -2));
+	int cx = image.cols/2;
+	int cy = image.rows/2;
+
+	//reoganiza os quadrantes
+	//AB -&gt; DC
+	//CD -&gt; BA
+	A = image(Rect(0,0,cx,cy));
+	B = image(Rect(cx,0,cx,cy));
+	C = image(Rect(0,cy,cx,cy));
+	D = image(Rect(cx,cy,cx,cy));
+
+	//A &lt;-&gt; D
+	A.copyTo(tmp2); D.copyTo(A); tmp2.copyTo(D);
+
+	//C &lt;-&gt; B
+	C.copyTo(tmp2); B.copyTo(C); tmp2.copyTo(B);
+
+}
+
+// funcao do filtro homomorfico
+void on_trackbar_homomorphic(int, void*)
+{
+    yl = 26; //(float) yl_slider / 100.0;
+    yh = 44; //(float) yh_slider / 100.0;
+    d0 = 35; //25.0 * d0_slider / 100.0;
+    c  = 8; //(float) c_slider  / 100.0;
+
+    cout &lt;&lt; "yl = " &lt;&lt; yl &lt;&lt; endl;
+    cout &lt;&lt; "yh = " &lt;&lt; yh &lt;&lt; endl;
+    cout &lt;&lt; "d0 = " &lt;&lt; d0 &lt;&lt; endl;
+    cout &lt;&lt; "c = "  &lt;&lt; c  &lt;&lt; endl;
+
+    image = imread(name);
+    cvtColor(image, imagegray, CV_BGR2GRAY);
+    imshow("original", imagegray);
+
+    // realiza o padding da imagem
+    copyMakeBorder(imagegray, padded, 0,
+                   dft_M - image.rows, 0,
+                   dft_N - image.cols,
+                   BORDER_CONSTANT, Scalar::all(0));
+
+    // limpa o array de matrizes que vao compor a
+    // imagem complexa
+    planos.clear();
+    // cria a compoente real
+    realInput = Mat_&lt;float&gt;(padded);
+    // insere as duas componentes no array de matrizes
+    planos.push_back(realInput);
+    planos.push_back(zeros);
+
+    // combina o array de matrizes em uma unica
+    // componente complexa
+    merge(planos, complexImage);
+
+    // calcula o dft
+    dft(complexImage, complexImage);
+
+    // realiza a troca de quadrantes
+    deslocaDFT(complexImage);
+
+    // filtro homomorfico
+    for(int i=0; i &lt; tmp.rows; i++){
+        for(int j=0; j &lt; tmp.cols; j++){
+            float d2 = (i-dft_M/2)*(i-dft_M/2)+(j-dft_N/2)*(j-dft_N/2);
+            //cout &lt;&lt; "d2 = " &lt;&lt; d2 &lt;&lt; endl;
+            tmp.at&lt;float&gt; (i,j) = (yh-yl)*(1.0 - (float)exp(-(c*d2/(d0*d0)))) + yl;
+        }
+    }
+
+    // cria a matriz com as componentes do filtro e junta
+    // ambas em uma matriz multicanal complexa
+    Mat comps[]= {tmp, tmp};
+    merge(comps, 2, filter);
+
+    // aplica o filtro frequencial
+    mulSpectrums(complexImage,filter,complexImage,0);
+
+    // troca novamente os quadrantes
+    deslocaDFT(complexImage);
+
+    // calcula a DFT inversa
+    idft(complexImage, complexImage);
+
+    // limpa o array de planos
+    planos.clear();
+
+    // separa as partes real e imaginaria da
+    // imagem filtrada
+    split(complexImage, planos);
+
+    // normaliza a parte real para exibicao
+    normalize(planos[0], planos[0], 0, 1, CV_MINMAX);
+    imshow("filtrada", planos[0]);
+
+}
+
+
+
+int main(int argc, char** argv)
+{
+   namedWindow("ponte mal iluminada",WINDOW_NORMAL);
+   namedWindow("ponte filtrada",WINDOW_NORMAL);
+
+   if (argc != 2)
+   {
+	  cerr &lt;&lt; "erro";
+	  return 1;
+   }
+
+   name = argv[1];
+   image = imread(name);
+
+   //Primeiro identificar os melhores valores para calcular a dft mais otimizado
+   dft_M = getOptimalDFTSize(image.rows);
+   dft_N = getOptimalDFTSize(image.cols);
+
+   // A func copyMakeBorder cria uma versao da imagem com uma borda preenchida de zeros
+   copyMakeBorder(image , padded , 0,
+					dft_M - image.rows, 0,
+					dft_N - image.cols,
+					BORDER_CONSTANT, Scalar::all(0));
+
+   // parte imaginaria da matriz complexa
+   zeros = Mat_&lt;float&gt;::zeros(padded.size());
+
+   // prepara a matriz complexa para ser preenchida
+   complexImage = Mat(padded.size(), CV_32FC2, Scalar(0));
+
+   // funcao de transferencia do filtro deve ter o mesmo tamanho e tipo da matriz complexa
+   filter = complexImage.clone();
+
+   // cria uma matriz temporaria para compententes real e imaginaria do filtro
+   tmp = Mat(dft_M , dft_N, CV_32F);
+
+   // funcao do filtro esta ali em cima para ficar mais bonito
+
+   //Tracks:
+    // Inicializar trackbars
+
+    /*
+    sprintf( TrackbarName, "yl" );
+    createTrackbar( TrackbarName, "filtrada",
+                    &amp;yl_slider,
+                    yl_slider_max,
+                    on_trackbar_homomorphic );
+
+    sprintf( TrackbarName, "yh" );
+    createTrackbar( TrackbarName, "filtrada",
+                    &amp;yh_slider,
+                    yh_slider_max,
+                    on_trackbar_homomorphic );
+
+    sprintf( TrackbarName, "d_zero" );
+    createTrackbar( TrackbarName, "filtrada",
+                    &amp;d0_slider,
+                    d0_slider_max,
+                    on_trackbar_homomorphic );
+
+    sprintf( TrackbarName, "c" );
+    createTrackbar( TrackbarName, "filtrada",
+                    &amp;c_slider,
+                    c_slider_max,
+                    on_trackbar_homomorphic );
+
+    on_trackbar_homomorphic(100, NULL);
+    */
+
+    while (1) {
+        key = (char) waitKey(10);
+        if( key == 27 ) break;
+    }
+
+    return 0;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_color_detect">Color detect</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Detecção de Cor para posterior rastreamento.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">#### Color detect
+import numpy as np
+import cv2
+import time
+#from Tkinter import *
+#from thread import *
+#import time
+#import threading
+
+
+
+capture = cv2.VideoCapture(0)
+
+def rescale_frame(capturing, wpercent=50, hpercent=50):
+    width = int(capturing.shape[1] * wpercent / 100)
+    height = int(capturing.shape[0] * hpercent / 100)
+    return cv2.resize(capturing, (width, height), interpolation=cv2.INTER_AREA)
+
+def roi_seg(img,hsv):
+	low_limit = np.array([80,100,100])     # color (100,50,50)
+	upper_limit = np.array([200,255,255]) # color (120,255,255)
+	# filtro anti-ruido
+	mask2 = cv2.inRange(hsv,low_limit,upper_limit)
+	res = cv2.bitwise_and(img,img,mask=mask2)
+	cv2.imshow('res',res)
+	kernel = np.ones((20,20),np.uint8)                  # destruindo os ruidos
+	res1 = cv2.morphologyEx(res,cv2.MORPH_OPEN,kernel)
+	return res1
+
+
+def filtragem(frame):
+	blurred = cv2.GaussianBlur(frame,(11,11),0)
+	errosion = cv2.erode(blurred,(11,11),1)
+	#cv2.imshow('filter',errosion)
+	hsv = cv2.cvtColor(errosion,cv2.COLOR_BGR2HSV)
+	roi = roi_seg(frame,hsv)
+	return roi
+
+def contorno(white_img,frame):
+	canny = cv2.Canny(white_img, 50, 200)
+	#cv2.imshow('canny',canny)
+	# depois tente aplicar contorno no canny
+	#ret1,thr = cv2.threshold(white_img, 127, 255, cv2.THRESH_BINARY)
+	result = cv2.findContours(canny,cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+	cont,hierarchy = result if len(result) == 2 else result[1:3]
+	if len(cont) &gt; 0:
+		areas = [cv2.contourArea(c) for c in cont]
+		max_index = np.argmax(areas)
+		cont_max = cont[max_index]
+		M = cv2.moments(cont[max_index])
+		if (M['m00'] != 0):
+			cx = int(M['m10']/M['m00'])
+			cy = int(M['m01']/M['m00'])
+			cv2.circle(frame,(cx,cy),8,(0,255,105),3)
+			return (cx,cy)
+	return (0,0)
+
+
+# tracando a reta de entrada para o controlador
+# as imagens funcionam mais ou menos assim:
+# ------------------------------
+#|(0,0)                        |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|				               |
+#|               (width,height)|
+# ------------------------------
+erro_old = 0
+cont = 0
+Y = 100
+
+#def threaded_server():
+#	while True:
+#		root = Tk()
+#		var = DoubleVar()
+#		scale = Scale(root,variable=var)
+#		scale.pack(anchor=CENTER)
+#		label.Label(root)
+#		label.pack()
+#		root.mainloop()
+
+
+while True:
+	#start_new_thread(threaded_server,())
+	_,img = capture.read()
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	frame = rescale_frame(img)
+	height,width = frame.shape[:2]
+	cx = width/2
+	cy = height/2
+	cv2.circle(frame,(cx,cy),8,(0,0,255),3)
+	roi = filtragem(frame)
+	### draw contorno e pegar o centroide:
+	(x1,y1)=contorno(roi,frame)
+	### controlador:
+	kp = 2
+	ki = 0.01
+	PO = x1
+	erro = PO - cx
+	cont = cont + erro
+	#print('erro=',erro)
+	Y = kp*erro+130 + ki*cont*0.1
+	cv2.circle(frame,(int(Y),cy),8,(255,10,0),3)
+	#####
+
+
+	#cv2.imshow('frame',frame)
+	if pressed_key == ord("z"):
+		break
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_vpython_opencv">Vpython + OpenCV</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Inspirado no kinect, é possível simular jogos controladors por movimento do jogador utilizando a câmera ?</p>
+</div>
+<div class="paragraph">
+<p>Sim, é possível e para isso eu vou explicar utilizando a ferramenta OpenCV e Vpython (simulação 3D).
+Vpython é um biblioteca de fácil aprendizado para quem quer começar a mexer com ferramenta gráfica em 3D. Não é tão complexo e robusto como o OpenGL, mas ele dá conta de muitos projetos de simulação. Sua sintaxe não é complexa, por exemplo, se deseja criar um objeto, algumas figuras como esfera e cilíndro já estão feitas, você só precisa escolhar dentre algumos parâmetros para modifica-los como: pos=(x,y,z) , size=(a1,a2,a3) e color; respectivamente você inicia numa posição com um tamanho e cor que você deseja. O site do Vpython contém mais explicações e detalhes de como construir objetos: vpython.org
+Quando você baixar o Vpython alguns exemplos vêm juntos com o pacote. Por exemplo o seguinte exemplo é bem intuitivo para começar a programar e construir cenários.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="Codigo1.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>Agora os codigos para rastrear movimentos usando OpenCV.
+1) A minha ideia inicial era fazer com que o movimento da câmera do jogo fosse obtida com o movimento de nosso rosto. Para isso a primeira etapa é detectar a face: duas ideias pode ser adotadas sendo uma delas mais automatica e eficiente, a outra seria setar manualmente a sua face. O primeiro ideia se baseia no algoritimo de Viola-Jones onde utilizando um arquivo de treinamento ja vindo com a biblioteca openCV e utilizando a função faceCascade.detectMultiScale() detectamos a face de uma pessoa de forma rápida e eficiente, a função nos retorna (x, y, w, h) que são as dimensões para desenharmos um retângulo em nossa face, apartir disso eu calculo o centro deste retangulo e a sua posição será a posição onde a nossa câmera estará no nosso jogo. Para isso é preciso fazer uma transformada de coordenadas, pois as coordenadas do Opencv e do Vpython são totalmente diferentes , inclusive a direção dos eixos, então baiscamente aplicamos uma transformação de matrizes rotacionais e de posição. A segunda ideia seria utilizar o algoritimo de fluxo optico, ou mean shift ou Lucas Kanade, o mean shift seria muito parecido com o viola jones, mas teriamos que setar manualmente o retângulo que seguiria o movimento de nossa face, enquanto o LK seria escolhido diretamente o ponto central, ambos precisão passar por a mesma transformação de coordenadas.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="gb.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>2) Para controlar o joystick, eu criei um controle virtual, onde o jogador deve passar a mão em um campo de pontos (Left, Right, Top e Bottom) onde se acionaria o comando no jogo. Para isso utilizei o algoritimo de Lucas Kanade onde o ponto-chave para isso foi que os campos de pontos são fixos e que a cada passada de movimento "brusco" ele acionariam um alerta. Os campos de pontos tem posições fixas e a cada repetição do laço de interação eles recebem suas coordenadas fixas, portanto caso o jogador movimento por exemplo a mão em um determinado campo, os pontos vão deslocar e assim acionando o alerta e depois retornando para sua posição inicial, porém deixando claro que o campo de pontos Left só e acionado caso o movimento de avanço dos pontos se dê na esquerda, caso não ele não será acionado. Isto previne que um movimento de qualquer direção não especifica com as caracteristicas daquele campo de pontos seja levada em conta.</p>
+</div>
+<div class="paragraph">
+<p>Segue abaixo o vídeo publicado no Youtube e os códigos:</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="YouTube.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>Foi criado um jogo de tenis onde o jogador controla  a raquete e tenta rebater a bola contra a parede.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Game completo</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>from visual import *
+import visual as vs   # for 3D panel
+import wx   # for widgets
+import cv2
+import numpy as np
+
+#### DECECAO DE FACE CONDICOES INICAIS
+arqCasc = 'haarcascade_frontalface_default.xml'
+faceCascade = cv2.CascadeClassifier(arqCasc)
+
+cap = cv2.VideoCapture(1)  #instancia o uso da webcam
+centro_x = 0
+centro_y = 0
+x_real = 0
+y_real = 0
+x=0
+y=0
+w=0
+h=0
+kernel = np.ones((5,5), dtype = "uint8")
+posica_x = 0
+posica_z = 0
+
+contador_time = 0
+
+
+##### USO DO lk PARA CONTROLE
+b = np.array([[]],dtype=np.float32)
+
+# parametros Lucas Ked
+lk_params = dict(winSize = (15,15),maxLevel=4,
+             criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT,10,0.03))
+# parametros shi - tasu, nao estou utilizando no momentos
+feature_params = dict(maxCorners= 100, qualityLevel = 0.3,
+                  minDistance = 7, blockSize = 7)
+
+#capture o primeiro frame
+capture = cv2.VideoCapture(0)
+_,old_img = capture.read()
+# convertar em escala cinza e adicione o parametro shi-tasu
+old_gray = cv2.cvtColor(old_img,cv2.COLOR_BGR2GRAY)
+p0 = cv2.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
+mask = np.zeros_like(old_img)
+
+# pre-pontos para teste e para saber se houve agitacao no gradiente
+val = np.array([[45.7,89.6],[45.7,79.6],[35.7,79.6],[35.7,89.6]],dtype=np.float32)
+
+# 5 primeiros sao esquerda, 5 depois direita:
+p1 = np.array([[[150.0,140.0],[170.0,140.0],[160,160.0],[150.0,180.0],[170.0,180.0],[450.0,140.0],[470.0,140.0],[460,160.0],[450.0,180.0],
+[470.0,180.0],[280.0,300.0],[300.0,300.0],[290.0,320.0],[280.0,340.0],[300.0,340.0],
+                [280.0,40.0],[300.0,40.0],[290.0,50.0],[280.0,70.0],[300.0,70.0]]],dtype=np.float32)
+inter = val
+
+x_1 = []
+x_2 = []
+y_1 = []
+y_2 = []
+# Direita e Esquerda
+for i in range(5):
+    x_1.append(p1[0,i,0])
+for i in range(5,10):
+    x_2.append(p1[0,i,0])
+for i in range(10,15):
+    y_1.append(p1[0,i,1])
+
+##### FUNC PARA CONTROLE
+def control(x1,x2,y1,y2,x_1,x_2,y_1,y_2):
+    tamanho_x1 = sum(x1)
+    tamanho_x_1 = sum(x_1) - 20.0
+    if(tamanho_x1 &lt; tamanho_x_1):
+        print("direita")
+        return(1)
+    tamanho_x2 = sum(x2)
+    tamanho_x_2 = sum(x_2) + 20.0
+    if(tamanho_x2 &gt; tamanho_x_2):
+        print("esquerda")
+        return(2)
+    tamanho_y1 = sum(y1)
+    tamanho_y_1 = sum(y_1) + 20.0
+    if(tamanho_y1 &gt; tamanho_y_1):
+        print("Cima")
+        return(3)
+    tamanho_y2 = sum(y2)
+    tamanho_y_2 = sum(y_2) - 20.0
+    if(tamanho_y2 &lt; tamanho_y_2):
+        print("Baixo")
+        return(4)
+
+
+
+##### Tamanho do grid
+tamanho_x = 100
+tamanho_y = 300
+tamanho_z = 50
+
+ball_1 = sphere (color = color.white, radius = 0.4)
+ball_2 = sphere (color = color.white, radius = 0.4)
+ball_3 = sphere (color = color.white, radius = 0.4)
+ball_4 = sphere (color = color.white, radius = 0.4)
+
+ball_1.pos = (-38,0,-40)
+ball_2.pos = (38,0,40)
+ball_3.pos = (38,0,-40)
+ball_4.pos = (-38,0,40)
+
+def axes( frame, colour, sz, posn ): # Make axes visible (of world or frame).
+                                     # Use None for world.
+    directions = [vs.vector(sz,0,0), vs.vector(0,sz,0), vs.vector(0,0,sz)]
+    texts = ["X","Y","Z"]
+    posn = vs.vector(posn)
+    for i in range (3): # EACH DIRECTION
+       vs.curve( frame = frame, color = colour, pos= [ posn, posn+directions[i]])
+       vs.label( frame = frame,color = colour,  text = texts[i], pos = posn+ directions[i],
+                                                                    opacity = 0, box = False )
+
+axes( None, color.white, 3, (-11,6,0))
+
+# Paredes de cima:
+curve(pos=[(-tamanho_x,0,tamanho_z),(tamanho_x,0,tamanho_z)], radius=1.0, color = color.white)
+curve(pos=[(-tamanho_x,0,-tamanho_z),(tamanho_x,0,-tamanho_z)], radius=1.0, color = color.white)
+
+curve(pos=[(-tamanho_x,0,tamanho_z),(-tamanho_x,0,-tamanho_z)], radius=1.0, color = color.white)
+curve(pos=[(tamanho_x,0,tamanho_z),(tamanho_x,0,-tamanho_z)], radius=1.0, color = color.white)
+
+# Aprendendo a fazer Grid:
+
+curve(pos=[(-tamanho_x,0,-40),(-tamanho_x,0,40)], radius=0.4, color = color.white)
+
+
+ini_x = -tamanho_x
+ini_z = -40
+ini_y = 80
+step = 13
+# Y = 0
+# Variando ao longo de Z:
+# range( [start], stop[, step] )
+'''
+for i in range(ini_z,-ini_z,step):
+    curve(pos=[(-38,0,i),(38,0,i)], radius=0.4, color = color.white)
+# Variando ao longo de X:
+for i in range(ini_x,-ini_x,step):
+    curve(pos=[(i,0,-40),(i,0,40)], radius=0.4, color = color.white)
+'''
+
+# Y Esquerda
+for i in range(ini_z,-ini_z,step):
+    curve(pos=[(-tamanho_x,tamanho_y,i),(-tamanho_x,0,i)], radius=0.4, color = color.white)
+for i in range(0,tamanho_y,step):
+    curve(pos=[(-tamanho_x,i,-tamanho_z),(-tamanho_x,i,tamanho_z)], radius=0.4, color = color.white)
+
+# Y DIreita
+for i in range(ini_z,-ini_z,step):
+    curve(pos=[(tamanho_x,tamanho_y,i),(tamanho_x,0,i)], radius=0.4, color = color.white)
+for i in range(0,tamanho_y,step):
+    curve(pos=[(tamanho_x,i,-tamanho_z),(tamanho_x,i,tamanho_z)], radius=0.4, color = color.white)
+
+# Y Cima
+for i in range(ini_x,-ini_x,step):
+    curve(pos=[(i,tamanho_y,-tamanho_z),(i,0,-tamanho_z)], radius=0.4, color = color.white)
+for i in range(0,tamanho_y,step):
+    curve(pos=[(-tamanho_x,i,-tamanho_z),(tamanho_x,i,-tamanho_z)], radius=0.4, color = color.white)
+# Y Baixo
+for i in range(ini_x,-ini_x,step):
+    curve(pos=[(i,tamanho_y,tamanho_z),(i,0,tamanho_z)], radius=0.4, color = color.white)
+for i in range(0,tamanho_y,step):
+    curve(pos=[(-tamanho_x,i,tamanho_z),(tamanho_x,i,tamanho_z)], radius=0.4, color = color.white)
+
+
+
+## FISICA DO JOGO:
+
+ball = sphere (color = color.green, radius = 2.5, make_trail=True, retain=200)
+ball.pos = (3,10,3)
+ball.trail_object.radius = 0.05
+ball.mass = 2.2
+ball.p = vector (-0.15, +9.43, +0.27)
+
+
+wall = box (pos=(0, 250 , 0), size=(23, 5, 23),  color = color.blue)
+
+dt = 1.5
+t=0.0
+camera = vector(0,0,0)
+scene.forward =  vector(0,-1,0)
+contador_x = 0
+contador_y =0
+num =0
+while True:
+    rate(100)
+
+    t = t + dt
+    ball.pos = ball.pos + (ball.p/ball.mass)*dt
+
+### AQUI SE TEM A DETECCAO DE FACE E SEU MOVIMENTO DE CAMERA
+    _, img = cap.read() #pega efeticamente a imagem da webcam
+    img = cv2.flip(img,180) #espelha a imagem
+    image = cv2.GaussianBlur(img,(5,5),0)
+    erosion = cv2.erode(image, kernel, iterations = 1)
+    dilation = cv2.dilate(image, kernel, iterations = 1)
+    img = dilation
+
+    faces = faceCascade.detectMultiScale(
+        img,
+        minNeighbors=5,
+        minSize=(30, 30),
+	maxSize=(200,200)
+    )
+
+    # Desenha um retângulo nas faces detectadas
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    contador_time = contador_time + 1
+    if(contador_time &gt; 5):
+        centro_x = x + w/2
+        centro_y = y + h/2
+        contador_time = 0
+    ### Posicoes com Transformadas:
+
+    cv2.circle(img,(centro_x,centro_y),5,(255,0,0),-1)
+
+    ### Mandar dados da posicao na escala do jogo:
+    if ( 89 &lt; centro_x &lt; 316.5):
+        posica_x = centro_x - 316.5
+    elif(316.7 &lt; centro_x &lt; 543):
+        posica_x = centro_x - 316.5
+
+    if(82 &lt; centro_y &lt; 235.5):
+        posica_z = centro_y - 235.5
+    elif(235.6 &lt; centro_y &lt; 386):
+        posica_z = centro_y - 235.5
+
+
+    #cv2.imshow('Video', img) #mostra a imagem captura na janela
+
+    if cv2.waitKey(1) &amp; 0xFF == ord('z'):
+        break
+
+    ## faz a camrea Girar:
+    #newforward = rotate(scene.forward, axis=scene.up, angle=math.pi/1000)
+    #scene.forward = newforward
+    ## Faz a camera Mover:
+    '''
+    if(t &lt; 10):
+        contador_x = contador_x + 0.01
+        #contador_y = contador_y + 0.01
+    else:
+        contador_x = contador_x - 0.01
+        #contador_y = contador_y - 0.01
+    scene.center = (contador_x,contador_y,0)
+    '''
+    contador_x = posica_x
+    contador_z = posica_z
+    scene.center = (contador_x,0,contador_z)
+
+
+### AKI SE TEM O CONTROLE:
+    ret,img1 = capture.read()
+    gray_frame = cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)
+    #flag para indicar agitacao no campo que ja pre-estabelecemos do grad
+    p_flag = p1
+    x1,y1 = (p_flag[0,0,0],p_flag[0,0,1])
+    x2,y2 = (p_flag[0,1,0],p_flag[0,1,1])
+    x3,y3 = (p_flag[0,2,0],p_flag[0,2,1])
+    x4,y4 = (p_flag[0,3,0],p_flag[0,3,1])
+    x5,y5 = (p_flag[0,4,0],p_flag[0,4,1])
+    new_point,status,error = cv2.calcOpticalFlowPyrLK(old_gray, gray_frame,p1,None,**lk_params)
+    old_gray = gray_frame.copy()
+    #p1 = new_point
+    # atualize sua area de interesse:
+    t_x1 = []
+    t_x2 = []
+    b_y1 = []
+    b_y2 = []
+    for i in range(5):
+        t_x1.append(new_point[0,i,0])
+    for i in range(5,10):
+        t_x2.append(new_point[0,i,0])
+    for i in range(10,15):
+        b_y1.append(new_point[0,i,1])
+    for i in range(15,20):
+        b_y2.append(new_point[0,i,1])
+
+    # Pinte a regiao do controlador
+    for i in range(20):
+        #cv2.circle(img,(p1[0,i,0],p1[0,i,1]),5,(0,255,0),-1)
+        cv2.circle(img,(new_point[0,i,0],new_point[0,i,1]),5,(255,0,0),-1)
+    num = control(t_x1,t_x2,b_y1,b_y2,x_1,x_2,y_1,y_2)
+    cv2.imshow('contr',img1)
+    if(num == 1):
+        wall.pos.x = wall.pos.x + 1
+    elif(num == 2):
+        wall.pos.x = wall.pos.x - 1
+    elif(num == 3):
+        wall.pos.z = wall.pos.z + 1
+    elif(num == 4):
+        wall.pos.z = wall.pos.z - 1
+
+### AQUI SE TEM A MECANICA DA BOLA:
+
+    #print("ball=",ball.pos)
+    if(ball.y &gt; 300 or ball.y &lt; -7):
+        ball.p.y = -ball.p.y
+    if(ball.z &gt; tamanho_z or ball.z &lt; -tamanho_z):
+        ball.p.z = -ball.p.z
+    if(ball.x &gt; tamanho_x or ball.x &lt; -tamanho_x):
+        ball.p.x = -ball.p.x
+    if( ball.y &gt; wall.y and ball.y &lt; 259):
+        if (ball.x &lt; wall.x + 10 and ball.x &gt; wall.x - 10):
+            ball.p.y = -ball.p.y</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Codigo detecção de face</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import cv2
+import numpy as np
+
+arqCasc = 'haarcascade_frontalface_default.xml'
+faceCascade = cv2.CascadeClassifier(arqCasc)
+
+cap = cv2.VideoCapture(1)  #instancia o uso da webcam
+centro_x = 0
+centro_y = 0
+x_real = 0
+y_real = 0
+x=0
+y=0
+w=0
+h=0
+contador_time = 0
+posica_x = 0
+posica_z = 0
+kernel = np.ones((5,5), dtype = "uint8")
+while True:
+    _, img = cap.read() #pega efeticamente a imagem da webcam
+    img = cv2.flip(img,180) #espelha a imagem
+    image = cv2.GaussianBlur(img,(5,5),0)
+    erosion = cv2.erode(image, kernel, iterations = 1)
+    dilation = cv2.dilate(image, kernel, iterations = 1)
+    img = dilation
+    contador_time = contador_time + 1
+    faces = faceCascade.detectMultiScale(
+        img,
+        minNeighbors=5,
+        minSize=(30, 30),
+	maxSize=(200,200)
+    )
+
+    # Desenha um retângulo nas faces detectadas
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    if(contador_time &gt; 5):
+        centro_x = x + w/2
+        centro_y = y + h/2
+        contador_time = 0
+    ### Posicoes com Transformadas:
+
+    cv2.circle(img,(centro_x,centro_y),5,(255,0,0),-1)
+
+    ### Mandar dados da posicao na escala do jogo:
+    if ( 89 &lt; centro_x &lt; 316.5):
+        posica_x = centro_x - 316.5
+    elif(316.7 &lt; centro_x &lt; 543):
+        posica_x = centro_x - 316.5
+
+    if(82 &lt; centro_y &lt; 235.5):
+        posica_z = centro_y - 235.5
+    elif(235.6 &lt; centro_y &lt; 386):
+        posica_z = centro_y - 235.5
+
+    print("posicao x verdadeira e adptada: ", centro_x,posica_x)
+    print("posicao z verdadeira e adptada: ", centro_y,posica_z)
+
+    cv2.imshow('Video', img) #mostra a imagem captura na janela
+
+    #o trecho seguinte é apenas para parar o código e fechar a janela
+    if cv2.waitKey(1) &amp; 0xFF == ord('z'):
+        break
+
+cap.release() #dispensa o uso da webcam
+cv2.destroyAllWindows() #fecha todas a janelas abertas</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Codigo Controle</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import numpy as np
+import cv2
+import time
+
+
+b = np.array([[]],dtype=np.float32)
+
+# parametros Lucas Ked
+lk_params = dict(winSize = (15,15),maxLevel=4,
+             criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT,10,0.03))
+# parametros shi - tasu, nao estou utilizando no momentos
+feature_params = dict(maxCorners= 100, qualityLevel = 0.3,
+                  minDistance = 7, blockSize = 7)
+
+#capture o primeiro frame
+capture = cv2.VideoCapture(0)
+_,old_img = capture.read()
+# convertar em escala cinza e adicione o parametro shi-tasu
+old_gray = cv2.cvtColor(old_img,cv2.COLOR_BGR2GRAY)
+p0 = cv2.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
+mask = np.zeros_like(old_img)
+
+# pre-pontos para teste e para saber se houve agitacao no gradiente
+val = np.array([[45.7,89.6],[45.7,79.6],[35.7,79.6],[35.7,89.6]],dtype=np.float32)
+
+# 5 primeiros sao esquerda, 5 depois direita:
+p1 = np.array([[[150.0,140.0],[170.0,140.0],[160,160.0],[150.0,180.0],[170.0,180.0],[450.0,140.0],[470.0,140.0],[460,160.0],[450.0,180.0],
+[470.0,180.0],[280.0,300.0],[300.0,300.0],[290.0,320.0],[280.0,340.0],[300.0,340.0],
+                [280.0,40.0],[300.0,40.0],[290.0,50.0],[280.0,70.0],[300.0,70.0]]],dtype=np.float32)
+inter = val
+
+x_1 = []
+x_2 = []
+y_1 = []
+y_2 = []
+# Direita e Esquerda
+for i in range(5):
+    x_1.append(p1[0,i,0])
+for i in range(5,10):
+    x_2.append(p1[0,i,0])
+for i in range(10,15):
+    y_1.append(p1[0,i,1])
+
+##### FUNC PARA CONTROLE
+def control(x1,x2,y1,y2,x_1,x_2,y_1,y_2):
+    tamanho_x1 = sum(x1)
+    tamanho_x_1 = sum(x_1) - 20.0
+    if(tamanho_x1 &lt; tamanho_x_1):
+        print("direita")
+    tamanho_x2 = sum(x2)
+    tamanho_x_2 = sum(x_2) + 20.0
+    if(tamanho_x2 &gt; tamanho_x_2):
+        print("esquerda")
+    tamanho_y1 = sum(y1)
+    tamanho_y_1 = sum(y_1) + 20.0
+    if(tamanho_y1 &gt; tamanho_y_1):
+        print("Cima")
+    tamanho_y2 = sum(y2)
+    tamanho_y_2 = sum(y_2) - 20.0
+    if(tamanho_y2 &lt; tamanho_y_2):
+        print("Baixo")
+
+
+
+while capture.isOpened():
+        cv2.namedWindow('Controlador')
+        ret,img = capture.read()
+        gray_frame = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+        #flag para indicar agitacao no campo que ja pre-estabelecemos do grad
+        p_flag = p1
+        x1,y1 = (p_flag[0,0,0],p_flag[0,0,1])
+        x2,y2 = (p_flag[0,1,0],p_flag[0,1,1])
+        x3,y3 = (p_flag[0,2,0],p_flag[0,2,1])
+        x4,y4 = (p_flag[0,3,0],p_flag[0,3,1])
+        x5,y5 = (p_flag[0,4,0],p_flag[0,4,1])
+        new_point,status,error = cv2.calcOpticalFlowPyrLK(old_gray, gray_frame,p1,None,**lk_params)
+        old_gray = gray_frame.copy()
+	#p1 = new_point
+	# atualize sua area de interesse:
+        t_x1 = []
+        t_x2 = []
+        b_y1 = []
+        b_y2 = []
+        for i in range(5):
+            t_x1.append(new_point[0,i,0])
+        for i in range(5,10):
+            t_x2.append(new_point[0,i,0])
+        for i in range(10,15):
+            b_y1.append(new_point[0,i,1])
+        for i in range(15,20):
+            b_y2.append(new_point[0,i,1])
+
+        # Pinte a regiao do controlador
+        for i in range(20):
+            #cv2.circle(img,(p1[0,i,0],p1[0,i,1]),5,(0,255,0),-1)
+            cv2.circle(img,(new_point[0,i,0],new_point[0,i,1]),5,(255,0,0),-1)
+        control(t_x1,t_x2,b_y1,b_y2,x_1,x_2,y_1,y_2)
+
+        cv2.imshow('img',img)
+
+        pressed_key = cv2.waitKey(1) &amp; 0xFF
+        if pressed_key == ord("z"):
+                break
+cv2.destroyAllWindows()
+capture.release()</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_face_detect_using_hog">Face Detect using HOG</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The idea behind HOG  is to extract features into a vector, and feed it into a classification algorithm like a Suport Vector Machine for example that will assess wheter a face (or any object you train it to recognize actually) is present in a region or not. The features extracted are the distribution (histograms) of a directions of gradientes (oriented gradients) of the image. Gradients are typically large around edges and corners and allow us to detect those regions.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="face1.jpg" alt="face1" width="500" height="500">
+</div>
+<div class="title">Figure 25. face1 image</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="new_face.jpg" alt="new_face" width="500" height="500">
+</div>
+<div class="title">Figure 26. new_face image</div>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Image</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import cv2
+import numpy as np
+import dlib
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from imutils import face_utils
+
+img = mpimg.imread('face1.jpg')
+
+resize = cv2.resize(img, (100, 200), interpolation = cv2.INTER_LINEAR)
+
+
+im = np.float32(img) / 255.0
+
+# Vamos calcular o gradiente
+gx = cv2.Sobel(im, cv2.CV_32F, 1, 0, ksize=1)
+gy = cv2.Sobel(im, cv2.CV_32F, 0, 1, ksize=1)
+mag, angle = cv2.cartToPolar(gx, gy, angleInDegrees=True)
+
+face_detect = dlib.get_frontal_face_detector()
+
+rects = face_detect(img, 1)
+
+x_maior = 0
+y_maior = 0
+w_maior = 0
+h_maior = 0
+
+for (i, rect) in enumerate(rects):
+	(x, y, w, h) = face_utils.rect_to_bb(rect)
+	if(w &gt; w_maior):
+		x_maior = x
+		y_maior = y
+		w_maior = w
+		h_maior = h
+
+	print(x,y,w,h)
+
+	cv2.rectangle(img, (x, y), (x + w, y + h), (255, 255, 255), 3)
+
+print(x_maior,y_maior,w_maior,h_maior)
+img_final = img[y_maior:y_maior+h_maior,x_maior:x_maior+w_maior]
+
+cv2.imwrite('new_face.jpg',img_final)
+
+print(img.shape[:2])
+plt.figure()
+plt.imshow(img_final)
+plt.show()</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Video</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import cv2
+import numpy as np
+import dlib
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from imutils import face_utils
+
+img = mpimg.imread('face1.jpg')
+
+resize = cv2.resize(img, (100, 200), interpolation = cv2.INTER_LINEAR)
+
+
+im = np.float32(img) / 255.0
+
+# Vamos calcular o gradiente
+gx = cv2.Sobel(im, cv2.CV_32F, 1, 0, ksize=1)
+gy = cv2.Sobel(im, cv2.CV_32F, 0, 1, ksize=1)
+mag, angle = cv2.cartToPolar(gx, gy, angleInDegrees=True)
+
+face_detect = dlib.get_frontal_face_detector()
+
+rects = face_detect(img, 1)
+
+x_maior = 0
+y_maior = 0
+w_maior = 0
+h_maior = 0
+
+for (i, rect) in enumerate(rects):
+	(x, y, w, h) = face_utils.rect_to_bb(rect)
+	if(w &gt; w_maior):
+		x_maior = x
+		y_maior = y
+		w_maior = w
+		h_maior = h
+
+	print(x,y,w,h)
+
+	cv2.rectangle(img, (x, y), (x + w, y + h), (255, 255, 255), 3)
+
+print(x_maior,y_maior,w_maior,h_maior)
+img_final = img[y_maior:y_maior+h_maior,x_maior:x_maior+w_maior]
+
+cv2.imwrite('new_face.jpg',img_final)
+
+print(img.shape[:2])
+plt.figure()
+plt.imshow(img_final)
+plt.show()</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_camshift">CamShift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>"The intuition behind the meanshift is simple. Consider you have a set of points. (It can be a pixel distribution like histogram backprojection). You are given a small window (may be a circle) and you have to move that window to the area of maximum pixel density (or maximum number of points).
+The initial window is shown in blue circle with the name "C1". Its original center is marked in blue rectangle, named "C1_o". But if you find the centroid of the points inside that window, you will get the point "C1_r" (marked in small blue circle) which is the real centroid of the window. Surely they don&#8217;t match. So move your window such that the circle of the new window matches with the previous centroid. Again find the new centroid. Most probably, it won&#8217;t match. So move it again, and continue the iterations such that the center of window and its centroid falls on the same location (or within a small desired error). So finally what you obtain is a window with maximum pixel distribution. It is marked with a green circle, named "C2". As you can see in the image, it has maximum number of points." OpenCV tutorial.</p>
+</div>
+<div class="paragraph">
+<p>Camshift it is similar to meanshift, but returns a rotated rectangle (that is our result) and box parameters (used to be passed as search window in next iteration). See the code below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">#### Using Camshift to track a ROI
+import numpy as np
+import cv2
+import time
+
+global flag
+flag = True
+drawing = False
+img = None
+c = 1
+boxes = []
+capture = cv2.VideoCapture(0)
+_,img = capture.read()
+
+
+def on_mouse(event,x,y,flags,params):
+	global boxes,drawing
+	if event == cv2.EVENT_LBUTTONDOWN:
+		print('Start Mouse Position:' ,str(x),str(y))
+		s = (x,y)
+		boxes.append(s)
+		drawing = True
+		cv2.circle(img,(x,y),4,(0,255,0),2)
+		cv2.imshow('img',img)
+	elif event == cv2.EVENT_LBUTTONUP:
+		print('END Mouse Position:',str(x),str(y))
+		e = (x,y)
+		boxes.append(e)
+		drawing = False
+		mode = True
+
+
+
+def ROI_segment(retangulo,capturing):
+	hsv_roi = cv2.cvtColor(retangulo, cv2.COLOR_BGR2HSV)
+	mask = cv2.inRange(hsv_roi,np.array((0.,60.,32.)),np.array((180.,255.,255.)))
+	#roi_hist = cv2.calcHist([hsv_roi], [0],mask,[180],[0,180])
+	#depois tente tirar o mask e coloque:
+	roi_hist = cv2.calcHist([hsv_roi], [0],None,[16],[0,180])
+	return cv2.normalize(roi_hist,roi_hist, 0, 255, cv2.NORM_MINMAX)
+
+
+
+term_crit = ( cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
+print("Posicione seu objeto a ser detectado - ROI manual")
+roi_area = None
+#ret,img = capture.read()
+#cv2.namedWindow('img')          nao coloque aki pois vai bugars
+#cv2.setMouseCallback('img',on_mouse,0)
+while capture.isOpened():
+	cv2.namedWindow('img')
+	cv2.setMouseCallback('img',on_mouse,0)
+	ret,img = capture.read(2)
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	if not ret:
+		break
+
+	if len(boxes)&lt;4:
+		orig = img.copy()
+		print("entrou no roi")
+		while len(boxes) &lt; 4:
+			cv2.imshow('img',img)
+			cv2.waitKey(0)
+		boxes = np.array(boxes)
+		s = boxes.sum(axis = 1)
+		t1 = boxes[np.argmin(s)]
+		br = boxes[np.argmax(s)]
+		roi = orig[t1[1]:br[1],t1[0]:br[0]]
+		#roiBox_x = (t1[0],t1[1])
+		#roiBox_y = (br[0],br[1])
+		#cv2.imshow('roi',roi)
+		roi_area = (t1[0],t1[1],br[0],br[1])
+		roi_hist = ROI_segment(roi,img)
+		flag = False
+	if len(boxes)&gt;4:
+		#print("entrou")
+		ret,img = capture.read(2)
+		hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+		dst = cv2.calcBackProject([hsv],[0],roi_hist,[0,180],1)
+		#apply meanshift:
+		ret1,roi_area = cv2.CamShift(dst,roi_area,term_crit)
+		#draw it on image:
+		#a,b,w,h = track_window
+		pts = np.int0(cv2.boxPoints(ret1))
+		cv2.polylines(img,[pts],True,255,2)
+		#cv2.imshow("Final",img)
+
+	cv2.imshow('img',img)
+	if pressed_key == ord("z"):
+		break
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_line_street_detection">Line-Street Detection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This algorithm proposed by me is intended to be used for autonomous cars, where it is necessary to detect the streets and the tracks, where the car should stabilize. To do this detection is necessary to have knowledge in techniques like Canny and filters and morphology. Before you start extracting data for the intelligent controller, it is responsible for guiding the car on the road, it is necessary to filter and segment what the car will see on the street, so it is necessary to use Gaussian low pass filters and a threshold to detect only the road (this one in the simulated case was white). After that, it is necessary to use the morphology technique to destroy small noises and leave the road clearer and clearer so that we can apply Canny. Canny is responsible for detecting the contour of the road and then a suggested technique is to get three ROIs that subdivide the whole image and calculate its centroids, so we plot a line connecting all 3 centroids. The purpose of the driver is to then leave the car&#8217;s straight (centered) aligned with the straight of the road so the car should make curves or keep to achieve its goals.</p>
+</div>
+<div class="openblock float-group">
+<div class="content">
+<div class="imageblock left">
+<div class="content">
+<img src="capturefilter.png" alt="capturefilter" width="500" height="500">
+</div>
+<div class="title">Figure 27. capturefilter image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="capturecanny.png" alt="capturecanny" width="500" height="500">
+</div>
+<div class="title">Figure 28. capturecanny image</div>
+</div>
+<div class="imageblock left">
+<div class="content">
+<img src="captureframe.png" alt="captureframe" width="500" height="500">
+</div>
+<div class="title">Figure 29. captureframe image</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">#### Autonomos car
+import numpy as np
+import cv2
+import time
+
+capture = cv2.VideoCapture(1)
+
+def rescale_frame(capturing, wpercent=50, hpercent=50):
+    width = int(capturing.shape[1] * wpercent / 100)
+    height = int(capturing.shape[0] * hpercent / 100)
+    return cv2.resize(capturing, (width, height), interpolation=cv2.INTER_AREA)
+
+def white_seg(img,hsv,thr):
+	upper = np.array([0,0,212])
+	lower = np.array([131,255,255])
+	mask1 = cv2.inRange(hsv,lower,upper)
+	out1 = cv2.bitwise_and(img,img,mask=mask1)
+	kernel = np.ones((15,15),np.uint8)                  # destruindo os ruidos
+	mask = cv2.morphologyEx(img,cv2.MORPH_OPEN,kernel)
+	out = cv2.bitwise_and(img,img,mask=mask)
+	#cv2.imshow('filter',out)
+	# teste para melhorar:
+	final = cv2.bitwise_and(out,out1)
+	final = cv2.blur(final,(5,5))
+	kernel_new = np.ones((15,15),np.uint8)
+	mask_new = cv2.morphologyEx(final,cv2.MORPH_OPEN,kernel_new)
+	cv2.imshow('filter',out)
+	return out
+
+def filtragem(frame):
+	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+	ret,threshold = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+	for i in range(4):
+		blurred = cv2.GaussianBlur(threshold,(11,11),0)
+	white_img = white_seg(blurred,hsv,threshold)
+
+	return white_img
+
+def contorno(white_img,frame):
+	#canny = cv2.Canny(white_img, 50, 200)
+	# depois tente aplicar contorno no canny
+	ret1,thr = cv2.threshold(white_img, 127, 255, cv2.THRESH_BINARY)
+	result = cv2.findContours(thr,cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+	cont,hierarchy = result if len(result) == 2 else result[1:3]
+	if len(cont) &gt; 0:
+		areas = [cv2.contourArea(c) for c in cont]
+		max_index = np.argmax(areas)
+		cont_max = cont[-1]
+		M = cv2.moments(cont[0])
+		if (M['m00'] != 0):
+			cx = int(M['m10']/M['m00'])
+			cy = int(M['m01']/M['m00'])
+			cv2.circle(frame,(cx,cy),8,(0,255,105),3)
+			return (cx,cy)
+	return (0,0)
+
+
+#### Funcs matematicas para o controlador:
+def regressao_linear(x1,x2,x3,y1,y2,y3,height,width,frame):
+	x_medio = float((x1+x2+x3)/3)
+	y_medio = float((y1+y2+y3)/3)
+	sum1 = x1*y1+x2*y2+x3*y3
+	a1 = float(3.0*(sum1) - (x1+x2+x3)*(y1+y2+y3) )/float(3.0*(x1**2+x2**2+x3**2) - ((x1+x2+x3))**2  )
+	a0 = y_medio - a1*x_medio
+	# y = a0 + a1*x
+	# ponto 0:
+	x1 = 0   # na real isso eh o y na func do cv2.line
+	y1 = a0  # na real isso eh o x na func do cv2.line
+	# ponto F:
+	xf = height
+	yf = a0 + a1*xf
+	cv2.line(frame,(y1,x1),(yf,xf),(0,255,105),4)
+	return (y1,yf)
+
+
+
+
+while True:
+	_,img = capture.read()
+	pressed_key = cv2.waitKey(1) &amp; 0xFF
+	frame = rescale_frame(img)
+	height,width = frame.shape[:2]
+	frame_new = filtragem(frame)
+	#print(width,height)
+	# tracando a reta de entrada para o controlador
+	# as imagens funcionam mais ou menos assim:
+	# ------------------------------
+	#|(0,0)                        |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|				               |
+	#|               (width,height)|
+	# ------------------------------
+	#### copy 1:
+	frame_copy = frame[0:height/3,100:width] # [coordenas y-(y0:yf), coordenas x(x0,xf)]
+	frame_seg1 = filtragem(frame_copy)
+	(x1,y1)=contorno(frame_seg1,frame_copy)
+	print(x1,y1)
+	cv2.imshow('copy',frame_copy)
+	### copy 2:
+	frame_copy2 = frame[height/3:2*height/3,100:width]
+	frame_seg2 = filtragem(frame_copy2)
+	(x2,y2)=contorno(frame_seg2,frame_copy2)
+	cv2.imshow('copy2',frame_copy2)
+	### copy 3:
+	frame_copy3 = frame[2*height/3:height,100:width]
+	frame_seg3 = filtragem(frame_copy3)
+	(x3,y3)=contorno(frame_seg3,frame_copy3)
+	cv2.imshow('copy3',frame_copy3)
+	####### CONTROLADOR ###########
+	height,width = frame.shape[:2]
+	middle_x = width/2
+	cv2.line(frame,(middle_x,0),(middle_x,height),(255,0,0),4)
+	##### atende aqui samuel pois os valores x1,x2,x3,y1,y2,y3 estao feitos na escala
+	##### do frame_copy, entao adicione 100 ao x e height/3 no y
+		#cv2.circle(frame,(x1+100,y1),3,(200,255,105),3)
+		#cv2.circle(frame,(x2+100,y2+height/3),3,(200,255,105),3)
+		#cv2.circle(frame,(x3+100,y3+2*height/3),3,(200,255,105),3)
+	# reta ligando pontos
+	x1 = int( x1 + 100 )
+	x2 = int (x2 + 100)
+	x3 = int(x3 + 100)
+	y2 = int(y2+height/3)
+	y3 = int(y2+2*height/3)
+	cv2.line(frame,(x3,y3),(x1,y1),(200,255,105),4)
+	'''
+	# reta regressao linear dos pontos obtidos:
+	(x0,xf)=regressao_linear(x1,x2,x3,y1,y2,y3,height,width,frame) # verificar func
+	# U(t) = eh exatamente a posicao media do xo e xf da reta regressao
+	u = (float(x0 + xf)/2.0)
+	## funcao erro: e = u - middle_x
+	# func planta-dos motores do robo:
+	'''
+	#cv2.imshow('frame',frame_new)
+	cv2.imshow('frame',frame)
+	if pressed_key == ord("z"):
+		break
+cv2.destroyAllWindows()
+capture.release()</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2019-06-23 18:15:30 -0300
+</div>
+</div>
+</body>
+</html>

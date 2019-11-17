@@ -1,0 +1,89 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Century Gothic;
+}
+
+
+header{
+    background-image:  url(../images/Home.jpg);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+ul{
+    float: left;
+    list-style: none;
+    margin-top: 35px;
+    margin-left: 30px;
+}
+
+ul li{
+    display: inline-block;
+    
+}
+
+ul li a{
+    text-decoration: none;
+    color: #000;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    font-size: 90%;
+    border: 1px solid transparent;
+    transition: 0.6s ease;
+    font-size: 150%;
+    font-family: Oswald
+}
+
+ul li a:hover{
+    border-bottom: 2px solid rgb(167, 41, 41);
+    color: #000;
+}
+
+ul li.active a{
+    border-bottom: 2px solid rgb(167, 41, 41);
+    color: #000;
+}
+
+
+.title{
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    transform: translate(-50%,-50%);
+    
+}
+
+.caption{
+    text-align: center;
+    margin-top: 60px;
+    font-size: 42px;
+    color: #000;
+    
+}
+
+.type{
+    box-sizing:  border-box;
+    
+}
+
+.type h3{
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    font-family: Oswald
+}
+
+
+/*  ----------- ABOUT CONTAINER ---------- */
+
+
+section.about{
+    background: rgb(58,58,58);
+    background-size: 100%;
+    color: rgb(255,255,255);
+    margin-top: 200px;
+    height: 900px;
+}
